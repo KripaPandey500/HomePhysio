@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Routines - HomePhysio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* ====== Routine Page Custom Styles ====== */
+    body {
+      background-color: #f0f8ff;
+    }
+
+    section.content {
+      padding: 6rem 2rem 3rem 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtext {
+      text-align: center;
+      color: #444;
+      margin-bottom: 2rem;
+    }
+
+    /* ====== Buttons ====== */
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .buttons-container button {
+      padding: 0.8rem 1.8rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      background: var(--primary-color);
+      color: white;
+      transition: 0.3s;
+    }
+
+    .buttons-container button:hover {
+      background: var(--accent-color);
+    }
+
+    /* ====== Routine Cards ====== */
+    .routine-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .exercise-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.3s;
+      position: relative;
+    }
+
+    .exercise-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .exercise-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .exercise-card h3 {
+      margin: 0.8rem 0 0.3rem;
+      color: var(--primary-color);
+    }
+
+    .exercise-card p {
+      font-size: 0.9rem;
+      color: #555;
+      margin: 0 1rem 1rem;
+    }
+
+    .card-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .card-icons i {
+      cursor: pointer;
+      color: var(--primary-color);
+      transition: color 0.3s;
+    }
+
+    .card-icons i:hover {
+      color: var(--accent-color);
+    }
+
+    /* ====== Empty Message ====== */
+    .empty-message {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    .empty-message button {
+      margin-top: 1rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.3rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .empty-message button:hover {
+      background: var(--accent-color);
+    }
+
+    /* ====== Modal for Instructions ====== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 500px;
+      text-align: center;
+      position: relative;
+    }
+
+    .modal-content img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #333;
+    }
+
+    /* ====== Build Routine Section ====== */
+    .form-section {
+      display: none;
+      margin-top: 2rem;
+      background: #e6f7ff;
+      padding: 1.5rem;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .form-section input[type="text"] {
+      padding: 0.7rem;
+      width: 60%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 0.5rem;
+    }
+
+    .form-section button {
+      padding: 0.7rem 1.3rem;
+      border: none;
+      border-radius: 5px;
+      background: var(--primary-color);
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== Navbar Section ===== -->
+  <header>
+    <a href="index.html" class="logo">
+      <img src="assets/images/logo.png" alt="HomePhysio Logo">
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="exercises.html">Exercises</a>
+      <a href="routines.html" class="active">My Routines</a>
+      <a href="progress.html">My Progress</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="register.html"><i class="fas fa-user-circle"></i></a>
+    </nav>
+  </header>
+
+  <!-- ===== Main Content ===== -->
+  <section class="content">
+    <h1>My Routines</h1>
+    <p class="subtext">Manage and follow your personalized physiotherapy exercises.</p>
+
+    <div class="buttons-container">
+      <button id="myRoutineBtn">My Routine</button>
+      <button id="buildRoutineBtn">Build Your Routine</button>
+    </div>
+
+    <section class="routine-grid" id="routineGrid"></section>
+
+    <div class="empty-message" id="emptyMessage" style="display:none;">
+      <p>No routines yet! Create your routine now.</p>
+      <button id="goBuild">Get Started</button>
+    </div>
+
+    <!-- Build Routine Form -->
+    <div class="form-section" id="buildRoutineSection">
+      <h3>Create New Routine</h3>
+      <input type="text" id="routineName" placeholder="Enter routine name">
+      <button id="browseExercises">Browse Exercises</button>
+      <button id="saveRoutine">Save Routine</button>
+    </div>
+  </section>
+
+  <!-- ===== Modal for Instructions ===== -->
+  <div class="modal" id="instructionModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <img id="modalImg" src="" alt="Exercise">
+      <h3 id="modalName"></h3>
+      <p id="modalDesc"></p>
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <p>&copy; 2025 HomePhysio | Follow us on social media</p>
+  </footer>
+
+  <!-- ===== JavaScript ===== -->
+  <script>
+    const routineGrid = document.getElementById("routineGrid");
+    const buildRoutineSection = document.getElementById("buildRoutineSection");
+    const myRoutineBtn = document.getElementById("myRoutineBtn");
+    const buildRoutineBtn = document.getElementById("buildRoutineBtn");
+    const emptyMessage = document.getElementById("emptyMessage");
+    const goBuild = document.getElementById("goBuild");
+
+    // ===== Get Saved Exercises from Local Storage =====
+    function getSavedExercises() {
+      return JSON.parse(localStorage.getItem("savedExercises")) || [];
+    }
+
+    // ===== Display Saved Exercises =====
+    function displaySavedExercises() {
+      const exercises = getSavedExercises();
+      routineGrid.innerHTML = '';
+
+      if (exercises.length === 0) {
+        routineGrid.style.display = "none";
+        emptyMessage.style.display = "block";
+        return;
+      }
+
+      emptyMessage.style.display = "none";
+      routineGrid.style.display = "grid";
+
+      exercises.forEach(ex => {
+        const card = document.createElement("div");
+        card.classList.add("exercise-card");
+        card.innerHTML = `
+          <img src="${ex.img}" alt="${ex.name}">
+          <h3>${ex.name}</h3>
+          <p>${ex.desc}</p>
+          <div class="card-icons">
+            <i class="fas fa-eye" onclick="viewInstruction('${ex.id}')"></i>
+            <i class="fas fa-play-circle"></i>
+            <i class="fas fa-trash" onclick="deleteExercise('${ex.id}')"></i>
+          </div>
+        `;
+        routineGrid.appendChild(card);
+      });
+    }
+
+    // ===== View Instruction =====
+    const modal = document.getElementById("instructionModal");
+    const closeModal = document.getElementById("closeModal");
+    const modalImg = document.getElementById("modalImg");
+    const modalName = document.getElementById("modalName");
+    const modalDesc = document.getElementById("modalDesc");
+
+    function viewInstruction(id) {
+      const exercises = getSavedExercises();
+      const ex = exercises.find(e => e.id == id);
+      if (!ex) return;
+      modalImg.src = ex.img;
+      modalName.textContent = ex.name;
+      modalDesc.textContent = ex.desc;
+      modal.style.display = "flex";
+    }
+
+    closeModal.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+
+    // ===== Delete Exercise =====
+    function deleteExercise(id) {
+      let exercises = getSavedExercises();
+      exercises = exercises.filter(e => e.id != id);
+      localStorage.setItem("savedExercises", JSON.stringify(exercises));
+      displaySavedExercises();
+    }
+
+    // ===== Switch Tabs =====
+    myRoutineBtn.onclick = () => {
+      buildRoutineSection.style.display = "none";
+      displaySavedExercises();
+    };
+
+    buildRoutineBtn.onclick = () => {
+      routineGrid.style.display = "none";
+      emptyMessage.style.display = "none";
+      buildRoutineSection.style.display = "block";
+    };
+
+    goBuild.onclick = () => {
+      routineGrid.style.display = "none";
+      emptyMessage.style.display = "none";
+      buildRoutineSection.style.display = "block";
+    };
+
+    // ===== Save Routine =====
+    document.getElementById('browseExercises').onclick = () => {
+      window.location.href = 'exercises.html';
+    };
+
+    document.getElementById('saveRoutine').onclick = () => {
+      const name = document.getElementById('routineName').value.trim();
+      if (!name) {
+        alert('Please enter a routine name.');
+        return;
+      }
+      alert(`Routine "${name}" saved successfully!`);
+      document.getElementById('routineName').value = '';
+    };
+
+    // ===== Initial Load =====
+    displaySavedExercises();
+  </script>
+</body>
+</html>

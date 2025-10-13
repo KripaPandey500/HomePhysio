@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HomePhysio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Header / Navbar -->
+  <header>
+    <a href="index.html" class="logo">
+      <img src="assets/images/logo.png" alt="HomePhysio Logo">
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="exercises.html">Exercises</a>
+      <a href="routines.html">My Routines</a>
+      <a href="progress.html">My Progress</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="register.html"><i class="fas fa-user-circle"></i></a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome to HomePhysio</h1>
+    <p>Your personalized physiotherapy app to stay healthy and mobile.</p>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <a href="aboutus.html" class="btn-primary">Our Services</a>
+    <div class="services-grid">
+      <div class="service-card" onclick="location.href='aboutus.html'">
+        <i class="fas fa-dumbbell fa-2x"></i>
+        <h3>Exercise Programs</h3>
+        <p>Personalized routines to improve mobility and strength safely.</p>
+      </div>
+
+      <div class="service-card" onclick="location.href='aboutus.html'">
+        <i class="fas fa-heartbeat fa-2x"></i>
+        <h3>Recovery Tracking</h3>
+        <p>Track your progress and monitor improvement over time.</p>
+      </div>
+
+      <div class="service-card" onclick="location.href='aboutus.html'">
+        <i class="fas fa-video fa-2x"></i>
+        <h3>Video Guidance</h3>
+        <p>Step-by-step exercise instructions with audio-visual support.</p>
+      </div>
+
+      <div class="service-card" onclick="location.href='aboutus.html'">
+        <i class="fas fa-cloud fa-2x"></i>
+        <h3>Offline Access</h3>
+        <p>Access your routines and exercises anytime without internet.</p>
+      </div>
+
+      <div class="service-card" onclick="location.href='aboutus.html'">
+        <i class="fas fa-user-md fa-2x"></i>
+        <h3>Virtual Consultation</h3>
+        <p>Connect with physiotherapists online for expert guidance and support from home.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exercises Section -->
+  <section class="exercises">
+    <h2>Explore Exercises</h2>
+    <p>Click below to explore our full library of physiotherapy exercises.</p>
+    <div class="explore-exercises" onclick="location.href='register.html'">
+      <i class="fas fa-book fa-2x"></i>
+      <span>Get Started</span>
+    </div>
+  </section>
+
+  <!-- Customer Reviews Section -->
+  <section class="testimonials">
+    <h2>What Our Users Say</h2>
+    <div class="testimonial-container">
+      <button class="nav-btn prev"><i class="fas fa-chevron-left"></i></button>
+
+      <div class="testimonial-card active">
+        <p>“HomePhysio made my knee recovery so much easier. The guided videos are amazing!”</p>
+        <h4>- Sarah K.</h4>
+      </div>
+
+      <div class="testimonial-card">
+        <p>“I love being able to track my progress and build custom routines. Highly recommend!”</p>
+        <h4>- Rajesh P.</h4>
+      </div>
+
+      <div class="testimonial-card">
+        <p>“Easy to use and works even offline! Perfect for daily physiotherapy exercises.”</p>
+        <h4>- Emily W.</h4>
+      </div>
+
+      <button class="nav-btn next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 HomePhysio | Follow us on social media</p>
+    <div class="socials">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

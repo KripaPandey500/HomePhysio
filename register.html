@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - HomePhysio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      background: url('assets/images/home-bg.jpg') no-repeat center center fixed; 
+      background-size: cover;
+      margin:0; 
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .form-container {
+      background: rgba(255,255,255,0.9); 
+      padding: 30px; 
+      border-radius: 12px; 
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+      width: 100%; 
+      max-width: 400px;
+    }
+    .form-container h2 { text-align:center; color:#00aaff; }
+    .form-container input { width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc; }
+    .form-container button { width:48%; padding:10px; margin:5px 1%; border:none; border-radius:6px; background:#00aaff; color:white; font-size:1rem; cursor:pointer; transition:0.3s; }
+    .form-container button:hover { background:#0077cc; }
+    .clear-btn { background:#ccc; color:#333; }
+    .form-container p { text-align:center; margin-top:10px; }
+    .form-container a { color:#00aaff; text-decoration:none; }
+    .form-container a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Register</h2>
+    <input type="text" id="regName" placeholder="Full Name">
+    <input type="email" id="regEmail" placeholder="Email">
+    <input type="password" id="regPassword" placeholder="Password">
+    <input type="password" id="regConfirmPassword" placeholder="Confirm Password">
+    <div style="display:flex; justify-content:space-between;">
+      <button onclick="registerUser()">Register</button>
+      <button class="clear-btn" onclick="clearRegisterForm()">Clear</button>
+    </div>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+
+<script>
+function registerUser() {
+  const name = document.getElementById("regName").value;
+  const email = document.getElementById("regEmail").value;
+  const password = document.getElementById("regPassword").value;
+  const confirmPassword = document.getElementById("regConfirmPassword").value;
+
+  if(!name || !email || !password || !confirmPassword){
+    alert("Please fill all fields!");
+    return;
+  }
+  if(password !== confirmPassword){
+    alert("Passwords do not match!");
+    return;
+  }
+
+  alert(`Registration Successful!\nName: ${name}\nEmail: ${email}`);
+  clearRegisterForm();
+}
+
+function clearRegisterForm() {
+  document.getElementById("regName").value = '';
+  document.getElementById("regEmail").value = '';
+  document.getElementById("regPassword").value = '';
+  document.getElementById("regConfirmPassword").value = '';
+}
+</script>
+
+</body>
+</html>
