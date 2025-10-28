@@ -37,46 +37,64 @@
 </head>
 <body>
 
-  <div class="form-container">
-    <h2>Register</h2>
-    <input type="text" id="regName" placeholder="Full Name">
-    <input type="email" id="regEmail" placeholder="Email">
-    <input type="password" id="regPassword" placeholder="Password">
-    <input type="password" id="regConfirmPassword" placeholder="Confirm Password">
+<div class="form-container">
+  <span class="close-btn" onclick="window.location.href='index.html'">&times;</span>
+  <h2>Register</h2>
+  <form id="registerForm">
+    <input type="text" id="fullname" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
     <div style="display:flex; justify-content:space-between;">
-      <button onclick="registerUser()">Register</button>
-      <button class="clear-btn" onclick="clearRegisterForm()">Clear</button>
+      <button type="submit">Register</button>
+      <button type="reset" class="clear-btn">Clear</button>
     </div>
-    <p>Already have an account? <a href="login.html">Login</a></p>
-  </div>
+  </form>
+  <p>Already have an account? <a href="login.html">Login</a></p>
+</div>
 
-<script>
-function registerUser() {
-  const name = document.getElementById("regName").value;
-  const email = document.getElementById("regEmail").value;
-  const password = document.getElementById("regPassword").value;
-  const confirmPassword = document.getElementById("regConfirmPassword").value;
 
-  if(!name || !email || !password || !confirmPassword){
-    alert("Please fill all fields!");
-    return;
-  }
-  if(password !== confirmPassword){
-    alert("Passwords do not match!");
-    return;
-  }
+  <script>
+  document.getElementById("registerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  alert(`Registration Successful!\nName: ${name}\nEmail: ${email}`);
-  clearRegisterForm();
-}
+    const name = document.getElementById("fullname").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-function clearRegisterForm() {
-  document.getElementById("regName").value = '';
-  document.getElementById("regEmail").value = '';
-  document.getElementById("regPassword").value = '';
-  document.getElementById("regConfirmPassword").value = '';
-}
-</script>
+    if (!name || !email || !password || !confirmPassword) {
+      alert("Please fill in all fields!");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.msg || "Registration failed!");
+        return;
+      }
+
+      alert(data.msg);
+      window.location.href = "login.html"; // redirect to login page
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Something went wrong while registering!");
+    }
+  });
+  </script>
 
 </body>
 </html>

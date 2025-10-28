@@ -84,9 +84,78 @@ header .logo:hover {
   color: var(--primary-color);
 }
 
-/* -----------------------------
-   HERO SECTION
------------------------------ */
+/* ---------- Theme Toggle Button ---------- */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 1.5rem;
+  margin-left: 15px;
+  transition: color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  color: #007bff;
+}
+
+/* ---------- Light Theme (default) ---------- */
+body {
+  background-color: #fff;
+  color: #222;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ---------- Dark Theme ---------- */
+body.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.dark-mode header,
+body.dark-mode footer {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode a {
+  color: #feffff;
+}
+
+body.dark-mode .service-card {
+  background-color: #1e1e1e;
+  border: 1px solid #ffffff;
+}
+
+body.dark-mode .service-card p{
+ color: #ffffff;
+}
+
+body.dark-mode .theme-toggle {
+  color: #fff;
+}
+
+/* 🌙 Add this below — it darkens the testimonial section */
+body.dark-mode .testimonials {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+
+body.dark-mode .testimonial-card {
+  background-color: #2a2a2a;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+body.dark-mode .nav-btn {
+  background-color: #333;
+  color: #fff;
+}
+
+body.dark-mode .nav-btn:hover {
+  background-color: #555;
+}
+
+
 .hero {
   padding: 6rem 2rem 4rem 2rem;
   text-align: center;
@@ -491,3 +560,26 @@ footer .socials a:hover {
       background-color: #00aaff;
       color: white;
     }
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-btn:hover {
+  color: #00aaff;
+}
+.form-container {
+  position: relative; /* added */
+  background: rgba(255,255,255,0.9); 
+  padding: 30px; 
+  border-radius: 12px; 
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+  width: 100%; 
+  max-width: 400px;
+}

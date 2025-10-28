@@ -95,6 +95,7 @@
       <a href="exercises.html">Exercises</a>
       <a href="progress.html">My Progress</a>
       <a href="routines.html">My Routines</a>
+       <a href="aboutus.html">About Us</a>
       <a href="#" id="profileIcon"><i class="fas fa-user-circle"></i></a>
     </nav>
   </header>
@@ -141,84 +142,35 @@
 
 
 <script>
-  const modal = document.getElementById("authModal");
-  const profileBtn = document.getElementById("profileIcon");
-  const closeBtn = document.getElementsByClassName("close")[0];
+window.onload = async () => {
+const res = await fetch("http://localhost:5000/profile", {
+  credentials: "include" // ✅ must include
+});
 
-  const registerForm = document.getElementById("registerForm");
-  const loginForm = document.getElementById("loginForm");
 
-  // Open modal
-  profileBtn.onclick = function() {
-    modal.style.display = "block";
-    showRegisterForm(); // default
+  const data = await res.json();
+
+  if (!res.ok || data.msg === "Not logged in") {
+    alert("Please login first!");
+    window.location.href = "login.html";
+    return;
   }
 
-  // Close modal
-  closeBtn.onclick = function() {
-    modal.style.display = "none";
-  }
+  document.body.innerHTML = `
+    <h2>Welcome, ${data.name}!</h2>
+    <p>Your email: ${data.email}</p>
+    <button id="logoutBtn">Logout</button>
+  `;
 
-  window.onclick = function(event) {
-    if(event.target == modal) modal.style.display = "none";
-  }
+  document.getElementById("logoutBtn").onclick = async () => {
+    await fetch("http://localhost:5000/logout", { 
+      method: "POST", 
+      credentials: "include" 
+    });
+    alert("Logged out!");
+    window.location.href = "login.html";
+  };
+};
 
-  // Show/hide forms
-  function showLoginForm() {
-    registerForm.style.display = "none";
-    loginForm.style.display = "block";
-  }
-
-  function showRegisterForm() {
-    loginForm.style.display = "none";
-    registerForm.style.display = "block";
-  }
-
-  // Registration
-  function registerUser() {
-    const name = document.getElementById("regName").value;
-    const email = document.getElementById("regEmail").value;
-    const password = document.getElementById("regPassword").value;
-    const confirmPassword = document.getElementById("regConfirmPassword").value;
-
-    if(!name || !email || !password || !confirmPassword){
-      alert("Please fill in all fields!");
-      return;
-    }
-    if(password !== confirmPassword){
-      alert("Passwords do not match!");
-      return;
-    }
-
-    alert(`Registration successful!\nName: ${name}\nEmail: ${email}`);
-    clearRegisterForm();
-    modal.style.display = "none";
-  }
-
-  function clearRegisterForm() {
-    document.getElementById("regName").value = '';
-    document.getElementById("regEmail").value = '';
-    document.getElementById("regPassword").value = '';
-    document.getElementById("regConfirmPassword").value = '';
-  }
-
-  // Login
-  function loginUser() {
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
-
-    if(!email || !password){
-      alert("Please fill in all fields!");
-      return;
-    }
-
-    alert(`Login successful!\nEmail: ${email}`);
-    clearLoginForm();
-    modal.style.display = "none";
-  }
-
-  function clearLoginForm() {
-    document.getElementById("loginEmail").value = '';
-    document.getElementById("loginPassword").value = '';
-  }
 </script>
+

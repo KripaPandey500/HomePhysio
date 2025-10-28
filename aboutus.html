@@ -141,6 +141,79 @@
     .journey-section button:hover {
       background: #005fa3;
     }
+
+    /* Dark Mode Overrides */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .about-page {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .about-container {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .about-container h1,
+body.dark-mode .about-container h2 {
+  color: #4da6ff; /* a lighter accent for headings */
+}
+
+body.dark-mode .about-container p,
+body.dark-mode .about-container ul li {
+  color: #ccc;
+}
+
+body.dark-mode .about-container ul li i {
+  color: #4da6ff;
+}
+
+body.dark-mode .image-grid img {
+  filter: brightness(0.8);
+}
+
+body.dark-mode .doctor-section {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .doctor-info h3 {
+  color: #4da6ff;
+}
+
+body.dark-mode .about-cta {
+  background-color: #4da6ff;
+  color: #fff;
+}
+
+body.dark-mode .journey-section button {
+  background-color: #4da6ff;
+  color: #fff;
+}
+
+body.dark-mode .journey-section button:hover {
+  background-color: #337acc;
+}
+
+body.dark-mode footer {
+  background-color: #1e1e1e;
+  color: #ccc;
+}
+
+body.dark-mode footer a {
+  color: #ccc;
+}
+
+body.dark-mode footer a:hover {
+  color: #fff;
+}
+
   </style>
 </head>
 <body>
@@ -149,14 +222,18 @@
     <a href="index.html" class="logo">
       <img src="assets/images/logo.png" alt="HomePhysio Logo" />
     </a>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="exercises.html">Exercises</a>
-      <a href="routines.html">My Routines</a>
-      <a href="progress.html">My Progress</a>
-      <a href="aboutus.html">About Us</a>
-      <a href="register.html"><i class="fas fa-user-circle"></i></a>
-    </nav>
+<nav class="nav-links">
+  <a href="index.html">Home</a>
+  <a href="exercises.html">Exercises</a>
+  <a href="routines.html">My Routines</a>
+  <a href="progress.html">My Progress</a>
+  <a href="aboutus.html">About Us</a>
+  <a href="register.html"><i class="fas fa-user-circle"></i></a>
+  <button id="theme-toggle" class="theme-toggle">
+    <i id="theme-icon" class="fas fa-moon"></i>
+  </button>
+  
+</nav>
   </header>
 
   <!-- About Section -->
@@ -173,9 +250,9 @@
 
       <!-- Image Grid -->
       <div class="image-grid">
-        <img src="https://cdn.pixabay.com/photo/2017/03/22/17/09/fitness-2166083_1280.jpg" alt="Home Workout" />
-        <img src="https://cdn.pixabay.com/photo/2016/03/27/19/36/yoga-1284656_1280.jpg" alt="Yoga Stretch" />
-        <img src="https://cdn.pixabay.com/photo/2020/04/13/14/59/rehabilitation-5036513_1280.jpg" alt="Rehabilitation Exercise" />
+        <img src="assets\images\home workout.png" alt="Home Workout" />
+        <img src="assets\images\yoga.png" alt="Yoga Stretch" />
+        <img src="assets\images\rehab.png" alt="Rehabilitation Exercise" />
       </div>
 
       <h2>What We Provide</h2>
@@ -205,7 +282,7 @@
       <div class="doctor-section">
         <h2>Meet Our Physiotherapy Experts</h2>
         <div class="doctor-profile">
-          <img src="https://cdn.pixabay.com/photo/2016/11/29/08/35/doctor-1869421_1280.jpg" alt="Dr. Aditi Sharma" />
+          <img src="assets\images\doctor aditi sharma.jpg" alt="Dr. Aditi Sharma" />
           <div class="doctor-info">
             <h3>Dr. Aditi Sharma (PT)</h3>
             <p><strong>Experience:</strong> 12+ years in Physical Rehabilitation & Sports Therapy</p>
@@ -241,5 +318,30 @@
       <a href="#"><i class="fab fa-instagram"></i></a>
     </div>
   </footer>
+<script>
+  // Get the toggle button and icon
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+
+  // Apply saved theme on load
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+    themeIcon.classList.replace('fa-moon', 'fa-sun');
+  }
+
+  // Toggle theme on click
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+
+    if (document.body.classList.contains('dark-mode')) {
+      themeIcon.classList.replace('fa-moon', 'fa-sun');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      themeIcon.classList.replace('fa-sun', 'fa-moon');
+      localStorage.setItem('theme', 'light');
+    }
+  });
+</script>
+
 </body>
 </html>

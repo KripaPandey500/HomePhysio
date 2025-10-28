@@ -90,6 +90,58 @@
     .activity-item:last-child {
       border-bottom: none;
     }
+
+    /* ====== Dark Mode Styles ====== */
+/* ====== Dark Mode Styles ====== */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+/* Dark mode background for main content */
+body.dark-mode .content {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .stats-container .stat-card {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .activity-section,
+body.dark-mode .recent-activity {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #333;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .calendar-placeholder {
+  background-color: #2c2c2c;
+  color: #bbb;
+}
+
+body.dark-mode footer {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3, 
+body.dark-mode p {
+  color: #e0e0e0;
+}
+
+
   </style>
 </head>
 
@@ -99,14 +151,18 @@
     <a href="index.html" class="logo">
       <img src="assets/images/logo.png" alt="HomePhysio Logo" />
     </a>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="exercises.html">Exercises</a>
-      <a href="routines.html">My Routines</a>
-      <a href="progress.html" class="active">My Progress</a>
-      <a href="aboutus.html">About Us</a>
-      <a href="register.html"><i class="fas fa-user-circle"></i></a>
-    </nav>
+<nav class="nav-links">
+  <a href="index.html">Home</a>
+  <a href="exercises.html">Exercises</a>
+  <a href="routines.html">My Routines</a>
+  <a href="progress.html">My Progress</a>
+  <a href="aboutus.html">About Us</a>
+  <a href="register.html"><i class="fas fa-user-circle"></i></a>
+  <button id="theme-toggle" class="theme-toggle">
+    <i id="theme-icon" class="fas fa-moon"></i>
+  </button>
+  
+</nav>
   </header>
 
   <!-- Main Content -->
@@ -195,6 +251,31 @@
     document.getElementById("minutes7").textContent = routines.length * 10;
     document.getElementById("minutes30").textContent = routines.length * 30;
     document.getElementById("streak").textContent = routines.length > 0 ? 1 : 0;
+
+
+
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+
+// Apply saved theme on load
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark-mode');
+  themeIcon.classList.replace('fa-moon', 'fa-sun');
+}
+
+// Toggle theme on click
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+
+  if (document.body.classList.contains('dark-mode')) {
+    themeIcon.classList.replace('fa-moon', 'fa-sun');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    themeIcon.classList.replace('fa-sun', 'fa-moon');
+    localStorage.setItem('theme', 'light');
+  }
+});
+
   </script>
 </body>
 </html>
