@@ -142,35 +142,63 @@
 
 
 <script>
-window.onload = async () => {
-const res = await fetch("http://localhost:5000/profile", {
-  credentials: "include" // ✅ must include
-});
-
-
-  const data = await res.json();
-
-  if (!res.ok || data.msg === "Not logged in") {
-    alert("Please login first!");
-    window.location.href = "login.html";
-    return;
-  }
-
-  document.body.innerHTML = `
-    <h2>Welcome, ${data.name}!</h2>
-    <p>Your email: ${data.email}</p>
-    <button id="logoutBtn">Logout</button>
-  `;
-
-  document.getElementById("logoutBtn").onclick = async () => {
-    await fetch("http://localhost:5000/logout", { 
-      method: "POST", 
-      credentials: "include" 
+async function checkAuth() {
+  try {
+    const res = await fetch("http://localhost:5000/profile", {
+      credentials: "include",
+      headers: { "Accept": "application/json" }
     });
-    alert("Logged out!");
-    window.location.href = "login.html";
-  };
-};
+    if (!res.ok) throw new Error("Authentication failed");
+    return await res.json();
+  } catch (err) {
+    console.error("Auth check failed:", err);
+    return null;
+  }
+}
 
+window.onload = async () => {
+  try {
+    const userData = await checkAuth();
+    
+    if (!userData) {
+      const userName = localStorage.getItem("userName");
+      const userEmail = localStorage.getItem("userEmail");
+      if (!userName || !userEmail) throw new Error("Not authenticated");
+      window.location.href = "login.html";
+      return;
+    }
+
+    const mainContent = document.createElement('main');
+    mainContent.innerHTML = `
+      <div style="padding: 20px; text-align: center;">
+        <h2>Welcome, ${userData.name}!</h2>
+        <p>Your email: ${userData.email}</p>
+        <button id="logoutBtn" style="padding: 10px 20px; margin-top: 20px; background: #00aaff; color: white; border: none; border-radius: 5px; cursor: pointer;">Logout</button>
+      </div>
+    `;
+    document.querySelector('header').insertAdjacentElement('afterend', mainContent);
+
+    // ✅ Fixed logout button functionality
+    document.getElementById("logoutBtn").onclick = async () => {
+      try {
+        await fetch("http://localhost:5000/logout", {
+          method: "POST",
+          credentials: "include"
+        });
+        localStorage.removeItem("userName");
+        localStorage.removeItem("userEmail");
+        alert("Logged out successfully!");
+        window.location.href = "login.html";
+      } catch (err) {
+        console.error("Logout failed:", err);
+      }
+    };
+
+  } catch (err) {
+    console.error("Error loading profile:", err);
+    window.location.href = "login.html";
+  }
+};
 </script>
 
+  

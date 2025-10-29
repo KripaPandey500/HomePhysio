@@ -24,16 +24,27 @@
     width:300px; 
   }
 
-  .close-btn {
+  .close-btn, .back-btn {
     position: absolute;
     top: 10px;
-    right: 15px;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333;
     cursor: pointer;
+    color: #333;
   }
+
+  .close-btn { right: 15px; }
   .close-btn:hover { color: #00aaff; }
+
+  .back-btn { left: 15px; }
+  .back-btn:hover { color: #00aaff; }
+
+  h2 {
+    text-align: center;
+    color: #00aaff;  
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
 
   input { 
     width:100%; 
@@ -41,7 +52,7 @@
     margin:10px 0; 
     border-radius:6px; 
     border:1px solid #ccc; 
-    height:40px;           /* ensure consistent height */
+    height:40px;           
     box-sizing: border-box;
   }
 
@@ -56,6 +67,12 @@
     cursor:pointer; 
   }
 
+  .clear-btn { 
+    background:#e44848; 
+    color:#333; 
+    margin-top:5px;
+  }
+
   /* Password wrapper */
   .password-wrapper {
     position: relative;
@@ -64,8 +81,8 @@
 
   .password-wrapper input {
     width: 100%;
-    padding-right: 35px; /* space for eye icon */
-    height: 40px;        /* same as email input */
+    padding-right: 35px; 
+    height: 40px;        
     border-radius: 6px;
     border: 1px solid #ccc;
     box-sizing: border-box;
@@ -73,7 +90,7 @@
 
   .password-wrapper .toggle-password {
     position: absolute;
-    right: 10px;             /* inside the input box */
+    right: 10px;             
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -87,6 +104,7 @@
 
 <div class="form-container">
   <span class="close-btn" onclick="window.location.href='index.html'">&times;</span>
+  <span class="back-btn" onclick="window.location.href='register.html'">&#8592;</span>
   <h2>Login</h2>
   <form id="loginForm">
     <input type="email" id="email" placeholder="Email" required>
@@ -97,6 +115,7 @@
     </div>
 
     <button type="submit">Login</button>
+    <button type="button" class="clear-btn" onclick="clearFields()">Clear</button>
   </form>
   <p>Don't have an account? <a href="register.html">Register</a></p>
 </div>
@@ -136,16 +155,24 @@
       const data = await res.json();
       alert(data.msg);
 
-      if (data.msg === "Login successful!") {
+      if (res.ok && data.msg === "Login successful!"){
         localStorage.setItem("userName", data.user.name);
         localStorage.setItem("userEmail", data.user.email);
         window.location.href = "profile.html";
+      } else {
+        alert("Login has failed. Please check your details.");
       }
     } catch (err) {
       console.error(err);
-      alert("Login has failed. Please check your details.");
+      alert("An error occurred during login. Please try again.");
     }
   });
+
+  // Clear input fields
+  function clearFields(){
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+  }
 </script>
 
 </body>

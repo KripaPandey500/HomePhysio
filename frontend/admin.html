@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - HomePhysio</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif;}
+    body {
+        display: flex;
+        min-height: 100vh;
+        background-color: #f6f8fb;
+        color: #333;
+        transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+        background-color: #1e1e2f;
+        color: #eee;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 250px;
+        background-color: #007bff;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        transition: width 0.3s;
+    }
+    .sidebar-header {
+        display: flex; align-items: center; justify-content: center;
+        padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.2);
+        flex-direction: column;
+    }
+    .sidebar-header img {
+        width: 60px; height: 60px; border-radius: 50%; margin-bottom: 10px;
+        border: 2px solid white;
+    }
+    .sidebar-header h3 { font-size: 16px; text-align: center; }
+    .sidebar ul { list-style: none; padding: 10px 0; flex-grow: 1; }
+    .sidebar ul li {
+        padding: 15px 25px; cursor: pointer; transition: 0.2s; display: flex; align-items: center;
+    }
+    .sidebar ul li:hover, .sidebar ul li.active {
+        background-color: rgba(255,255,255,0.2);
+    }
+    .sidebar ul li i { margin-right: 10px; }
+
+    /* Main content */
+    .main { flex: 1; padding: 20px; transition: all 0.3s; }
+    .header {
+        display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+    }
+    .header .right {
+        display: flex; align-items: center; gap: 15px;
+    }
+    .header img {
+        width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+    }
+
+    /* Dashboard cards */
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    .card {
+        background: white; padding: 20px; border-radius: 15px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        text-align: center; transition: 0.3s;
+    }
+    .card:hover { transform: translateY(-3px); }
+    .card h3 { color: #007bff; }
+    body.dark .card { background: #2b2b3c; color: white; }
+
+    /* Tables */
+    table {
+        width: 100%; border-collapse: collapse; margin-top: 10px;
+        background-color: white; border-radius: 8px; overflow: hidden;
+    }
+    th, td {
+        padding: 12px 15px; border-bottom: 1px solid #ddd; text-align: left;
+    }
+    th { background-color: #007bff; color: white; }
+    tr:hover { background-color: #f1f5f9; }
+    body.dark table { background: #2b2b3c; color: white; }
+
+    /* Buttons */
+    .btn {
+        padding: 8px 15px; background-color: #007bff; color: white;
+        border: none; border-radius: 5px; cursor: pointer; margin-right: 5px; transition: 0.2s;
+    }
+    .btn:hover { background-color: #0056b3; }
+
+    /* Modals */
+    .modal {
+        display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+        width: 100%; height: 100%; overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+        background-color: white; margin: 8% auto; padding: 20px; border-radius: 10px;
+        width: 400px; position: relative;
+    }
+    .modal-content input {
+        width: 100%; padding: 8px; margin: 8px 0;
+        border: 1px solid #ccc; border-radius: 5px;
+    }
+    .close { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; }
+
+    /* Toast */
+    .toast {
+        visibility: hidden; min-width: 200px;
+        background: #007bff; color: #fff; text-align: center;
+        border-radius: 5px; padding: 10px;
+        position: fixed; bottom: 30px; right: 30px; z-index: 2000;
+    }
+    .toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+    @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+    @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+    /* Dark mode toggle */
+    .theme-toggle { cursor: pointer; font-size: 20px; }
+
+    /* Hidden sections */
+    .section { display: none; }
+    .active-section { display: block; }
+
+    /* Profile Page */
+    .profile-container {
+        max-width: 400px; margin: auto; background: white;
+        padding: 20px; border-radius: 10px; text-align: center;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    .profile-container img {
+        width: 100px; height: 100px; border-radius: 50%; margin-bottom: 15px;
+    }
+    .profile-container input, textarea {
+        width: 100%; margin: 8px 0; padding: 8px; border: 1px solid #ccc; border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <img id="sidebarPic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Admin">
+        <h3 id="sidebarGreeting">Hello, Admin 👋</h3>
+    </div>
+    <ul>
+        <li class="active" onclick="showSection('dashboard', this)"><i class="fas fa-chart-line"></i> Dashboard</li>
+        <li onclick="showSection('users', this)"><i class="fas fa-users"></i> Users</li>
+        <li onclick="showSection('exercises', this)"><i class="fas fa-dumbbell"></i> Exercises</li>
+        <li onclick="showSection('routines', this)"><i class="fas fa-calendar-check"></i> Routines</li>
+        <li onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</li>
+    </ul>
+</div>
+
+<!-- Main -->
+<div class="main">
+    <div class="header">
+        <h1 id="section-title">Dashboard</h1>
+        <div class="right">
+            <i class="fas fa-sun theme-toggle" id="themeToggle" onclick="toggleTheme()"></i>
+            <img id="headerPic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile" onclick="showSection('profile')">
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="section active-section">
+        <div class="cards">
+            <div class="card"><h3>Users</h3><p id="userCount">0</p></div>
+            <div class="card"><h3>Exercises</h3><p id="exerciseCount">0</p></div>
+            <div class="card"><h3>Routines</h3><p id="routineCount">0</p></div>
+        </div>
+    </div>
+
+    <!-- Users -->
+    <div id="users" class="section">
+        <button class="btn" onclick="openModal('userModal')">Add User</button>
+        <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Action</th></tr></thead>
+            <tbody id="users-table"></tbody>
+        </table>
+    </div>
+
+    <!-- Exercises -->
+    <div id="exercises" class="section">
+        <button class="btn" onclick="openModal('exerciseModal')">Add Exercise</button>
+        <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Action</th></tr></thead>
+            <tbody id="exercises-table"></tbody>
+        </table>
+    </div>
+
+    <!-- Routines -->
+    <div id="routines" class="section">
+        <button class="btn" onclick="openModal('routineModal')">Add Routine</button>
+        <table>
+            <thead><tr><th>ID</th><th>User</th><th>Exercises</th><th>Action</th></tr></thead>
+            <tbody id="routines-table"></tbody>
+        </table>
+    </div>
+
+    <!-- Profile -->
+    <div id="profile" class="section">
+        <div class="profile-container">
+            <img id="adminPic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+            <input type="file" accept="image/*" onchange="updateProfilePic(event)">
+            <input type="text" id="adminName" placeholder="Admin Name" value="Admin">
+            <input type="email" id="adminEmail" placeholder="Email" value="admin@homephysio.com">
+            <textarea id="adminDesc" placeholder="Description">Managing the physiotherapy app system efficiently.</textarea>
+            <button class="btn" onclick="saveProfile()">Save Changes</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+<div id="userModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('userModal')">&times;</span>
+    <h3>Add User</h3>
+    <input id="userName" placeholder="Name">
+    <input id="userEmail" placeholder="Email">
+    <button class="btn" onclick="addUser()">Add</button>
+  </div>
+</div>
+
+<div id="exerciseModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('exerciseModal')">&times;</span>
+    <h3>Add Exercise</h3>
+    <input id="exerciseName" placeholder="Exercise Name">
+    <input id="exerciseCategory" placeholder="Category">
+    <button class="btn" onclick="addExercise()">Add</button>
+  </div>
+</div>
+
+<div id="routineModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('routineModal')">&times;</span>
+    <h3>Add Routine</h3>
+    <input id="routineUser" placeholder="User Name">
+    <input id="routineExercises" placeholder="Exercises (comma separated)">
+    <button class="btn" onclick="addRoutine()">Add</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+let users = [], exercises = [], routines = [];
+let ids = {user:1, exercise:1, routine:1};
+
+// Theme toggle
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  const icon = document.getElementById('themeToggle');
+  icon.classList.toggle('fa-moon');
+  icon.classList.toggle('fa-sun');
+}
+
+// Toast
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.innerText = msg;
+  toast.className = "toast show";
+  setTimeout(()=> toast.className = "toast", 3000);
+}
+
+// Show section
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
+  document.getElementById(id).classList.add('active-section');
+  document.getElementById('section-title').innerText = id.charAt(0).toUpperCase()+id.slice(1);
+  if(el){
+    document.querySelectorAll('.sidebar ul li').forEach(li => li.classList.remove('active'));
+    el.classList.add('active');
+  }
+}
+
+// Logout
+function logout() {
+  showToast("Logged out successfully!");
+  setTimeout(()=>window.location.href="index.html",1500);
+}
+
+// Modal controls
+function openModal(id){ document.getElementById(id).style.display='block'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+
+// Add/Edit/Delete functions
+function addUser() {
+  const name=document.getElementById('userName').value, email=document.getElementById('userEmail').value;
+  if(!name||!email) return alert("Fill all fields");
+  const table=document.getElementById('users-table');
+  const row=table.insertRow();
+  row.innerHTML=`<td>${ids.user++}</td><td>${name}</td><td>${email}</td>
+  <td><button class='btn' onclick='editRow(this,"user")'>Edit</button><button class='btn' onclick='deleteRow(this,"user")'>Delete</button></td>`;
+  users.push({name,email});
+  document.getElementById('userName').value=document.getElementById('userEmail').value='';
+  closeModal('userModal');
+  updateCounts(); showToast("User added");
+}
+
+function addExercise() {
+  const name=document.getElementById('exerciseName').value, cat=document.getElementById('exerciseCategory').value;
+  if(!name||!cat) return alert("Fill all fields");
+  const table=document.getElementById('exercises-table');
+  const row=table.insertRow();
+  row.innerHTML=`<td>${ids.exercise++}</td><td>${name}</td><td>${cat}</td>
+  <td><button class='btn' onclick='editRow(this,"exercise")'>Edit</button><button class='btn' onclick='deleteRow(this,"exercise")'>Delete</button></td>`;
+  exercises.push({name,cat});
+  document.getElementById('exerciseName').value=document.getElementById('exerciseCategory').value='';
+  closeModal('exerciseModal');
+  updateCounts(); showToast("Exercise added");
+}
+
+function addRoutine() {
+  const user=document.getElementById('routineUser').value, ex=document.getElementById('routineExercises').value;
+  if(!user||!ex) return alert("Fill all fields");
+  const table=document.getElementById('routines-table');
+  const row=table.insertRow();
+  row.innerHTML=`<td>${ids.routine++}</td><td>${user}</td><td>${ex}</td>
+  <td><button class='btn' onclick='editRow(this,"routine")'>Edit</button><button class='btn' onclick='deleteRow(this,"routine")'>Delete</button></td>`;
+  routines.push({user,ex});
+  document.getElementById('routineUser').value=document.getElementById('routineExercises').value='';
+  closeModal('routineModal');
+  updateCounts(); showToast("Routine added");
+}
+
+function editRow(btn,type){
+  const row=btn.parentNode.parentNode;
+  for(let i=1;i<row.cells.length-1;i++){
+    const newVal=prompt("Edit value:",row.cells[i].innerText);
+    if(newVal) row.cells[i].innerText=newVal;
+  }
+  showToast("Edited successfully!");
+}
+
+function deleteRow(btn,type){
+  if(confirm("Are you sure?")){
+    btn.parentNode.parentNode.remove();
+    if(type==="user") users.pop();
+    if(type==="exercise") exercises.pop();
+    if(type==="routine") routines.pop();
+    updateCounts(); showToast("Deleted");
+  }
+}
+
+// Update counts
+function updateCounts(){
+  document.getElementById('userCount').innerText=document.getElementById('users-table').rows.length;
+  document.getElementById('exerciseCount').innerText=document.getElementById('exercises-table').rows.length;
+  document.getElementById('routineCount').innerText=document.getElementById('routines-table').rows.length;
+}
+
+// Profile update
+function updateProfilePic(e){
+  const file=e.target.files[0];
+  if(file){
+    const reader=new FileReader();
+    reader.onload=()=>{
+        document.getElementById('adminPic').src=reader.result;
+        document.getElementById('headerPic').src=reader.result;
+        document.getElementById('sidebarPic').src=reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+function saveProfile(){
+  const name=document.getElementById('adminName').value;
+  const email=document.getElementById('adminEmail').value;
+  const desc=document.getElementById('adminDesc').value;
+
+  document.getElementById('sidebarGreeting').innerText=`Hello, ${name} 👋`;
+  showToast("Profile updated!");
+}
+</script>
+</body>
+</html>
