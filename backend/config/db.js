@@ -32,4 +32,5 @@ request.onsuccess = (e) => {
     console.log("IndexedDB ready");
 };
 
+
 request.onerror = (e) => console.log("DB error:", e.target.errorCode);

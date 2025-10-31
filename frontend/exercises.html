@@ -1,552 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HomePhysio</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HomePhysio - Exercises</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* Welcome Section */
+    .welcome-section { text-align: center; padding: 100px 20px 40px; background: #f4f6f8; }
+    .welcome-section h1 { margin-bottom: 10px; font-size: 2.5em; }
+    .welcome-section p { font-size: 1.1em; color: #555; }
 
-<body>
-</body>
+    /* Body Filters */
+    .body-filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+    .body-filters button { padding: 10px 20px; border: none; background-color: #0077cc; color: white; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+    .body-filters button.active, .body-filters button:hover { background-color: #005fa3; }
 
-</html>
-<style>
-  .welcome-section {
-    text-align: center;
-    padding: 110px;
-  }
+    /* Exercise Grid */
+    .exercise-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 0 20px 40px; }
 
-  .welcome-section h1 {
-    margin-bottom: 10px;
-  }
-
-  .body-filters {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  .body-filters button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #0077cc;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
-  }
-
-  .body-filters button.active {
-    background-color: #005fa3;
-  }
-
-  .exercise-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 0 20px 40px;
-  }
-
-  .exercise-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 350px;
-    text-align: center;
-    padding: 15px;
-  }
-
-  .exercise-card img {
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-
-  .exercise-card h3 {
-    margin: 10px 0 5px;
-  }
-
-  .exercise-card p {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 10px;
-  }
-
-  .exercise-card button {
-    padding: 5px 10px;
-    border: none;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-  .save-btn {
-    background-color: #00cc66;
-    color: #fff;
-  }
-
-  .view-btn {
-    background-color: #ffaa00;
-    color: #fff;
-  }
-
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-
-  .modal-content {
-    background-color: #fff;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 600px;
-    padding: 25px 30px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-    text-align: left;
-    overflow-y: auto;
-    max-height: 90vh;
-  }
-
-  .modal-content img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin: 15px 0;
-    object-fit: contain;
-  }
-
-  .modal-content h2 {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-
-  .modal-content ul {
-    list-style: none;
-    padding-left: 0;
-  }
-
-  .modal-content li {
-    margin-bottom: 8px;
-    font-size: 15px;
-    line-height: 1.5;
-  }
-
-  .modal-content li strong {
-    color: #0077cc;
-  }
-
-  .modal-content ol {
-    margin-left: 20px;
-  }
-
-  .close {
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #333;
-  }
-
-  .close:hover {
-    color: #0077cc;
-  }
-
-  .close {
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  body.dark-mode {
-    background-color: #121212;
-    color: #f0f0f0;
-  }
-
-  body.dark-mode header,
-  body.dark-mode footer {
-    background-color: #1e1e1e;
-  }
-
-  body.dark-mode .nav-links a {
-    color: #ffffff;
-  }
-
-  body.dark-mode .service-card,
-  body.dark-mode .exercise-card {
-    background-color: #1e1e1e;
-    color: #ffffff;
-    border: 1px solid #333;
-  }
-
-  /* 🌙 Dark mode modal fix */
-  body.dark-mode .modal-content {
-    background-color: #1e1e1e;
-    color: #f0f0f0;
-    border: 1px solid #333;
-    box-shadow: 0 6px 18px rgba(255, 255, 255, 0.1);
-  }
-
-  body.dark-mode .modal-content h2 {
-    color: #ffffff;
-  }
-
-  body.dark-mode .modal-content li strong {
-    color: #4da3ff;
-  }
-
-  body.dark-mode .close {
-    color: #f0f0f0;
-  }
-
-  body.dark-mode .close:hover {
-    color: #4da3ff;
-  }
-</style>
-
-
-
-<!-- Header / Navbar -->
-<header>
-  <a href="index.html" class="logo">
-    <img src="assets/images/Logo.png" alt="HomePhysio Logo">
-  </a>
-
-  <nav class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="exercises.html">Exercises</a>
-    <a href="routines.html">My Routines</a>
-    <a href="progress.html">My Progress</a>
-    <a href="aboutus.html">About Us</a>
-    <a href="register.html"><i class="fas fa-user-circle"></i></a>
-    <button id="theme-toggle" class="theme-toggle">
-      <i id="theme-icon" class="fas fa-moon"></i>
-    </button>
-
-  </nav>
-</header>
-
-<!-- Welcome -->
-<section class="welcome-section">
-  <h1>Welcome to the Exercises Library</h1>
-  <p>Explore exercises for every part of your body. Click on a body part to filter exercises, or see all exercises
-    below.</p>
-</section>
-
-<!-- Body filters -->
-<div class="body-filters">
-  <button class="filter-btn active" data-body="all">All</button>
-  <button class="filter-btn" data-body="neck">Neck</button>
-  <button class="filter-btn" data-body="shoulder">Shoulder</button>
-  <button class="filter-btn" data-body="back">Back</button>
-  <button class="filter-btn" data-body="hands">Hands</button>
-  <button class="filter-btn" data-body="knee">Knee</button>
-  <button class="filter-btn" data-body="leg">Leg</button>
-  <button class="filter-btn" data-body="ankle">Ankle</button>
-</div>
-
-
-<!-- Exercise Grid -->
-<section class="exercise-grid" id="exerciseGrid">
-  <!-- Exercises injected by JS -->
-</section>
-
-<!-- Modal for instructions -->
-<div id="instructionModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2 id="modalTitle">Exercise Instructions</h2>
-    <img id="modalImage" src="" alt="">
-    <p id="modalDesc"></p>
-    <ul id="modalDetails"></ul>
-  </div>
-</div>
-
-
-<script>
-  const exercises = [
-    {
-      id: 1, name: "Neck Stretch", body: "neck", img: "assets/images/neck stretch.png",
-      desc: "Loosen neck muscles", sets: 3, reps: 10, duration: "30 sec",
-      howToDo: [
-        "Sit or stand up straight.",
-        "Gently tilt your head to the right and hold for 15 sec.",
-        "Return to center and tilt to the left for 15 sec.",
-        "Repeat for 3 sets."
-      ]
-    },
-    {
-      id: 2, name: "Shoulder Stretch", body: "shoulder", img: "assets/images/Shoulder stretch.png",
-      desc: "Improve shoulder mobility", sets: 3, reps: 12, duration: "40 sec",
-      howToDo: [
-        "Stand straight and bring your right arm across your chest.",
-        "Hold with your left hand for 20 sec.",
-        "Switch arms and repeat.",
-        "Do 3 sets."
-      ]
-    },
-    {
-      id: 3, name: "Back Extension", body: "back", img: "assets/images/back extension.png",
-      desc: "Strengthen lower back", sets: 3, reps: 15, duration: "45 sec",
-      howToDo: [
-        "Lie face down on a mat.",
-        "Place your hands behind your head.",
-        "Lift your chest off the floor slowly.",
-        "Lower back down and repeat."
-      ]
-    },
-    {
-      id: 4, name: "Hand Grip", body: "hands", img: "assets/images/hand grip.png",
-      desc: "Improve hand strength", sets: 2, reps: 20, duration: "30 sec",
-      howToDo: [
-        "Hold a stress ball or grip trainer.",
-        "Squeeze tightly for 2-3 sec.",
-        "Release slowly.",
-        "Repeat 20 times for 2 sets."
-      ]
-    },
-    {
-      id: 5, name: "Knee Flexion", body: "knee", img: "assets/images/knee flexion.png",
-      desc: "Strengthen knees", sets: 3, reps: 15, duration: "40 sec",
-      howToDo: [
-        "Sit on a chair with feet flat on the floor.",
-        "Slowly lift one leg and bend your knee.",
-        "Hold for 2 sec and lower slowly.",
-        "Repeat 15 times for each leg."
-      ]
-    },
-    {
-      id: 6, name: "Leg Raise", body: "leg", img: "assets/images/leg raise.png",
-      desc: "Improve leg strength", sets: 3, reps: 12, duration: "50 sec",
-      howToDo: [
-        "Lie on your back with legs straight.",
-        "Lift one leg slowly up to 45 degrees.",
-        "Lower it back without touching the floor.",
-        "Repeat 12 times per leg for 3 sets."
-      ]
-    },
-    {
-      id: 7, name: "Ankle Rotation", body: "ankle", img: "assets/images/ankle rotation.png",
-      desc: "Increase ankle mobility", sets: 2, reps: 15, duration: "30 sec",
-      howToDo: [
-        "Sit or lie down with legs extended.",
-        "Rotate your right ankle clockwise 15 times.",
-        "Then rotate counterclockwise 15 times.",
-        "Switch ankle and repeat."
-      ]
-    },
-    {
-      id: 8, name: "Neck Tilt", body: "neck", img: "assets/images/neck tilt.png",
-      desc: "Stretch neck sides", sets: 3, reps: 10, duration: "30 sec",
-      howToDo: [
-        "Sit straight.",
-        "Tilt your head slowly to the right shoulder.",
-        "Hold for 10 sec, return to center.",
-        "Tilt to left shoulder, repeat 3 sets."
-      ]
-    },
-    {
-      id: 9, name: "Shoulder Press", body: "shoulder", img: "assets/images/shoulder press.png",
-      desc: "Strengthen shoulders", sets: 3, reps: 12, duration: "45 sec",
-      howToDo: [
-        "Stand or sit holding dumbbells at shoulder height.",
-        "Press upward until arms are straight.",
-        "Lower slowly back to shoulders.",
-        "Repeat 12 times for 3 sets."
-      ]
-    },
-    {
-      id: 10, name: "Back Twist", body: "back", img: "assets/images/back twist.png",
-      desc: "Stretch back muscles", sets: 2, reps: 10, duration: "30 sec",
-      howToDo: [
-        "Sit on the floor with legs extended.",
-        "Bend right knee and place foot outside left thigh.",
-        "Twist torso to the right, hold 10 sec.",
-        "Switch sides, repeat 2 sets."
-      ]
-    },
-    {
-      id: 11, name: "Wrist Circles", body: "hands", img: "assets/images/wrist circle.png",
-      desc: "Improve wrist mobility", sets: 2, reps: 20, duration: "25 sec",
-      howToDo: [
-        "Extend arms in front of you.",
-        "Rotate wrists clockwise 10 times, then counterclockwise 10 times.",
-        "Do 2 sets."
-      ]
-    },
-    {
-      id: 12, name: "Squat", body: "knee", img: "assets/images/squat.png",
-      desc: "Strengthen legs and knees", sets: 3, reps: 15, duration: "50 sec",
-      howToDo: [
-        "Stand with feet shoulder-width apart.",
-        "Lower your body as if sitting on a chair.",
-        "Keep back straight and knees behind toes.",
-        "Return to standing. Repeat 15 times for 3 sets."
-      ]
-    },
-    {
-      id: 13, name: "Calf Raise", body: "leg", img: "assets/images/calf raise.png",
-      desc: "Strengthen calves", sets: 3, reps: 20, duration: "40 sec",
-      howToDo: [
-        "Stand straight, feet shoulder-width apart.",
-        "Raise heels off the ground, hold 2 sec.",
-        "Lower slowly. Repeat 20 times for 3 sets."
-      ]
-    },
-    {
-      id: 14, name: "Ankle Flexion", body: "ankle", img: "assets/images/ankle flexion.png",
-      desc: "Improve ankle strength", sets: 3, reps: 15, duration: "35 sec",
-      howToDo: [
-        "Sit with legs extended.",
-        "Point toes away from body, then pull back toward body.",
-        "Repeat 15 times per ankle for 3 sets."
-      ]
+    /* Exercise Card */
+    .exercise-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: transform 0.2s;
     }
-  ];
+    .exercise-card:hover { transform: translateY(-5px); }
+    .exercise-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; }
+    .exercise-card h3 { margin: 8px 0 5px; font-size: 1.2em; color: #333; }
+    .exercise-card p { font-size: 14px; color: #555; margin: 2px 0; }
+    .exercise-card .category { font-weight: bold; color: #0077cc; }
+    .exercise-card button { padding: 7px 12px; border: none; margin: 5px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    .save-btn { background-color: #00cc66; color: #fff; }
+    .view-btn { background-color: #ffaa00; color: #fff; }
+    .save-btn:hover { background-color: #00994d; }
+    .view-btn:hover { background-color: #cc8800; }
 
-  const exerciseGrid = document.getElementById('exerciseGrid');
+    /* Modal */
+    .modal { display: none; position: fixed; z-index: 1000; inset: 0; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; padding: 20px; }
+    .modal-content { background-color: #fff; border-radius: 12px; width: 90%; max-width: 600px; padding: 25px 30px; box-shadow: 0 6px 18px rgba(0,0,0,0.25); text-align: left; overflow-y: auto; max-height: 90vh; }
+    .modal-content img { width: 100%; height: auto; border-radius: 10px; margin: 15px 0; object-fit: contain; }
+    .close { float: right; font-size: 28px; font-weight: bold; cursor: pointer; color: #333; }
+    .close:hover { color: #0077cc; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <a href="index.html" class="logo"><img src="assets/images/Logo.png" alt="HomePhysio Logo" /></a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="exercises.html">Exercises</a>
+      <a href="routines.html">My Routines</a>
+      <a href="progress.html">My Progress</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="register.html"><i class="fas fa-user-circle"></i></a>
+      <button id="theme-toggle" class="theme-toggle">
+        <i id="theme-icon" class="fas fa-moon"></i>
+      </button>
+    </nav>
+  </header>
 
-  function displayExercises(filter = "all") {
-    exerciseGrid.innerHTML = '';
-    const filtered = filter === "all" ? exercises : exercises.filter(e => e.body === filter);
-    filtered.forEach(ex => {
-      const card = document.createElement('div');
-      card.classList.add('exercise-card');
-      card.innerHTML = `
-          <img src="${ex.img}" alt="${ex.name}">
+  <!-- Welcome -->
+  <section class="welcome-section">
+    <h1>Welcome to the Exercises Library</h1>
+    <p>Explore exercises for every part of your body. Click on a body part to filter exercises, or see all exercises below.</p>
+  </section>
+
+  <!-- Body filters -->
+  <div class="body-filters">
+    <button class="filter-btn active" data-body="all">All</button>
+    <button class="filter-btn" data-body="neck">Neck</button>
+    <button class="filter-btn" data-body="shoulder">Shoulder</button>
+    <button class="filter-btn" data-body="back">Back</button>
+    <button class="filter-btn" data-body="hands">Hands</button>
+    <button class="filter-btn" data-body="knee">Knee</button>
+    <button class="filter-btn" data-body="leg">Leg</button>
+    <button class="filter-btn" data-body="ankle">Ankle</button>
+  </div>
+
+  <!-- Exercise Grid -->
+  <section class="exercise-grid" id="exerciseGrid"></section>
+
+  <!-- Modal -->
+  <div id="instructionModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modalTitle">Exercise Instructions</h2>
+      <img id="modalImage" src="" alt="" />
+      <p id="modalDesc"></p>
+      <ul id="modalDetails"></ul>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    const exerciseGrid = document.getElementById("exerciseGrid");
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    const modal = document.getElementById("instructionModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalImage = document.getElementById("modalImage");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalDetails = document.getElementById("modalDetails");
+    const closeModal = document.querySelector(".close");
+
+    // Mapping admin categories to match filter buttons
+    const categoryMap = {
+      hand: "hands",
+      hands: "hands",
+      leg: "leg",
+      legs: "leg",
+      shoulder: "shoulder",
+      back: "back",
+      neck: "neck",
+      knee: "knee",
+      ankle: "ankle"
+    };
+
+    // Fetch exercises (backend + local admin)
+    async function fetchExercises() {
+      let backendExercises = [];
+      try {
+        const res = await fetch("http://localhost:5000/exercises");
+        backendExercises = (await res.json()).map(e => ({
+          ...e,
+          bodyPart: e.bodyPart ? e.bodyPart.trim().toLowerCase() : 'all'
+        }));
+      } catch (err) {
+        console.warn("Backend fetch failed, showing only admin exercises.");
+      }
+
+      let db = JSON.parse(localStorage.getItem("db") || '{"exercises":[]}');
+      const adminExercises = db.exercises.map((e, index) => ({
+        _id: `local-${index}`,
+        name: e.name,
+        description: e.description,
+        bodyPart: categoryMap[e.category?.trim().toLowerCase()] || 'all',
+        image: e.image || "assets/images/default.png",
+        sets: e.sets || "-",
+        reps: e.reps || "-",
+        difficulty: e.difficulty || "-",
+        category: e.category || 'General'
+      }));
+
+      window.allExercises = [...backendExercises, ...adminExercises];
+      displayExercises(window.allExercises);
+    }
+
+    function displayExercises(exercises) {
+      exerciseGrid.innerHTML = "";
+      exercises.forEach(ex => {
+        const card = document.createElement("div");
+        card.classList.add("exercise-card");
+        card.innerHTML = `
+          <img src="${ex.image}" alt="${ex.name}">
           <h3>${ex.name}</h3>
-          <p>${ex.desc}</p>
-          <button class="save-btn" onclick="saveExercise(${ex.id})">Save Exercise</button>
-          <button class="view-btn" onclick="viewInstruction(${ex.id})">View Instruction</button>
+          <button class="save-btn" onclick="saveExercise('${ex._id}')">Save Exercise</button>
+          <button class="view-btn" onclick="viewInstruction('${ex._id}')">View Instruction</button>
         `;
-      exerciseGrid.appendChild(card);
+        exerciseGrid.appendChild(card);
+      });
+    }
+
+    // Filter by body part
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const body = btn.getAttribute("data-body");
+        const filtered = body === "all"
+          ? window.allExercises
+          : window.allExercises.filter(e => e.bodyPart === body);
+        displayExercises(filtered);
+      });
     });
-  }
 
-  displayExercises();
-
-  // Filter buttons
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const body = btn.getAttribute('data-body');
-      displayExercises(body);
-    });
-  });
-
-  // Modal elements
-  const modal = document.getElementById("instructionModal");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalImage = document.getElementById("modalImage");
-  const modalDesc = document.getElementById("modalDesc");
-  const modalDetails = document.getElementById("modalDetails");
-  const closeModal = document.querySelector(".close");
-
-  // Show instruction modal
-  window.viewInstruction = function (id) {
-    const ex = exercises.find(e => e.id === id);
-    modalTitle.innerText = ex.name;
-    modalImage.src = ex.img;
-    modalImage.alt = ex.name;
-    modalDesc.innerText = ex.desc;
-
-    modalDetails.innerHTML = `
+    // Modal
+    window.viewInstruction = id => {
+      const ex = window.allExercises.find(e => e._id === id);
+      if (!ex) return;
+      modalTitle.innerText = ex.name;
+      modalImage.src = ex.image;
+      modalDesc.innerText = ex.description;
+      modalDetails.innerHTML = `
         <li><strong>Sets:</strong> ${ex.sets}</li>
         <li><strong>Reps:</strong> ${ex.reps}</li>
-        <li><strong>Duration:</strong> ${ex.duration}</li>
-        <li><strong>How to do:</strong>
-          <ol id="stepsList"></ol>
-        </li>
+        <li><strong>Difficulty:</strong> ${ex.difficulty}</li>
       `;
+      modal.style.display = "flex";
+    };
 
-    const stepsList = document.getElementById("stepsList");
-    ex.howToDo.forEach(step => {
-      const li = document.createElement("li");
-      li.innerText = step;
-      stepsList.appendChild(li);
-    });
+    closeModal.onclick = () => modal.style.display = "none";
+    window.onclick = e => { if(e.target === modal) modal.style.display = "none"; };
 
-    modal.style.display = "flex";
-  };
+    // Save exercise
+    window.saveExercise = id => {
+      const ex = window.allExercises.find(e => e._id === id);
+      if(!ex) return;
+      let saved = JSON.parse(localStorage.getItem("savedExercises")) || [];
+      if(saved.some(e => e._id === ex._id)) {
+        alert(`${ex.name} is already in your routine!`);
+        return;
+      }
+      saved.push(ex);
+      localStorage.setItem("savedExercises", JSON.stringify(saved));
+      alert(`${ex.name} saved to your routine!`);
+    };
 
-  // Close modal
-  closeModal.onclick = () => modal.style.display = "none";
-  window.onclick = (event) => {
-    if (event.target == modal) modal.style.display = "none";
-  };
-
-  window.saveExercise = function (id) {
-    const ex = exercises.find(e => e.id === id);
-    if (!ex) return;
-
-    // Get existing saved exercises
-    let saved = JSON.parse(localStorage.getItem("savedExercises")) || [];
-
-    // Avoid duplicates
-    if (saved.some(e => e.id === ex.id)) {
-      alert(`${ex.name} is already in your routine!`);
-      return;
-    }
-
-    // Save new one
-    saved.push(ex);
-    localStorage.setItem("savedExercises", JSON.stringify(saved));
-
-    alert(`${ex.name} saved to your routine!`);
-  };
-
-</script>
-
-<!-- Footer -->
-<footer>
-  <p>&copy; 2025 HomePhysio | Follow us on social media</p>
-  <div class="socials">
-    <a href="#"><i class="fab fa-facebook"></i></a>
-    <a href="#"><i class="fab fa-twitter"></i></a>
-    <a href="#"><i class="fab fa-instagram"></i></a>
-  </div>
-</footer>
-
-<script>
-  const themeToggle = document.getElementById('theme-toggle');
-  const themeIcon = document.getElementById('theme-icon');
-
-  // Apply saved theme on load
-  if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-mode');
-    themeIcon.classList.replace('fa-moon', 'fa-sun');
-  }
-
-  // Toggle theme on click
-  themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-
-    if (document.body.classList.contains('dark-mode')) {
-      themeIcon.classList.replace('fa-moon', 'fa-sun');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      themeIcon.classList.replace('fa-sun', 'fa-moon');
-      localStorage.setItem('theme', 'light');
-    }
-  });
-</script>
-
+    fetchExercises();
+  </script>
 </body>
-
 </html>

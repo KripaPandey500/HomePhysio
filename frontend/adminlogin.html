@@ -158,6 +158,31 @@
     document.getElementById("adminEmail").value = "";
     document.getElementById("adminPassword").value = "";
   }
+
+  
+</script>
+
+<script src="js/db.js"></script>
+<script src="js/auth.js"></script>
+
+<script>
+  // Run when form is submitted
+  document.getElementById("adminLoginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("adminEmail").value.trim();
+    const password = document.getElementById("adminPassword").value;
+
+    // Get admin from localStorage (created by db.js)
+    const admin = JSON.parse(localStorage.getItem("admin"));
+
+    if (email === admin.email && password === admin.password) {
+      alert("Welcome Admin!");
+      window.location.href = "admin.html";
+    } else {
+      alert("Invalid admin credentials!");
+    }
+  });
 </script>
 
 </body>

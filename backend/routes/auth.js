@@ -26,3 +26,4 @@ function loginUser(email, password) {
         }
     };
 }
+

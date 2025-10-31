@@ -107,8 +107,8 @@ app.post('/logout', (req, res) => {
   });
 });
 
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
 
+const exerciseRoutes = require('./routes/exercises');
+app.use('/api/exercises', exerciseRoutes);
 
-// ✅ Start Server
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
