@@ -70,34 +70,36 @@ app.post('/register', async (req, res) => {
   }
 });
 
-// ✅ Login Route
-app.post('/login', async (req, res) => {
+// ✅ Admin Login Route
+app.post('/admin/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("🔐 Login attempt:", email);
+    console.log("🛠 Admin login attempt:", email);
 
     if (!email || !password)
       return res.status(400).json({ msg: "Please fill all fields" });
 
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: "Invalid credentials" });
+    // Find admin in database
+    const admin = await Admin.findOne({ email });
+    if (!admin) return res.status(400).json({ msg: "Invalid credentials" });
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    // Compare password (no bcrypt if stored plain)
+    const isMatch = password === admin.password;
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
-    // Save session
-    req.session.userId = user._id;
-    req.session.userEmail = user.email;
+    // Save admin session
+    req.session.adminId = admin._id;
+    req.session.adminEmail = admin.email;
 
     req.session.save(err => {
       if (err) {
         console.error("Session save error:", err);
         return res.status(500).json({ msg: "Session error" });
       }
-      console.log("✅ Session saved:", req.session.id);
+      console.log("✅ Admin session saved:", req.session.id);
       res.json({
-        msg: "Login successful!",
-        user: { name: user.name, email: user.email }
+        msg: "Admin login successful!",
+        admin: { name: admin.name, email: admin.email }
       });
     });
   } catch (err) {
@@ -105,6 +107,7 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 });
+
 
 // ✅ Profile Route (protected)
 app.get('/profile', async (req, res) => {

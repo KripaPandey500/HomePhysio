@@ -8,13 +8,32 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     /* Welcome Section */
-    .welcome-section { text-align: center; padding: 100px 20px 40px; background: #f4f6f8; }
+    .welcome-section { 
+      text-align: center; 
+      padding: 100px 20px 40px; 
+      background: #f4f6f8; 
+    }
     .welcome-section h1 { margin-bottom: 10px; font-size: 2.5em; }
     .welcome-section p { font-size: 1.1em; color: #555; }
 
     /* Body Filters */
-    .body-filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
-    .body-filters button { padding: 10px 20px; border: none; background-color: #0077cc; color: white; cursor: pointer; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+    .body-filters { 
+      display: flex; 
+      justify-content: center; 
+      flex-wrap: wrap; 
+      gap: 10px; 
+      margin-bottom: 30px; 
+    }
+    .body-filters button { 
+      padding: 10px 20px; 
+      border: none; 
+      background-color: #0077cc; 
+      color: white; 
+      cursor: pointer; 
+      border-radius: 5px; 
+      font-weight: bold; 
+      transition: 0.3s; 
+    }
     .body-filters button.active, .body-filters button:hover { background-color: #005fa3; }
 
     /* Exercise Grid */
@@ -30,7 +49,7 @@
       padding: 15px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       transition: transform 0.2s;
     }
     .exercise-card:hover { transform: translateY(-5px); }
@@ -38,18 +57,94 @@
     .exercise-card h3 { margin: 8px 0 5px; font-size: 1.2em; color: #333; }
     .exercise-card p { font-size: 14px; color: #555; margin: 2px 0; }
     .exercise-card .category { font-weight: bold; color: #0077cc; }
-    .exercise-card button { padding: 7px 12px; border: none; margin: 5px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    .exercise-card button { 
+      padding: 8px 15px; 
+      border: none; 
+      margin: 5px 5px 0 5px; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      font-weight: bold; 
+      transition: 0.3s; 
+    }
     .save-btn { background-color: #00cc66; color: #fff; }
     .view-btn { background-color: #ffaa00; color: #fff; }
     .save-btn:hover { background-color: #00994d; }
     .view-btn:hover { background-color: #cc8800; }
 
     /* Modal */
-    .modal { display: none; position: fixed; z-index: 1000; inset: 0; background-color: rgba(0,0,0,0.6); justify-content: center; align-items: center; padding: 20px; }
-    .modal-content { background-color: #fff; border-radius: 12px; width: 90%; max-width: 600px; padding: 25px 30px; box-shadow: 0 6px 18px rgba(0,0,0,0.25); text-align: left; overflow-y: auto; max-height: 90vh; }
+    .modal { 
+      display: none; 
+      position: fixed; 
+      z-index: 1000; 
+      inset: 0; 
+      background-color: rgba(0,0,0,0.6); 
+      justify-content: center; 
+      align-items: center; 
+      padding: 20px; 
+    }
+    .modal-content { 
+      background-color: #fff; 
+      border-radius: 12px; 
+      width: 90%; 
+      max-width: 600px; 
+      padding: 25px 30px; 
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25); 
+      text-align: left; 
+      overflow-y: auto; 
+      max-height: 90vh; 
+    }
     .modal-content img { width: 100%; height: auto; border-radius: 10px; margin: 15px 0; object-fit: contain; }
     .close { float: right; font-size: 28px; font-weight: bold; cursor: pointer; color: #333; }
     .close:hover { color: #0077cc; }
+
+    /* Dark Theme */
+    body.dark-theme {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    body.dark-theme header {
+      background-color: #1a1a1a;
+    }
+    body.dark-theme header a, 
+    body.dark-theme header a i, 
+    body.dark-theme header .nav-links a, 
+    body.dark-theme header button {
+      color: #e0e0e0;
+    }
+    body.dark-theme .welcome-section {
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }
+    body.dark-theme .body-filters button {
+      background-color: #333;
+      color: #fff;
+    }
+    body.dark-theme .body-filters button.active,
+    body.dark-theme .body-filters button:hover {
+      background-color: #555;
+    }
+
+   body.dark-theme .modal-content {
+  background-color: #1e1e1e; /* Dark background */
+  color: #e0e0e0; /* Default text color */
+}
+
+body.dark-theme .modal-content h2 {
+  color: #ffffff; /* Title */
+}
+
+body.dark-theme .modal-content p,
+body.dark-theme .modal-content li {
+  color: #cccccc; /* Paragraphs and list items */
+}
+
+body.dark-theme .close {
+  color: #e0e0e0; /* Close button */
+}
+
+body.dark-theme .close:hover {
+  color: #0077cc; /* Hover color stays */
+}
   </style>
 </head>
 <body>
@@ -89,6 +184,19 @@
 
   <!-- Exercise Grid -->
   <section class="exercise-grid" id="exerciseGrid"></section>
+  <div style="text-align:center; margin:20px;">
+  <button id="createRoutineBtn" style="
+    display:none;
+    background:#0077cc;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+  ">Create Routine from Selected</button>
+</div>
+
 
   <!-- Modal -->
   <div id="instructionModal" class="modal">
@@ -111,111 +219,132 @@
     const modalDesc = document.getElementById("modalDesc");
     const modalDetails = document.getElementById("modalDetails");
     const closeModal = document.querySelector(".close");
+    const isPickingRoutine = localStorage.setItem("pickForRoutine", "false");
 
-    // Mapping admin categories to match filter buttons
-    const categoryMap = {
-      hand: "hands",
-      hands: "hands",
-      leg: "leg",
-      legs: "leg",
-      shoulder: "shoulder",
-      back: "back",
-      neck: "neck",
-      knee: "knee",
-      ankle: "ankle"
-    };
+    const categoryMap = { hand:"hands", hands:"hands", leg:"leg", legs:"leg", shoulder:"shoulder", back:"back", neck:"neck", knee:"knee", ankle:"ankle" };
 
-    // Fetch exercises (backend + local admin)
     async function fetchExercises() {
-      let backendExercises = [];
-      try {
-        const res = await fetch("http://localhost:5000/exercises");
-        backendExercises = (await res.json()).map(e => ({
-          ...e,
-          bodyPart: e.bodyPart ? e.bodyPart.trim().toLowerCase() : 'all'
-        }));
-      } catch (err) {
-        console.warn("Backend fetch failed, showing only admin exercises.");
-      }
-
       let db = JSON.parse(localStorage.getItem("db") || '{"exercises":[]}');
-      const adminExercises = db.exercises.map((e, index) => ({
-        _id: `local-${index}`,
-        name: e.name,
-        description: e.description,
-        bodyPart: categoryMap[e.category?.trim().toLowerCase()] || 'all',
-        image: e.image || "assets/images/default.png",
-        sets: e.sets || "-",
-        reps: e.reps || "-",
-        difficulty: e.difficulty || "-",
-        category: e.category || 'General'
+      const adminExercises = db.exercises.map((e,i)=>({
+        _id:`local-${i}`,
+        name:e.name||'Unnamed Exercise',
+        description:e.description||'No description provided.',
+        bodyPart:categoryMap[e.category?.trim().toLowerCase()]||'all',
+        image:e.image||"assets/images/default.png",
+        sets:e.sets||"-",
+        reps:e.reps||"-",
+        difficulty:e.difficulty||"-",
+        category:e.category||'General'
       }));
-
-      window.allExercises = [...backendExercises, ...adminExercises];
+      window.allExercises=[...adminExercises];
       displayExercises(window.allExercises);
+
+      try{
+        const res=await fetch("http://localhost:5000/exercises");
+        const backendExercises=(await res.json()).map(e=>({
+          _id:e._id||e.id||`backend-${Math.random()}`,
+          name:e.name||'Unnamed Exercise',
+          description:e.description||'No description provided.',
+          bodyPart:e.bodyPart?e.bodyPart.trim().toLowerCase():'all',
+          image:e.image||"assets/images/default.png",
+          sets:e.sets||"-",
+          reps:e.reps||"-",
+          difficulty:e.difficulty||"-",
+          category:e.category||'General'
+        }));
+        window.allExercises=[...backendExercises,...adminExercises];
+        const activeBody=document.querySelector(".filter-btn.active").getAttribute("data-body");
+        const filtered=activeBody==="all"?window.allExercises:window.allExercises.filter(e=>e.bodyPart===activeBody);
+        displayExercises(filtered);
+      }catch(err){console.warn("Backend fetch failed, showing only admin exercises.");}
     }
 
-    function displayExercises(exercises) {
-      exerciseGrid.innerHTML = "";
-      exercises.forEach(ex => {
-        const card = document.createElement("div");
+    function displayExercises(exercises){
+      exerciseGrid.innerHTML="";
+      exercises.forEach(ex=>{
+        const card=document.createElement("div");
         card.classList.add("exercise-card");
-        card.innerHTML = `
+        card.innerHTML=`
           <img src="${ex.image}" alt="${ex.name}">
           <h3>${ex.name}</h3>
-          <button class="save-btn" onclick="saveExercise('${ex._id}')">Save Exercise</button>
+          <button class="save-btn" onclick='saveExercise(${JSON.stringify(ex)})'>Save Exercise</button>
           <button class="view-btn" onclick="viewInstruction('${ex._id}')">View Instruction</button>
         `;
         exerciseGrid.appendChild(card);
       });
     }
 
-    // Filter by body part
-    filterBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        filterBtns.forEach(b => b.classList.remove("active"));
+    filterBtns.forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        filterBtns.forEach(b=>b.classList.remove("active"));
         btn.classList.add("active");
-        const body = btn.getAttribute("data-body");
-        const filtered = body === "all"
-          ? window.allExercises
-          : window.allExercises.filter(e => e.bodyPart === body);
+        const body=btn.getAttribute("data-body");
+        const filtered=body==="all"?window.allExercises:window.allExercises.filter(e=>e.bodyPart===body);
         displayExercises(filtered);
       });
     });
 
-    // Modal
-    window.viewInstruction = id => {
-      const ex = window.allExercises.find(e => e._id === id);
-      if (!ex) return;
-      modalTitle.innerText = ex.name;
-      modalImage.src = ex.image;
-      modalDesc.innerText = ex.description;
-      modalDetails.innerHTML = `
+    window.viewInstruction=id=>{
+      const ex=window.allExercises.find(e=>e._id===id);
+      if(!ex)return;
+      modalTitle.innerText=ex.name;
+      modalImage.src=ex.image;
+      modalDesc.innerText=ex.description;
+      modalDetails.innerHTML=`
         <li><strong>Sets:</strong> ${ex.sets}</li>
         <li><strong>Reps:</strong> ${ex.reps}</li>
         <li><strong>Difficulty:</strong> ${ex.difficulty}</li>
       `;
-      modal.style.display = "flex";
+      modal.style.display="flex";
     };
 
-    closeModal.onclick = () => modal.style.display = "none";
-    window.onclick = e => { if(e.target === modal) modal.style.display = "none"; };
+    closeModal.onclick=()=>modal.style.display="none";
+    window.onclick=e=>{if(e.target===modal)modal.style.display="none";};
 
-    // Save exercise
-    window.saveExercise = id => {
-      const ex = window.allExercises.find(e => e._id === id);
-      if(!ex) return;
-      let saved = JSON.parse(localStorage.getItem("savedExercises")) || [];
-      if(saved.some(e => e._id === ex._id)) {
-        alert(`${ex.name} is already in your routine!`);
-        return;
-      }
-      saved.push(ex);
-      localStorage.setItem("savedExercises", JSON.stringify(saved));
-      alert(`${ex.name} saved to your routine!`);
-    };
+    const themeToggle=document.getElementById("theme-toggle");
+    const themeIcon=document.getElementById("theme-icon");
+    let theme=localStorage.getItem("theme")||"light";
+    document.body.classList.toggle("dark-theme",theme==="dark");
+    themeIcon.className=theme==="dark"?"fas fa-sun":"fas fa-moon";
 
-    fetchExercises();
-  </script>
+    themeToggle.addEventListener("click",()=>{
+      document.body.classList.toggle("dark-theme");
+      const isDark=document.body.classList.contains("dark-theme");
+      themeIcon.className=isDark?"fas fa-sun":"fas fa-moon";
+      localStorage.setItem("theme",isDark?"dark":"light");
+    });
+
+    //SAVED EXERCISE
+function saveExercise(exercise) {
+  const exId = exercise._id || exercise.id;
+
+  // Check if we are picking exercises for a routine
+  const pickForRoutine = localStorage.getItem("pickForRoutine") === "true";
+
+  if (pickForRoutine) {
+    let routineTemp = JSON.parse(localStorage.getItem("routineTemp")) || [];
+    // Prevent duplicates
+    if (!routineTemp.includes(exId)) {
+      routineTemp.push(exId);
+      localStorage.setItem("routineTemp", JSON.stringify(routineTemp));
+      alert("Exercise added to routine selection!");
+    } else {
+      alert("Exercise already picked for routine!");
+    }
+  } else {
+    let savedExercises = JSON.parse(localStorage.getItem("savedExercises")) || [];
+    if (!savedExercises.find(ex => (ex._id || ex.id) === exId)) {
+      savedExercises.push(exercise);
+      localStorage.setItem("savedExercises", JSON.stringify(savedExercises));
+      alert("Exercise saved!");
+    } else {
+      alert("Exercise already saved!");
+    }
+  }
+}
+
+
+fetchExercises();
+</script>
 </body>
 </html>

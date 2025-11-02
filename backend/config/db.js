@@ -33,4 +33,3 @@ request.onsuccess = (e) => {
 };
 
 
-request.onerror = (e) => console.log("DB error:", e.target.errorCode);

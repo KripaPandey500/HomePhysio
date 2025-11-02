@@ -173,6 +173,48 @@
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
   }
+
+  const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value.trim();
+
+if (email === "admin@gmail.com") {
+  // Call admin login API
+  fetch("http://localhost:5000/admin/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.msg === "Admin login successful!") {
+        localStorage.setItem("loggedInEmail", email);
+        alert("Admin successfully logged in!");
+        window.location.href = "admin.html"; // redirect to admin panel
+      } else {
+        alert("Access denied. Invalid credentials!");
+      }
+    })
+    .catch(err => console.error(err));
+} else {
+  // Normal user login
+  fetch("http://localhost:5000/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.msg === "Login successful!") {
+        localStorage.setItem("loggedInEmail", email);
+        alert("User login successful!");
+        window.location.href = "home.html"; // redirect to normal user home
+      } else {
+        alert("Invalid credentials!");
+      }
+    })
+    .catch(err => console.error(err));
+}
+
 </script>
 
 </body>

@@ -11,12 +11,13 @@
       font-family: Arial, sans-serif; 
       background: url('assets/images/home-bg.jpg') no-repeat center center fixed; 
       background-size: cover;
-      margin:0; 
+      margin: 0; 
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
+
     .form-container {
       background: rgba(255,255,255,0.9); 
       padding: 30px; 
@@ -24,26 +25,76 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
       width: 100%; 
       max-width: 400px;
+      position: relative;
     }
-    .form-container h2 { text-align:center; color:#00aaff; }
-    .form-container input { width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc; }
-    .form-container button { width:48%; padding:10px; margin:5px 1%; border:none; border-radius:6px; background:#00aaff; color:white; font-size:1rem; cursor:pointer; transition:0.3s; }
-    .clear-btn { background:#ccc; color:#333; }
-    .form-container p { text-align:center; margin-top:10px; }
-    .form-container a { color:#00aaff; text-decoration:none; }
-    .form-container a:hover { text-decoration:underline; }
+
+    .form-container h2 { 
+      text-align: center; 
+      color: #00aaff; 
+      margin-bottom: 20px;
+    }
+
+    .form-container input { 
+      width: 100%; 
+      padding: 10px; 
+      margin: 10px 0; 
+      border-radius: 6px; 
+      border: 1px solid #ccc; 
+    }
+
+    .form-container button { 
+      width: 48%; 
+      padding: 10px; 
+      margin: 5px 1%; 
+      border: none; 
+      border-radius: 6px; 
+      background: #309bd0; 
+      color: white; 
+      font-size: 1rem; 
+      cursor: pointer; 
+      transition: 0.3s; 
+    }
+
+    .form-container button:hover {
+      background: #0088cc;
+    }
+
+    .clear-btn { 
+      background: #ccc; 
+      color: #333; 
+    }
+
+    .clear-btn:hover {
+      background: #bbb;
+    }
+
+    .form-container p { 
+      text-align: center; 
+      margin-top: 10px; 
+    }
+
+    .form-container a { 
+      color: #00aaff; 
+      text-decoration: none; 
+    }
+
+    .form-container a:hover { 
+      text-decoration: underline; 
+    }
 
     /* Password eye icon styles */
     .password-wrapper {
       position: relative;
     }
+
     .password-wrapper input {
-      padding-right: 15x; /* space for eye icon */
+      padding-right: -5px; /* space for eye icon */
     }
+
     .password-wrapper .toggle-password {
       position: absolute;
-      right: -100px;
-      top: 50%;
+      right: -80px;
+      top: 40%;
       transform: translateY(-50%);
       background: none;
       border: none;
@@ -51,6 +102,19 @@
       font-size: 1rem;
       color: #555;
       padding: 0;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 22px;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #333;
     }
   </style>
 </head>
@@ -83,29 +147,33 @@
     </div>
   </form>
   <p>Already have an account? <a href="login.html">Login</a></p>
-  <p>Or Are you an <a href="adminlogin.html"> Admin?</a></p>
+  <p>Or Are you an <a href="adminlogin.html">Admin?</a></p>
 </div>
 
 <script>
-  // Toggle password visibility
-  document.querySelectorAll('.toggle-password').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const input = document.getElementById(btn.dataset.target);
-      const icon = btn.querySelector('i');
-      if(input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
+  // ✅ Toggle password visibility
+  document.querySelectorAll(".toggle-password").forEach(button => {
+    button.addEventListener("click", () => {
+      const targetId = button.getAttribute("data-target");
+      const input = document.getElementById(targetId);
+      const icon = button.querySelector("i");
+
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+        icon.style.color = "#00aaff"; // eye color changes when active
       } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+        icon.style.color = "#555";
       }
     });
   });
 
-  // Registration form submit
-  document.getElementById("registerForm").addEventListener("submit", async (e) => {
+  // ✅ LocalStorage Registration Logic
+  document.getElementById("registerForm").addEventListener("submit", (e) => {
     e.preventDefault();
 
     const name = document.getElementById("fullname").value.trim();
@@ -123,28 +191,20 @@
       return;
     }
 
-    try {
-      const res = await fetch("http://localhost:5000/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-      });
+    let db = JSON.parse(localStorage.getItem("db") || '{"users":[],"exercises":[],"routines":[]}');
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.msg || "Registration failed!");
-        return;
-      }
-
-      alert(data.msg);
-      window.location.href = "login.html";
-    } catch (err) {
-      console.error("Error:", err);
-      alert("Something went wrong while registering!");
+    if (db.users.some(u => u.email === email)) {
+      alert("Email already registered!");
+      return;
     }
-  });
 
+    db.users.push({ id: db.users.length + 1, name, email, password, image: null });
+    localStorage.setItem("db", JSON.stringify(db));
+
+    alert("Registration successful!");
+    window.location.href = "login.html";
+  });
 </script>
+
 </body>
 </html>
