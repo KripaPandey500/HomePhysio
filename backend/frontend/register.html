@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - HomePhysio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      background: url('assets/images/home-bg.jpg') no-repeat center center fixed; 
+      background-size: cover;
+      margin:0; 
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .form-container {
+      background: rgba(255,255,255,0.9); 
+      padding: 30px; 
+      border-radius: 12px; 
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+      width: 100%; 
+      max-width: 400px;
+    }
+    .form-container h2 { text-align:center; color:#00aaff; }
+    .form-container input { width:100%; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #ccc; }
+    .form-container button { width:48%; padding:10px; margin:5px 1%; border:none; border-radius:6px; background:#00aaff; color:white; font-size:1rem; cursor:pointer; transition:0.3s; }
+    .clear-btn { background:#ccc; color:#333; }
+    .form-container p { text-align:center; margin-top:10px; }
+    .form-container a { color:#00aaff; text-decoration:none; }
+    .form-container a:hover { text-decoration:underline; }
+
+    /* Password eye icon styles */
+    .password-wrapper {
+      position: relative;
+    }
+    .password-wrapper input {
+      padding-right: 15x; /* space for eye icon */
+    }
+    .password-wrapper .toggle-password {
+      position: absolute;
+      right: -100px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      color: #555;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <span class="close-btn" onclick="window.location.href='index.html'">&times;</span>
+  <h2>Register</h2>
+  <form id="registerForm">
+    <input type="text" id="fullname" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+
+    <div class="password-wrapper">
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="button" class="toggle-password" data-target="password">
+        <i class="fa-regular fa-eye"></i>
+      </button>
+    </div>
+
+    <div class="password-wrapper">
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+      <button type="button" class="toggle-password" data-target="confirmPassword">
+        <i class="fa-regular fa-eye"></i>
+      </button>
+    </div>
+
+    <div style="display:flex; justify-content:space-between;">
+      <button type="submit">Register</button>
+      <button type="reset" class="clear-btn">Clear</button>
+    </div>
+  </form>
+  <p>Already have an account? <a href="login.html">Login</a></p>
+</div>
+
+<script>
+  // Toggle password visibility
+  document.querySelectorAll('.toggle-password').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = document.getElementById(btn.dataset.target);
+      const icon = btn.querySelector('i');
+      if(input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+  });
+
+  // Registration form submit
+  document.getElementById("registerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("fullname").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (!name || !email || !password || !confirmPassword) {
+      alert("Please fill in all fields!");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.msg || "Registration failed!");
+        return;
+      }
+
+      alert(data.msg);
+      window.location.href = "login.html";
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Something went wrong while registering!");
+    }
+  });
+</script>
+
+</body>
+</html>

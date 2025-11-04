@@ -49,6 +49,68 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
+// ✅ Routine Schema
+const routineSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  exercises: [{ 
+    name: String,
+    image: String,
+    description: String,
+    sets: String,
+    reps: String,
+    difficulty: String,
+    category: String
+  }],
+  userEmail: { type: String, required: true } // associate with user
+});
+
+const Routine = mongoose.model('Routine', routineSchema);
+
+// ✅ Create Routine
+app.post('/routines', async (req, res) => {
+  try {
+    const { name, userEmail } = req.body;
+    if (!name || !userEmail) return res.status(400).json({ msg: "Missing fields" });
+
+    const newRoutine = new Routine({ name, exercises: [], userEmail });
+    await newRoutine.save();
+    res.json({ msg: "Routine created", routine: newRoutine });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+// ✅ Get all routines for a user
+app.get('/routines/:email', async (req, res) => {
+  try {
+    const routines = await Routine.find({ userEmail: req.params.email });
+    res.json(routines);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+// ✅ Add exercise to a routine
+app.post('/routines/:id/addExercise', async (req, res) => {
+  try {
+    const { exercise } = req.body; // exercise object
+    if (!exercise) return res.status(400).json({ msg: "No exercise provided" });
+
+    const routine = await Routine.findById(req.params.id);
+    if (!routine) return res.status(404).json({ msg: "Routine not found" });
+
+    routine.exercises.push(exercise);
+    await routine.save();
+    res.json({ msg: "Exercise added", routine });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+
 // ✅ Register Route
 app.post('/register', async (req, res) => {
   try {
