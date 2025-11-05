@@ -44,7 +44,7 @@
       background-color: #fff;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      width: 300px;
+      width: 200px;
       text-align: center;
       padding: 15px;
       display: flex;
@@ -149,20 +149,21 @@ body.dark-theme .close:hover {
 </head>
 <body>
   <!-- Header -->
-  <header>
-    <a href="../index.html"class="logo"><img src="assets/images/Logo.png" alt="HomePhysio Logo" /></a>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="exercises.html">Exercises</a>
-      <a href="routines.html">My Routines</a>
-      <a href="progress.html">My Progress</a>
-      <a href="aboutus.html">About Us</a>
-      <a href="register.html"><i class="fas fa-user-circle"></i></a>
-      <button id="theme-toggle" class="theme-toggle">
-        <i id="theme-icon" class="fas fa-moon"></i>
-      </button>
-    </nav>
-  </header>
+<header>
+  <a href="index.html" class="logo"><img src="assets/images/Logo.png" alt="HomePhysio Logo" /></a>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="exercises.html">Exercises</a>
+    <a href="routines.html">My Routines</a>
+    <a href="progress.html">My Progress</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="register.html"><i class="fas fa-user-circle"></i></a>
+    <button id="theme-toggle" class="theme-toggle">
+      <i id="theme-icon" class="fas fa-moon"></i>
+    </button>
+  </nav>
+</header>
+
 
   <!-- Welcome -->
   <section class="welcome-section">
@@ -251,6 +252,7 @@ const categoryMap = {
 // ===== Fetch Exercises =====
 async function fetchExercises() {
     let db = JSON.parse(localStorage.getItem("db") || '{"exercises":[]}');
+    
     const adminExercises = db.exercises.map((e, i) => ({
         _id: `local-${i}`,
         name: e.name || "Unnamed Exercise",
