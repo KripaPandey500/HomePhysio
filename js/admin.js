@@ -64,19 +64,19 @@ function updateProfilePic(e) {
 }
 
 function saveProfile() {
-    let name = adminName.value,
-        email = adminEmail.value,
-        desc = adminDesc.value,
-        pic = adminPic.src;
+    let name = document.getElementById('adminName').value;
+    let email = document.getElementById('adminEmail').value;
+    let desc = document.getElementById('adminDesc').value;
+    let pic = document.getElementById('adminPic') ? document.getElementById('adminPic').src : viewPic.src;
 
     db.profile = { name, email, desc, pic };
     saveAndUpdate();
 
-    sidebarGreeting.innerText = `Hello, ${name} 👋`;
-    viewName.innerText = name;
-    viewEmail.innerText = email;
-    viewDesc.innerText = desc;
-    viewPic.src = headerPic.src = sidebarPic.src = pic;
+    document.getElementById('sidebarGreeting').innerText = `Hello, ${name} 👋`;
+    document.getElementById('viewName').innerText = name;
+    document.getElementById('viewEmail').innerText = email;
+    document.getElementById('viewDesc').innerText = desc;
+    document.getElementById('viewPic').src = document.getElementById('headerPic').src = document.getElementById('sidebarPic').src = pic;
 
     localStorage.setItem("loggedInEmail", email);
     toggleEditProfile(false);
@@ -87,73 +87,79 @@ function loadProfile() {
     const p = db.profile || {};
     const loggedInEmail = localStorage.getItem("loggedInEmail") || p.email || "admin@homephysio.com";
 
-    viewEmail.innerText = adminEmail.value = loggedInEmail;
-    viewName.innerText = adminName.value = p.name || "Admin";
-    viewDesc.innerText = adminDesc.value = p.desc || "Managing the physiotherapy app efficiently.";
+    document.getElementById('viewEmail').innerText = document.getElementById('adminEmail').value = loggedInEmail;
+    document.getElementById('viewName').innerText = document.getElementById('adminName').value = p.name || "Admin";
+    document.getElementById('viewDesc').innerText = document.getElementById('adminDesc').value = p.desc || "Managing the physiotherapy app efficiently.";
 
     const pic = p.pic || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-    viewPic.src = headerPic.src = sidebarPic.src = adminPic.src = pic;
+    document.getElementById('viewPic').src = document.getElementById('headerPic').src = document.getElementById('sidebarPic').src = document.getElementById('adminPic') ? document.getElementById('adminPic').src = pic : pic;
 
-    sidebarGreeting.innerText = `Hello, ${p.name || "Admin"} 👋`;
+    document.getElementById('sidebarGreeting').innerText = `Hello, ${p.name || "Admin"} 👋`;
 }
 
 /* ==================== TABLE FUNCTIONS ==================== */
 function updateTables() {
-    // Users Table
+    // ===== Users Table =====
     const ut = document.getElementById("users-table");
-    ut.innerHTML = db.users.map((u, i) => `
-        <tr>
-            <td>${i + 1}</td>
-            <td>${u.name}</td>
-            <td>${u.email}</td>
-            <td>${u.image ? '<img src="'+u.image+'" style="width:40px;height:40px;border-radius:50%;">' : ''}</td>
-            <td>
-                <button class='btn edit' onclick='editUser(${i})'>Edit</button>
-                <button class='btn delete' onclick='deleteUser(${i})'>Delete</button>
-            </td>
-        </tr>
-    `).join("");
+    if (ut) {
+        ut.innerHTML = db.users.map((u, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${u.name}</td>
+                <td>${u.email}</td>
+                <td>${u.password || '*****'}</td>
+                <td>
+                    <button class='btn edit' onclick='editUser(${i})'>Edit</button>
+                    <button class='btn delete' onclick='deleteUser(${i})'>Delete</button>
+                </td>
+            </tr>
+        `).join("");
+    }
 
-    // Exercises Table
+    // ===== Exercises Table =====
     const et = document.getElementById("exercises-table");
-    et.innerHTML = db.exercises.map((e, i) => `
-        <tr>
-            <td>${i+1}</td>
-            <td>${e.name}</td>
-            <td>${e.category}</td>
-            <td>${e.reps}</td>
-            <td>${e.sets}</td>
-            <td class="description" title="${e.description}">${e.description}</td>
-            <td>${e.image ? '<img src="'+e.image+'" style="width:40px;height:40px;border-radius:5px;">' : ''}</td>
-            <td>${e.difficulty}</td>
-            <td>
-                <button class='btn edit' onclick='editExercise(${i})'>Edit</button>
-                <button class='btn delete' onclick='deleteExercise(${i})'>Delete</button>
-            </td>
-        </tr>
-    `).join("");
+    if (et) {
+        et.innerHTML = db.exercises.map((e, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${e.name}</td>
+                <td>${e.category}</td>
+                <td>${e.reps}</td>
+                <td>${e.sets}</td>
+                <td class="description" title="${e.description}">${e.description}</td>
+                <td>${e.image ? '<img src="'+e.image+'" style="width:40px;height:40px;border-radius:5px;">' : ''}</td>
+                <td>${e.difficulty}</td>
+                <td>
+                    <button class='btn edit' onclick='editExercise(${i})'>Edit</button>
+                    <button class='btn delete' onclick='deleteExercise(${i})'>Delete</button>
+                </td>
+            </tr>
+        `).join("");
+    }
 
-    // Routines Table
+    // ===== Routines Table =====
     const rt = document.getElementById("routines-table");
-    rt.innerHTML = db.routines.map((r, i) => `
-        <tr>
-            <td>${i+1}</td>
-            <td>${r.name}</td>
-            <td>${r.exercises}</td>
-            <td>${r.image ? '<img src="'+r.image+'" style="width:40px;height:40px;border-radius:5px;">' : ''}</td>
-            <td>${r.progress}</td>
-            <td>${new Date(r.createdAt).toLocaleDateString()}</td>
-            <td>
-                <button class='btn edit' onclick='editRoutine(${i})'>Edit</button>
-                <button class='btn delete' onclick='deleteRoutine(${i})'>Delete</button>
-            </td>
-        </tr>
-    `).join("");
+    if (rt) {
+        rt.innerHTML = db.routines.map((r, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${r.name}</td>
+                <td>${r.email || 'N/A'}</td>
+                <td>
+                    <button class='btn delete' onclick='deleteRoutine(${i})'>Delete</button>
+                </td>
+            </tr>
+        `).join("");
+    }
 
-    // Counts
-    document.getElementById("userCount").innerText = db.users.length;
-    document.getElementById("exerciseCount").innerText = db.exercises.length;
-    document.getElementById("routineCount").innerText = db.routines.length;
+    // ===== Update Counts =====
+    const uc = document.getElementById("userCount");
+    const ec = document.getElementById("exerciseCount");
+    const rc = document.getElementById("routineCount");
+
+    if (uc) uc.innerText = db.users.length;
+    if (ec) ec.innerText = db.exercises.length;
+    if (rc) rc.innerText = db.routines.length;
 }
 
 function saveAndUpdate() {
@@ -162,47 +168,6 @@ function saveAndUpdate() {
 }
 
 /* ==================== USERS ==================== */
-let currentUserIndex = null;
-
-async function addUser() {
-    const name = document.getElementById('userName').value;
-    const email = document.getElementById('userEmail').value;
-
-    if (!name || !email) { showToast("Please fill all fields"); return; }
-
-    const newUser = { name, email, image: null };
-
-    try {
-        const res = await fetch('http://localhost:5000/users', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newUser)
-        });
-
-        if (!res.ok) throw new Error("Server error");
-
-        const savedUser = await res.json();
-        db.users.push(savedUser);   // update local db after server success
-        saveAndUpdate();
-        closeModal('userModal');
-        showToast("User added!");
-        document.getElementById('userName').value = '';
-        document.getElementById('userEmail').value = '';
-    } catch (err) {
-        console.error(err);
-        showToast("Failed to add user!");
-    }
-}
-
-function editUser(index) {
-    currentUserIndex = index;
-    const user = db.users[index];
-    document.getElementById('userName').value = user.name;
-    document.getElementById('userEmail').value = user.email;
-    document.getElementById('userImage').value = '';
-    openModal('userModal');
-}
-
 function deleteUser(index) {
     if (confirm("Are you sure you want to delete this user?")) {
         db.users.splice(index, 1);
@@ -211,24 +176,12 @@ function deleteUser(index) {
     }
 }
 
-async function loadUsersFromServer() {
-    try {
-        const res = await fetch("http://localhost:5000/users");
-        const data = await res.json();
-        db.users = data; // Update db
-        localStorage.setItem("db", JSON.stringify(db));
-        updateTables();
-    } catch (err) {
-        console.error("Failed to load users:", err);
-    }
-}
-
 /* ==================== EXERCISES ==================== */
 let currentExerciseIndex = null;
 
 function addExercise() {
-    const name = document.getElementById('exerciseName').value;
-    const desc = document.getElementById('exerciseDesc').value;
+    const name = document.getElementById('exerciseName').value.trim();
+    const desc = document.getElementById('exerciseDesc').value.trim();
     const diff = document.getElementById('exerciseDiff').value;
     const category = document.getElementById('exerciseCategory').value;
     const reps = document.getElementById('exerciseReps').value;
@@ -240,7 +193,7 @@ function addExercise() {
         return;
     }
 
-    const process = (imageData) => {
+    const processExercise = (imageData) => {
         if (currentExerciseIndex !== null) {
             db.exercises[currentExerciseIndex] = { name, description: desc, difficulty: diff, category, reps, sets, image: imageData };
             showToast("Exercise updated!");
@@ -249,20 +202,22 @@ function addExercise() {
             db.exercises.push({ name, description: desc, difficulty: diff, category, reps, sets, image: imageData });
             showToast("Exercise added!");
         }
-        saveAndUpdate();
+
+        saveAndUpdate(); // <-- ensures table refresh immediately
         closeModal('exerciseModal');
         clearExerciseForm();
     };
 
     if (file) {
         const reader = new FileReader();
-        reader.onload = () => process(reader.result);
+        reader.onload = (e) => processExercise(e.target.result);
         reader.readAsDataURL(file);
     } else {
-        const imageData = currentExerciseIndex !== null && db.exercises[currentExerciseIndex].image ? db.exercises[currentExerciseIndex].image : null;
-        process(imageData);
+        const imageData = currentExerciseIndex !== null && db.exercises[currentExerciseIndex]?.image ? db.exercises[currentExerciseIndex].image : null;
+        processExercise(imageData);
     }
 }
+
 
 function editExercise(index) {
     currentExerciseIndex = index;
@@ -296,67 +251,6 @@ function clearExerciseForm() {
 }
 
 /* ==================== ROUTINES ==================== */
-let currentRoutineIndex = null;
-function addRoutine() {
-    const name = document.getElementById('routineName').value;
-    const files = document.getElementById('routineExercises').files;
-    const progress = document.getElementById('routineProgress').value;
-
-    if (!name) { showToast("Routine name required"); return; }
-
-    const images = [];
-
-    const processRoutine = () => {
-        if (currentRoutineIndex !== null) {
-            db.routines[currentRoutineIndex] = {
-                name,
-                exercises: images.length ? images.join(',') : db.routines[currentRoutineIndex].exercises,
-                progress,
-                createdAt: db.routines[currentRoutineIndex].createdAt
-            };
-            showToast("Routine updated!");
-            currentRoutineIndex = null;
-        } else {
-            db.routines.push({
-                name,
-                exercises: images.join(','),
-                progress,
-                createdAt: new Date()
-            });
-            showToast("Routine added!");
-        }
-        saveAndUpdate();
-        closeModal('routineModal');
-        // clear form fields
-        document.getElementById('routineName').value = '';
-        document.getElementById('routineExercises').value = '';
-        document.getElementById('routineProgress').value = '';
-    };
-
-    if (files.length === 0) return processRoutine();
-
-    let loaded = 0;
-    for (let i = 0; i < files.length; i++) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            images[i] = e.target.result; // keep correct order
-            loaded++;
-            if (loaded === files.length) processRoutine(); // call only once
-        };
-        reader.readAsDataURL(files[i]);
-    }
-}
-
-
-function editRoutine(index) {
-    currentRoutineIndex = index;
-    const r = db.routines[index];
-    document.getElementById('routineName').value = r.name;
-    document.getElementById('routineProgress').value = r.progress;
-    document.getElementById('routineExercises').value = '';
-    openModal('routineModal');
-}
-
 function deleteRoutine(index) {
     if (confirm("Are you sure you want to delete this routine?")) {
         db.routines.splice(index, 1);
@@ -368,6 +262,8 @@ function deleteRoutine(index) {
 /* ==================== INITIAL LOAD ==================== */
 window.onload = async () => {
     loadProfile();
-    await loadUsersFromServer(); // fetch users from server
-    updateTables();
+
+    if (typeof loadUsersFromServer === 'function') await loadUsersFromServer();
+
+    updateTables(); 
 };
