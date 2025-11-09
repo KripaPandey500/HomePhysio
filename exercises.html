@@ -166,6 +166,7 @@ body.dark-theme header button {
     </div>
   </div>
 
+<script src="js/exercises-data.js"></script>
 <script>
 const exerciseGrid = document.getElementById("exerciseGrid");
 const filterBtns = document.querySelectorAll(".filter-btn");
@@ -302,16 +303,24 @@ savedBtn.addEventListener("click", () => {
 // ===== Load exercises from admin/local storage =====
 function loadExercises() {
   const db = JSON.parse(localStorage.getItem("db") || '{"exercises":[]}');
-  allExercises = db.exercises.map((e,i)=>({
-    _id: `local-${i}`,
-    name: e.name || "Unnamed",
-    description: e.description || "No description",
-    bodyPart: (e.category || "all").toLowerCase(),
-    image: e.image || "assets/images/default.png",
-    sets: e.sets || "-",
-    reps: e.reps || "-",
-    difficulty: e.difficulty || "-"
-  }));
+  
+  // If localStorage has exercises from admin panel, use them
+  if (db.exercises && db.exercises.length > 0) {
+    allExercises = db.exercises.map((e, i) => ({
+      _id: e._id || `local-${i}`,
+      name: e.name || "Unnamed",
+      description: e.description || "No description",
+      bodyPart: (e.category || "all").toLowerCase(),
+      image: e.image || "assets/images/default.png",
+      sets: e.sets || "-",
+      reps: e.reps || "-",
+      difficulty: e.difficulty || "-"
+    }));
+  } else {
+    // Fallback to default exercises if no data in localStorage
+    allExercises = defaultExercises;
+  }
+  
   displayExercises(allExercises, false);
 }
 
