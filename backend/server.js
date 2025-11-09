@@ -201,4 +201,63 @@ app.post('/logout', (req, res) => {
 // Start server
 app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
 
+// Exercise model
+const exerciseSchema = new mongoose.Schema({
+    name: String,
+    description: String,
+    difficulty: String,
+    category: String,
+    reps: String,
+    sets: String,
+    image: String
+});
+
+const Exercise = mongoose.model('Exercise', exerciseSchema);
+
+// Add new exercise
+app.post('/api/exercises', async (req, res) => {
+    try {
+        const newExercise = new Exercise(req.body);
+        await newExercise.save();
+        res.json(newExercise);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: "Failed to add exercise" });
+    }
+});
+
+// Get all exercises
+app.get('/api/exercises', async (req, res) => {
+    try {
+        const exercises = await Exercise.find();
+        res.json(exercises);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: "Failed to fetch exercises" });
+    }
+});
+
+// Update exercise
+app.put('/api/exercises/:id', async (req, res) => {
+    try {
+        const updatedExercise = await Exercise.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedExercise) return res.status(404).json({ msg: "Exercise not found" });
+        res.json(updatedExercise);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: "Failed to update exercise" });
+    }
+});
+
+// Delete exercise
+app.delete('/api/exercises/:id', async (req, res) => {
+    try {
+        const deletedExercise = await Exercise.findByIdAndDelete(req.params.id);
+        if (!deletedExercise) return res.status(404).json({ msg: "Exercise not found" });
+        res.json({ msg: "Exercise deleted" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: "Failed to delete exercise" });
+    }
+});
 
