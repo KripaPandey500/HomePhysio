@@ -121,99 +121,84 @@
 </div>
 
 <script>
-  // Toggle password visibility
-  const togglePassword = document.querySelector('.toggle-password');
-  const passwordInput = document.getElementById('password');
 
-  togglePassword.addEventListener('click', () => {
-    if(passwordInput.type === 'password'){
-      passwordInput.type = 'text';
-      togglePassword.classList.remove('fa-eye');
-      togglePassword.classList.add('fa-eye-slash');
-    } else {
-      passwordInput.type = 'password';
-      togglePassword.classList.remove('fa-eye-slash');
-      togglePassword.classList.add('fa-eye');
-    }
+    // ✅ Toggle password visibility
+  document.querySelectorAll(".toggle-password").forEach(button => {
+    button.addEventListener("click", () => {
+      const targetId = button.getAttribute("data-target");
+      const input = document.getElementById(targetId);
+      const icon = button.querySelector("i");
+
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+        icon.style.color = "#00aaff"; // eye color changes when active
+      } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+        icon.style.color = "#555";
+      }
+    });
   });
 
-  // Login form submit
-  document.getElementById("loginForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-    try {
-      const res = await fetch("http://localhost:5000/login", {
+  try {
+    let res, data;
+
+    if (email === "admin@gmail.com") {
+      // Admin login
+res = await fetch("http://localhost:5000/admin/login", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  credentials: "include",
+  body: JSON.stringify({ email, password })
+});
+
+      data = await res.json();
+
+      if (res.ok && data.msg === "Admin login successful!") {
+        localStorage.setItem("loggedInEmail", email);
+        alert("Admin successfully logged in!");
+        window.location.href = "admin.html"; // redirect admin
+      } else {
+        alert(data.msg || "Access denied. Invalid credentials!");
+      }
+
+    } else {
+      // Normal user login
+      res = await fetch("http://localhost:5000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({ email, password })
       });
 
-      const data = await res.json();
-      alert(data.msg);
+      data = await res.json();
 
-      if (res.ok && data.msg === "Login successful!"){
+      if (res.ok && data.user) {
+        // ✅ store user info
         localStorage.setItem("userName", data.user.name);
         localStorage.setItem("userEmail", data.user.email);
-        window.location.href = "profile.html";
+        alert("User successfully logged in!");
+        window.location.href = "profile.html"; // redirect user
       } else {
-        alert("Login has failed. Please check your details.");
+        alert(data.msg || "Login failed. Please check your details.");
       }
-    } catch (err) {
-      console.error(err);
-      alert("An error occurred during login. Please try again.");
     }
-  });
 
-  // Clear input fields
-  function clearFields(){
-    document.getElementById("email").value = "";
-    document.getElementById("password").value = "";
+  } catch (err) {
+    console.error(err);
+    alert("An error occurred during login. Please try again.");
   }
+});
 
-  const email = document.getElementById("email").value.trim();
-const password = document.getElementById("password").value.trim();
-
-if (email === "admin@gmail.com") {
-  // Call admin login API
-  fetch("http://localhost:5000/admin/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.msg === "Admin login successful!") {
-        localStorage.setItem("loggedInEmail", email);
-        alert("Admin successfully logged in!");
-        window.location.href = "admin.html"; // redirect to admin panel
-      } else {
-        alert("Access denied. Invalid credentials!");
-      }
-    })
-    .catch(err => console.error(err));
-} else {
-  // Normal user login
-  fetch("http://localhost:5000/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.msg === "Login successful!") {
-        localStorage.setItem("loggedInEmail", email);
-        alert("User login successful!");
-        window.location.href = "home.html"; // redirect to normal user home
-      } else {
-        alert("Invalid credentials!");
-      }
-    })
-    .catch(err => console.error(err));
-}
 
 </script>
 

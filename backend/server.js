@@ -13,28 +13,26 @@ app.use(bodyParser.json());
 
 // ✅ CORS config to allow frontend at different localhost ports
 app.use(cors({
-  origin: [
-    "http://127.0.0.1:5500",
-    "http://localhost:5500",
-    "http://127.0.0.1:5501",
-    "http://localhost:5501"
-  ],
-  methods: ["GET", "POST", "OPTIONS"],
-  credentials: true
+    origin: "http://127.0.0.1:5501",
+    credentials: true
 }));
+
 
 // ✅ Session config
 app.use(session({
+  name: 'homephysio.sid',  // better cookie name
   secret: 'homephysioSecret123',
   resave: false,
   saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    secure: false,       // must be false for local HTTP
-    sameSite: 'lax',     // allows cross-origin cookies locally
-    maxAge: 24 * 60 * 60 * 1000 // 1 day
-  }
+cookie: {
+  httpOnly: true,
+  secure: false,       // keep false in localhost
+  sameSite: 'lax',     // FIX: allows localhost cookies
+  maxAge: 24 * 60 * 60 * 1000
+}
+
 }));
+
 
 // ✅ Connect MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/homephysio')
@@ -48,6 +46,14 @@ const userSchema = new mongoose.Schema({
   password: String
 });
 const User = mongoose.model('User', userSchema);
+
+// ✅ Admin Schema
+const adminSchema = new mongoose.Schema({
+  name: String,
+  email: { type: String, unique: true },
+  password: String
+});
+const Admin = mongoose.model('Admin', adminSchema);
 
 // ✅ Routine Schema
 const routineSchema = new mongoose.Schema({
@@ -110,7 +116,6 @@ app.post('/routines/:id/addExercise', async (req, res) => {
   }
 });
 
-
 // ✅ Register Route
 app.post('/register', async (req, res) => {
   try {
@@ -126,6 +131,33 @@ app.post('/register', async (req, res) => {
     await newUser.save();
 
     res.json({ msg: "Registration successful!" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+// ✅ User Login Route
+app.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password)
+      return res.status(400).json({ msg: "Please fill all fields" });
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ msg: "Invalid credentials" });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
+
+    // Save session
+    req.session.userId = user._id;
+    req.session.save(err => {
+      if (err) return res.status(500).json({ msg: "Session error" });
+
+      res.json({ msg: "Login successful!", user: { name: user.name, email: user.email } });
+    });
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: "Server error" });
@@ -170,7 +202,6 @@ app.post('/admin/login', async (req, res) => {
   }
 });
 
-
 // ✅ Profile Route (protected)
 app.get('/profile', async (req, res) => {
   console.log("🧠 Checking session:", req.session);
@@ -193,7 +224,7 @@ app.get('/profile', async (req, res) => {
 app.post('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) return res.status(500).json({ msg: "Logout failed" });
-    res.clearCookie('connect.sid');
+    res.clearCookie('homephysio.sid');
     res.json({ msg: "Logged out successfully" });
   });
 });
@@ -260,4 +291,3 @@ app.delete('/api/exercises/:id', async (req, res) => {
         res.status(500).json({ msg: "Failed to delete exercise" });
     }
 });
-

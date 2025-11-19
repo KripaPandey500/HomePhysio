@@ -140,65 +140,78 @@
   </div>
 </div>
 
-
 <script>
-async function checkAuth() {
-  try {
-    const res = await fetch("http://localhost:5000/profile", {
-      credentials: "include",
-      headers: { "Accept": "application/json" }
-    });
-    if (!res.ok) throw new Error("Authentication failed");
-    return await res.json();
-  } catch (err) {
-    console.error("Auth check failed:", err);
-    return null;
-  }
-}
+  // ✅ Function to check if user is authenticated via server session
+  async function checkAuth() {
+    try {
+      const res = await fetch("http://localhost:5000/profile", {
+        credentials: "include" // important to send cookies
+      });
 
-window.onload = async () => {
-  try {
-    const userData = await checkAuth();
-    
-    if (!userData) {
-      const userName = localStorage.getItem("userName");
-      const userEmail = localStorage.getItem("userEmail");
-      if (!userName || !userEmail) throw new Error("Not authenticated");
-      window.location.href = "login.html";
-      return;
+      if (!res.ok) return null; // not authenticated
+      const data = await res.json();
+      return data;
+
+    } catch (err) {
+      console.error("Auth check failed:", err);
+      return null;
     }
-
-    const mainContent = document.createElement('main');
-    mainContent.innerHTML = `
-      <div style="padding: 20px; text-align: center;">
-        <h2>Welcome, ${userData.name}!</h2>
-        <p>Your email: ${userData.email}</p>
-        <button id="logoutBtn" style="padding: 10px 20px; margin-top: 20px; background: #00aaff; color: white; border: none; border-radius: 5px; cursor: pointer;">Logout</button>
-      </div>
-    `;
-    document.querySelector('header').insertAdjacentElement('afterend', mainContent);
-
-    // ✅ Fixed logout button functionality
-    document.getElementById("logoutBtn").onclick = async () => {
-      try {
-        await fetch("http://localhost:5000/logout", {
-          method: "POST",
-          credentials: "include"
-        });
-        localStorage.removeItem("userName");
-        localStorage.removeItem("userEmail");
-        alert("Logged out successfully!");
-        window.location.href = "login.html";
-      } catch (err) {
-        console.error("Logout failed:", err);
-      }
-    };
-
-  } catch (err) {
-    console.error("Error loading profile:", err);
-    window.location.href = "login.html";
   }
-};
+
+  window.onload = async () => {
+    try {
+      const userData = await checkAuth(); // get session info
+
+      if (!userData) {
+        // No session → redirect to login
+        window.location.href = "login.html";
+        return;
+      }
+
+      // ✅ Display user profile
+      const mainContent = document.createElement('main');
+      mainContent.innerHTML = `
+        <div style="padding: 20px; text-align: center;">
+          <h2>Welcome, ${userData.name}!</h2>
+          <p>Your email: ${userData.email}</p>
+          <button id="logoutBtn" style="
+            padding: 10px 20px; 
+            margin-top: 20px; 
+            background: #00aaff; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer;
+          ">Logout</button>
+        </div>
+      `;
+      document.querySelector('header').insertAdjacentElement('afterend', mainContent);
+
+      // ✅ Logout functionality
+      document.getElementById("logoutBtn").onclick = async () => {
+        try {
+          const res = await fetch("http://localhost:5000/logout", {
+            method: "POST",
+            credentials: "include"
+          });
+
+          if (res.ok) {
+            alert("Logged out successfully!");
+            window.location.href = "login.html";
+          } else {
+            alert("Logout failed!");
+          }
+        } catch (err) {
+          console.error("Logout failed:", err);
+        }
+      };
+
+    } catch (err) {
+      console.error("Error loading profile:", err);
+      window.location.href = "login.html";
+    }
+  };
 </script>
+
 
   
