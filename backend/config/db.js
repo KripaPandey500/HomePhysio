@@ -25,6 +25,16 @@ request.onupgradeneeded = (e) => {
     if (!db.objectStoreNames.contains("progress")) {
         const prStore = db.createObjectStore("progress", { keyPath: "routineId" });
     }
+    
+    //admin
+    // Admin store
+if (!db.objectStoreNames.contains("admin")) {
+    const adminStore = db.createObjectStore("admin", { keyPath: "email" });
+    adminStore.createIndex("name", "name", { unique: false });
+    adminStore.createIndex("pic", "pic", { unique: false });
+    adminStore.createIndex("desc", "desc", { unique: false });
+}
+
 };
 
 request.onsuccess = (e) => {

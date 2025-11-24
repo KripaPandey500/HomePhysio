@@ -65,37 +65,53 @@ function updateProfilePic(e) {
 }
 
 function saveProfile() {
-    let name = document.getElementById('adminName').value;
-    let email = document.getElementById('adminEmail').value;
-    let desc = document.getElementById('adminDesc').value;
-    let pic = document.getElementById('adminPic') ? document.getElementById('adminPic').src : viewPic.src;
+    const name = document.getElementById('adminName').value;
+    const email = document.getElementById('adminEmail').value;
+    const desc = document.getElementById('adminDesc').value;
+    const pic = document.getElementById('viewPic').src;
 
-    db.profile = { name, email, desc, pic };
-    saveAndUpdate();
+    const transaction = db.transaction(["admin"], "readwrite");
+    const store = transaction.objectStore("admin");
 
-    document.getElementById('sidebarGreeting').innerText = `Hello, ${name} 👋`;
-    document.getElementById('viewName').innerText = name;
-    document.getElementById('viewEmail').innerText = email;
-    document.getElementById('viewDesc').innerText = desc;
-    document.getElementById('viewPic').src = document.getElementById('headerPic').src = document.getElementById('sidebarPic').src = pic;
+    store.put({ email, name, desc, pic }); // update or insert
 
-    localStorage.setItem("loggedInEmail", email);
-    toggleEditProfile(false);
-    showToast("Profile Saved");
+    transaction.oncomplete = () => {
+        console.log("Admin profile updated in IndexedDB");
+
+        document.getElementById('viewName').innerText = name;
+        document.getElementById('viewEmail').innerText = email;
+        document.getElementById('viewDesc').innerText = desc;
+        document.getElementById('viewPic').src =
+        document.getElementById('headerPic').src =
+        document.getElementById('sidebarPic').src = pic;
+
+        showToast("Profile saved!");
+        toggleEditProfile(false);
+    };
+
+    transaction.onerror = () => showToast("Error saving profile!");
 }
 
+
 function loadProfile() {
-    const p = db.profile || {};
-    const loggedInEmail = localStorage.getItem("loggedInEmail") || p.email || "admin@homephysio.com";
+    const transaction = db.transaction(["admin"], "readonly");
+    const store = transaction.objectStore("admin");
 
-    document.getElementById('viewEmail').innerText = document.getElementById('adminEmail').value = loggedInEmail;
-    document.getElementById('viewName').innerText = document.getElementById('adminName').value = p.name || "Admin";
-    document.getElementById('viewDesc').innerText = document.getElementById('adminDesc').value = p.desc || "Managing the physiotherapy app efficiently.";
+    const request = store.getAll();
 
-    const pic = p.pic || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-    document.getElementById('viewPic').src = document.getElementById('headerPic').src = document.getElementById('sidebarPic').src = document.getElementById('adminPic') ? document.getElementById('adminPic').src = pic : pic;
+    request.onsuccess = () => {
+        const admins = request.result;
+        const admin = admins[0] || { name: "Admin", email: "admin@homephysio.com", desc: "Managing the physiotherapy app efficiently.", pic: "https://cdn-icons-png.flaticon.com/512/149/149071.png" };
 
-    document.getElementById('sidebarGreeting').innerText = `Hello, ${p.name || "Admin"} 👋`;
+        document.getElementById('viewName').innerText = document.getElementById('adminName').value = admin.name;
+        document.getElementById('viewEmail').innerText = document.getElementById('adminEmail').value = admin.email;
+        document.getElementById('viewDesc').innerText = document.getElementById('adminDesc').value = admin.desc;
+        document.getElementById('viewPic').src =
+        document.getElementById('headerPic').src =
+        document.getElementById('sidebarPic').src = admin.pic;
+
+        document.getElementById('sidebarGreeting').innerText = `Hello, ${admin.name} 👋`;
+    };
 }
 
 /* ==================== TABLE FUNCTIONS ==================== */

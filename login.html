@@ -171,27 +171,27 @@ res = await fetch("http://localhost:5000/admin/login", {
         alert(data.msg || "Access denied. Invalid credentials!");
       }
 
-    } else {
-      // Normal user login
-      res = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email, password })
-      });
+} else {
+  // Normal user login
+  res = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+  });
 
-      data = await res.json();
+  data = await res.json();
 
-      if (res.ok && data.user) {
-        // ✅ store user info
-        localStorage.setItem("userName", data.user.name);
-        localStorage.setItem("userEmail", data.user.email);
-        alert("User successfully logged in!");
-        window.location.href = "profile.html"; // redirect user
-      } else {
-        alert(data.msg || "Login failed. Please check your details.");
-      }
-    }
+  if (res.ok && data.user) {
+      localStorage.setItem("userName", data.user.name);
+      localStorage.setItem("userEmail", data.user.email);
+      alert("User successfully logged in!");
+      window.location.href = "profile.html";
+  } else {
+      alert(data.msg || "Login failed. Please check your details.");
+  }
+}
+
 
   } catch (err) {
     console.error(err);

@@ -52,7 +52,7 @@
     margin:10px 0; 
     border-radius:6px; 
     border:1px solid #ccc; 
-    height:40px;           
+    height:40px; 
     box-sizing: border-box;
   }
 
@@ -69,11 +69,10 @@
 
   .clear-btn { 
     background:#e44848; 
-    color:#333; 
+    color:white; 
     margin-top:5px;
   }
 
-  /* Password wrapper */
   .password-wrapper {
     position: relative;
     width: 100%;
@@ -105,7 +104,9 @@
 <div class="form-container">
   <span class="close-btn" onclick="window.location.href='index.html'">&times;</span>
   <span class="back-btn" onclick="window.location.href='register.html'">&#8592;</span>
+
   <h2>Admin Login</h2>
+
   <form id="adminLoginForm">
     <input type="email" id="adminEmail" placeholder="Email" required>
 
@@ -120,61 +121,46 @@
 </div>
 
 <script>
-  // Toggle password visibility
-  const togglePassword = document.querySelector('.toggle-password');
-  const passwordInput = document.getElementById('adminPassword');
+/* ============================
+   SHOW / HIDE PASSWORD
+============================ */
+const togglePassword = document.querySelector('.toggle-password');
+const passwordInput = document.getElementById('adminPassword');
 
-  togglePassword.addEventListener('click', () => {
-    if(passwordInput.type === 'password'){
-      passwordInput.type = 'text';
-      togglePassword.classList.remove('fa-eye');
-      togglePassword.classList.add('fa-eye-slash');
-    } else {
-      passwordInput.type = 'password';
-      togglePassword.classList.remove('fa-eye-slash');
-      togglePassword.classList.add('fa-eye');
-    }
-  });
-
-  // Admin login form submit
-  document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("adminEmail").value.trim();
-    const password = document.getElementById("adminPassword").value;
-
-    if(!email || !password){
-      alert("Please fill in all fields!");
-      return;
-    }
-
-    // Example: Redirect to admin dashboard (replace with your backend authentication)
-    alert("Admin login successful!");
-    window.location.href = "admin.html"; 
-  });
-
-  // Clear fields function
-  function clearFields() {
-    document.getElementById("adminEmail").value = "";
-    document.getElementById("adminPassword").value = "";
+togglePassword.addEventListener('click', () => {
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    togglePassword.classList.replace("fa-eye", "fa-eye-slash");
+  } else {
+    passwordInput.type = 'password';
+    togglePassword.classList.replace("fa-eye-slash", "fa-eye");
   }
+});
 
-  
-</script>
+/* ============================
+   CLEAR INPUT FIELDS
+============================ */
+function clearFields() {
+  document.getElementById("adminEmail").value = "";
+  document.getElementById("adminPassword").value = "";
+}
 
-<script src="js/db.js"></script>
-<script src="js/auth.js"></script>
-
-<script>
-const loginForm = document.getElementById("loginForm");
-loginForm.addEventListener("submit", async (e) => {
+/* ============================
+   ADMIN LOGIN (BACKEND)
+============================ */
+document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("adminEmail").value.trim();
+  const password = document.getElementById("adminPassword").value;
+
+  if (!email || !password) {
+    alert("Please fill in all fields!");
+    return;
+  }
 
   try {
-    const res = await fetch("/admin/login", {
+    const res = await fetch("http://localhost:5000/admin/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -183,16 +169,16 @@ loginForm.addEventListener("submit", async (e) => {
     const data = await res.json();
 
     if (!res.ok) {
-      alert(data.message); // shows wrong password/email or access denied
+      alert(data.msg); // Email not found / wrong password
     } else {
-      alert(data.message); // shows admin login successful
-      window.location.href = "adminDashboard.html"; // redirect to admin dashboard
+      alert(data.msg); // Success message
+      window.location.href = "admin.html"; // Redirect to admin panel
     }
+
   } catch (err) {
-    console.error(err);
-    alert("Server error");
+    alert("Server not responding. Make sure backend is running.");
   }
-  });
+});
 </script>
 
 </body>
