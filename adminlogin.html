@@ -1,185 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Login - HomePhysio</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  body { 
-    font-family: Arial; 
-    display:flex; 
-    justify-content:center; 
-    align-items:center; 
-    height:100vh; 
-    background:#f0f0f0; 
-  }
-
-  .form-container { 
-    position: relative;
-    background:white; 
-    padding:30px; 
-    border-radius:12px; 
-    box-shadow:0 5px 15px rgba(0,0,0,0.2); 
-    width:300px; 
-  }
-
-  .close-btn, .back-btn {
-    position: absolute;
-    top: 10px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    color: #333;
-  }
-
-  .close-btn { right: 15px; }
-  .close-btn:hover { color: #00aaff; }
-
-  .back-btn { left: 15px; }
-  .back-btn:hover { color: #00aaff; }
-
-  h2 {
-    text-align: center;
-    color: #00aaff;  
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-
-  input { 
-    width:100%; 
-    padding:10px; 
-    margin:10px 0; 
-    border-radius:6px; 
-    border:1px solid #ccc; 
-    height:40px; 
-    box-sizing: border-box;
-  }
-
-  button { 
-    width:100%; 
-    padding:10px; 
-    margin-top:10px; 
-    border:none; 
-    border-radius:6px; 
-    background:#00aaff; 
-    color:white; 
-    cursor:pointer; 
-  }
-
-  .clear-btn { 
-    background:#e44848; 
-    color:white; 
-    margin-top:5px;
-  }
-
-  .password-wrapper {
-    position: relative;
-    width: 100%;
-  }
-
-  .password-wrapper input {
-    width: 100%;
-    padding-right: 35px; 
-    height: 40px;        
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  }
-
-  .password-wrapper .toggle-password {
-    position: absolute;
-    right: 10px;             
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #555;
-    font-size: 1.1rem;
-    user-select: none;
-  }
-</style>
-</head>
-<body>
-
-<div class="form-container">
-  <span class="close-btn" onclick="window.location.href='index.html'">&times;</span>
-  <span class="back-btn" onclick="window.location.href='register.html'">&#8592;</span>
-
-  <h2>Admin Login</h2>
-
-  <form id="adminLoginForm">
-    <input type="email" id="adminEmail" placeholder="Email" required>
-
-    <div class="password-wrapper">
-      <input type="password" id="adminPassword" placeholder="Password" required>
-      <i class="fa-regular fa-eye toggle-password"></i>
-    </div>
-
-    <button type="submit">Login</button>
-    <button type="button" class="clear-btn" onclick="clearFields()">Clear</button>
-  </form>
-</div>
-
-<script>
-/* ============================
-   SHOW / HIDE PASSWORD
-============================ */
-const togglePassword = document.querySelector('.toggle-password');
-const passwordInput = document.getElementById('adminPassword');
-
-togglePassword.addEventListener('click', () => {
-  if (passwordInput.type === 'password') {
-    passwordInput.type = 'text';
-    togglePassword.classList.replace("fa-eye", "fa-eye-slash");
-  } else {
-    passwordInput.type = 'password';
-    togglePassword.classList.replace("fa-eye-slash", "fa-eye");
-  }
-});
-
-/* ============================
-   CLEAR INPUT FIELDS
-============================ */
-function clearFields() {
-  document.getElementById("adminEmail").value = "";
-  document.getElementById("adminPassword").value = "";
-}
-
-/* ============================
-   ADMIN LOGIN (BACKEND)
-============================ */
-document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const email = document.getElementById("adminEmail").value.trim();
-  const password = document.getElementById("adminPassword").value;
-
-  if (!email || !password) {
-    alert("Please fill in all fields!");
-    return;
-  }
-
-  try {
-    const res = await fetch("http://localhost:5000/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.msg); // Email not found / wrong password
-    } else {
-      alert(data.msg); // Success message
-      window.location.href = "admin.html"; // Redirect to admin panel
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - HomePhysio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f0f0f0;
     }
 
-  } catch (err) {
-    alert("Server not responding. Make sure backend is running.");
-  }
-});
-</script>
+    .form-container {
+      position: relative;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      width: 300px;
+    }
+
+    .close-btn,
+    .back-btn {
+      position: absolute;
+      top: 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .close-btn {
+      right: 15px;
+    }
+
+    .close-btn:hover {
+      color: #00aaff;
+    }
+
+    .back-btn {
+      left: 15px;
+    }
+
+    .back-btn:hover {
+      color: #00aaff;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00aaff;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      height: 40px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #00aaff;
+      color: white;
+      cursor: pointer;
+    }
+
+    .clear-btn {
+      background: #e44848;
+      color: white;
+      margin-top: 5px;
+    }
+
+    .password-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .password-wrapper input {
+      width: 100%;
+      padding-right: 35px;
+      height: 40px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .password-wrapper .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #555;
+      font-size: 1.1rem;
+      user-select: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="form-container">
+    <span class="close-btn" onclick="window.location.href='index.html'">&times;</span>
+    <span class="back-btn" onclick="window.location.href='register.html'">&#8592;</span>
+
+    <h2>Admin Login</h2>
+
+    <form id="adminLoginForm">
+      <input type="email" id="adminEmail" placeholder="Email" required>
+
+      <div class="password-wrapper">
+        <input type="password" id="adminPassword" placeholder="Password" required>
+        <i class="fa-regular fa-eye toggle-password"></i>
+      </div>
+
+      <button type="submit">Login</button>
+      <button type="button" class="clear-btn" onclick="clearFields()">Clear</button>
+    </form>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script>
+    /* ============================
+       SHOW / HIDE PASSWORD
+    ============================ */
+    const togglePassword = document.querySelector('.toggle-password');
+    const passwordInput = document.getElementById('adminPassword');
+
+    togglePassword.addEventListener('click', () => {
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        togglePassword.classList.replace("fa-eye", "fa-eye-slash");
+      } else {
+        passwordInput.type = 'password';
+        togglePassword.classList.replace("fa-eye-slash", "fa-eye");
+      }
+    });
+
+    /* ============================
+       CLEAR INPUT FIELDS
+    ============================ */
+    function clearFields() {
+      document.getElementById("adminEmail").value = "";
+      document.getElementById("adminPassword").value = "";
+    }
+
+    /* ============================
+       ADMIN LOGIN (BACKEND)
+    ============================ */
+    document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("adminEmail").value.trim();
+      const password = document.getElementById("adminPassword").value;
+
+      if (!email || !password) {
+        alert("Please fill in all fields!");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/admin/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.msg); // Email not found / wrong password
+        } else {
+          alert(data.msg); // Success message
+          window.location.href = `${API_BASE_URL}/admin.html`; // Redirect to admin panel
+        }
+
+      } catch (err) {
+        alert("Server not responding. Make sure backend is running.");
+      }
+    });
+  </script>
 
 </body>
+
 </html>

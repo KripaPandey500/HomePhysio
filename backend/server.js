@@ -19,7 +19,7 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-    origin: function(origin, callback) {
+    origin: function (origin, callback) {
         // allow requests with no origin (like mobile apps or curl)
         if (!origin) return callback(null, true);
         if (allowedOrigins.some(re => re.test(origin))) return callback(null, true);
@@ -81,7 +81,9 @@ const User = mongoose.model('User', userSchema);
 const adminSchema = new mongoose.Schema({
     name: String,
     email: { type: String, unique: true },
-    password: String
+    password: String,
+    pic: String,
+    desc: String
 });
 const Admin = mongoose.model('Admin', adminSchema);
 
@@ -227,7 +229,20 @@ app.post('/admin/login', async (req, res) => {
     }
 });
 
-// -------------------- ROUTINES --------------------
+// -------------------- ADMIN PROFILE --------------------
+app.get('/admin/profile', async (req, res) => {
+    if (!req.session.adminId)
+        return res.status(401).json({ msg: "Not logged in as admin" });
+
+    try {
+        const admin = await Admin.findById(req.session.adminId);
+        if (!admin) return res.status(404).json({ msg: "Admin not found" });
+
+        res.json(admin);
+    } catch (err) {
+        res.status(500).json({ msg: "Server error" });
+    }
+});
 app.post('/routines', async (req, res) => {
     try {
         const { name, userEmail } = req.body;
@@ -315,6 +330,25 @@ app.delete('/api/exercises/:id', async (req, res) => {
     }
 });
 
+// -------------------- ADMIN DATA ROUTES --------------------
+app.get('/api/users', async (req, res) => {
+    try {
+        const users = await User.find().select('-password'); // Exclude passwords
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ msg: "Server error" });
+    }
+});
+
+app.get('/api/routines', async (req, res) => {
+    try {
+        const routines = await Routine.find();
+        res.json(routines);
+    } catch (err) {
+        res.status(500).json({ msg: "Server error" });
+    }
+});
+
 // -------------------- START SERVER --------------------
 app.listen(PORT, () =>
     console.log(`🚀 Server running at http://localhost:${PORT}`)
@@ -329,6 +363,24 @@ app.get('/debug/session', (req, res) => {
         session: req.session || null,
         cookieHeader: req.headers.cookie || null
     });
+});
+
+app.delete('/api/users/:id', async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.params.id);
+        res.json({ msg: "User deleted" });
+    } catch (err) {
+        res.status(500).json({ msg: "Server error" });
+    }
+});
+
+app.delete('/api/routines/:id', async (req, res) => {
+    try {
+        await Routine.findByIdAndDelete(req.params.id);
+        res.json({ msg: "Routine deleted" });
+    } catch (err) {
+        res.status(500).json({ msg: "Server error" });
+    }
 });
 
 // Update Admin Profile

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,11 @@
 
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
+
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/admin.css">
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
@@ -51,64 +53,73 @@
         <!-- Dashboard Section -->
         <div id="dashboard" class="section active-section">
             <div class="cards">
-                <div class="card"><h3>Users</h3><p id="userCount">0</p></div>
-                <div class="card"><h3>Exercises</h3><p id="exerciseCount">0</p></div>
-                <div class="card"><h3>Routines</h3><p id="routineCount">0</p></div>
+                <div class="card">
+                    <h3>Users</h3>
+                    <p id="userCount">0</p>
+                </div>
+                <div class="card">
+                    <h3>Exercises</h3>
+                    <p id="exerciseCount">0</p>
+                </div>
+                <div class="card">
+                    <h3>Routines</h3>
+                    <p id="routineCount">0</p>
+                </div>
             </div>
         </div>
 
-<!-- Users Section -->
-<div id="users" class="section">
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="users-table"></tbody>
-    </table>
-</div>
+        <!-- Users Section -->
+        <div id="users" class="section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table"></tbody>
+            </table>
+        </div>
 
 
         <!-- Exercises Section -->
         <div id="exercises" class="section">
             <button class="btn add" onclick="openModal('exerciseModal')">Add Exercise</button>
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Reps</th>
-      <th>Sets</th>
-      <th>Description</th>
-      <th>Image</th>
-      <th>Difficulty</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody id="exercises-table"></tbody>
-</table>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Reps</th>
+                        <th>Sets</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Difficulty</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="exercises-table"></tbody>
+            </table>
         </div>
 
-<!-- Routines Section -->
-<div id="routines" class="section">
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Routine Name</th>
-                <th>Email</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="routines-table"></tbody>
-    </table>
-</div>
+        <!-- Routines Section -->
+        <div id="routines" class="section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Routine Name</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="routines-table"></tbody>
+            </table>
+        </div>
 
 
         <!-- Profile Section -->
@@ -117,7 +128,8 @@
                 <img id="viewPic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
                 <h3 id="viewName">Admin</h3>
                 <p><strong>Email:</strong> <span id="viewEmail">admin@homephysio.com</span></p>
-                <p><strong>Description:</strong> <span id="viewDesc">Managing the physiotherapy app efficiently.</span></p>
+                <p><strong>Description:</strong> <span id="viewDesc">Managing the physiotherapy app efficiently.</span>
+                </p>
                 <button class="btn add" onclick="toggleEditProfile(true)">Edit Profile</button>
             </div>
             <div class="profile-edit" id="profileEdit">
@@ -198,6 +210,8 @@
     </div>
 
     <!-- Main JS -->
+    <script src="js/config.js"></script>
     <script src="js/admin.js"></script>
 </body>
+
 </html>

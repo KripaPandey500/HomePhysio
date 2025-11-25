@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,8 @@
   <style>
     /* Modal background */
     .modal {
-      display: none; /* hidden by default */
+      display: none;
+      /* hidden by default */
       position: fixed;
       z-index: 200;
       left: 0;
@@ -17,7 +19,7 @@
       width: 100%;
       height: 100%;
       overflow: auto;
-      background-color: rgba(0,0,0,0.6);
+      background-color: rgba(0, 0, 0, 0.6);
       padding-top: 60px;
     }
 
@@ -30,13 +32,20 @@
       max-width: 400px;
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       animation: fadeIn 0.4s;
     }
 
     @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(-50px);}
-      to {opacity:1; transform: translateY(0);}
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .modal-header h2 {
@@ -84,6 +93,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Header -->
   <header>
@@ -95,82 +105,83 @@
       <a href="exercises.html">Exercises</a>
       <a href="progress.html">My Progress</a>
       <a href="routines.html">My Routines</a>
-       <a href="aboutus.html">About Us</a>
+      <a href="aboutus.html">About Us</a>
       <a href="#" id="profileIcon"><i class="fas fa-user-circle"></i></a>
     </nav>
   </header>
-<!-- Registration/Login Modal -->
-<div id="authModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
+  <!-- Registration/Login Modal -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
 
-    <!-- Registration Form -->
-    <div id="registerForm">
-      <div class="modal-header">
-        <h2>Register</h2>
+      <!-- Registration Form -->
+      <div id="registerForm">
+        <div class="modal-header">
+          <h2>Register</h2>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="regName" placeholder="Full Name" required>
+          <input type="email" id="regEmail" placeholder="Email" required>
+          <input type="password" id="regPassword" placeholder="Password" required>
+          <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
+          <button onclick="registerUser()">Register</button>
+          <button onclick="clearRegisterForm()" style="background:#ccc;color:#333;margin-top:5px;">Clear</button>
+          <p style="text-align:center;margin-top:10px;">
+            Already have an account? <a href="#" onclick="showLoginForm()">Login</a>
+          </p>
+        </div>
       </div>
-      <div class="modal-body">
-        <input type="text" id="regName" placeholder="Full Name" required>
-        <input type="email" id="regEmail" placeholder="Email" required>
-        <input type="password" id="regPassword" placeholder="Password" required>
-        <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
-        <button onclick="registerUser()">Register</button>
-        <button onclick="clearRegisterForm()" style="background:#ccc;color:#333;margin-top:5px;">Clear</button>
-        <p style="text-align:center;margin-top:10px;">
-          Already have an account? <a href="#" onclick="showLoginForm()">Login</a>
-        </p>
-      </div>
-    </div>
 
-    <!-- Login Form -->
-    <div id="loginForm" style="display:none;">
-      <div class="modal-header">
-        <h2>Login</h2>
-      </div>
-      <div class="modal-body">
-        <input type="email" id="loginEmail" placeholder="Email" required>
-        <input type="password" id="loginPassword" placeholder="Password" required>
-        <button onclick="loginUser()">Login</button>
-        <button onclick="clearLoginForm()" style="background:#ccc;color:#333;margin-top:5px;">Clear</button>
-        <p style="text-align:center;margin-top:10px;">
-          Don't have an account? <a href="#" onclick="showRegisterForm()">Register</a>
-        </p>
+      <!-- Login Form -->
+      <div id="loginForm" style="display:none;">
+        <div class="modal-header">
+          <h2>Login</h2>
+        </div>
+        <div class="modal-body">
+          <input type="email" id="loginEmail" placeholder="Email" required>
+          <input type="password" id="loginPassword" placeholder="Password" required>
+          <button onclick="loginUser()">Login</button>
+          <button onclick="clearLoginForm()" style="background:#ccc;color:#333;margin-top:5px;">Clear</button>
+          <p style="text-align:center;margin-top:10px;">
+            Don't have an account? <a href="#" onclick="showRegisterForm()">Register</a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  // ✅ Function to check if user is authenticated via server session
-  async function checkAuth() {
-    try {
-      const res = await fetch("http://localhost:5000/profile", {
-        credentials: "include" // important to send cookies
-      });
+  <script src="js/config.js"></script>
+  <script>
+    // ✅ Function to check if user is authenticated via server session
+    async function checkAuth() {
+      try {
+        const res = await fetch(`${API_BASE_URL}/profile`, {
+          credentials: "include" // important to send cookies
+        });
 
-      if (!res.ok) return null; // not authenticated
-      const data = await res.json();
-      return data;
+        if (!res.ok) return null; // not authenticated
+        const data = await res.json();
+        return data;
 
-    } catch (err) {
-      console.error("Auth check failed:", err);
-      return null;
-    }
-  }
-
-  window.onload = async () => {
-    try {
-      const userData = await checkAuth(); // get session info
-
-      if (!userData) {
-        // No session → redirect to login
-        window.location.href = "login.html";
-        return;
+      } catch (err) {
+        console.error("Auth check failed:", err);
+        return null;
       }
+    }
 
-      // ✅ Display user profile
-      const mainContent = document.createElement('main');
-      mainContent.innerHTML = `
+    window.onload = async () => {
+      try {
+        const userData = await checkAuth(); // get session info
+
+        if (!userData) {
+          // No session → redirect to login
+          window.location.href = "login.html";
+          return;
+        }
+
+        // ✅ Display user profile
+        const mainContent = document.createElement('main');
+        mainContent.innerHTML = `
         <div style="padding: 20px; text-align: center;">
           <h2>Welcome, ${userData.name}!</h2>
           <p>Your email: ${userData.email}</p>
@@ -185,33 +196,30 @@
           ">Logout</button>
         </div>
       `;
-      document.querySelector('header').insertAdjacentElement('afterend', mainContent);
+        document.querySelector('header').insertAdjacentElement('afterend', mainContent);
 
-      // ✅ Logout functionality
-      document.getElementById("logoutBtn").onclick = async () => {
-        try {
-          const res = await fetch("http://localhost:5000/logout", {
-            method: "POST",
-            credentials: "include"
-          });
+        // ✅ Logout functionality
+        document.getElementById("logoutBtn").onclick = async () => {
+          try {
+            const res = await fetch(`${API_BASE_URL}/logout`, {
+              method: "POST",
+              credentials: "include"
+            });
 
-          if (res.ok) {
-            alert("Logged out successfully!");
-            window.location.href = "login.html";
-          } else {
-            alert("Logout failed!");
+            if (res.ok) {
+              alert("Logged out successfully!");
+              window.location.href = "login.html";
+            } else {
+              alert("Logout failed!");
+            }
+          } catch (err) {
+            console.error("Logout failed:", err);
           }
-        } catch (err) {
-          console.error("Logout failed:", err);
-        }
-      };
+        };
 
-    } catch (err) {
-      console.error("Error loading profile:", err);
-      window.location.href = "login.html";
-    }
-  };
-</script>
-
-
-  
+      } catch (err) {
+        console.error("Error loading profile:", err);
+        window.location.href = "login.html";
+      }
+    };
+  </script>
