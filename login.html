@@ -183,7 +183,7 @@
           if (res.ok && data.msg === "Admin login successful!") {
             localStorage.setItem("loggedInEmail", email);
             alert("Admin successfully logged in!");
-            window.location.href = `${API_BASE_URL}/admin.html`; // redirect admin
+            window.location.href = "admin.html"; // redirect admin
           } else {
             alert(data.msg || "Access denied. Invalid credentials!");
           }
@@ -203,7 +203,7 @@
             localStorage.setItem("userName", data.user.name);
             localStorage.setItem("userEmail", data.user.email);
             alert("User successfully logged in!");
-            window.location.href = `${API_BASE_URL}/profile.html`;
+            window.location.href = "profile.html";
           } else {
             alert(data.msg || "Login failed. Please check your details.");
           }
