@@ -1,0 +1,51 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="HALL" directorySegmentName="seg_0" id="461FB267-E244-3418-6912-4641159209BE">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>38CBBB15-0625-8F04-D397-C18424849D21</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>C9A9C459-97A5-9575-7EF9-0FB6FBC2B38B</segment>
+<tableSpace>FBEB6349-A640-6FD6-E797-B404CABCD494</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="THEATREID" id="38DCCC52-B506-97CC-832A-0271716C802B">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="HALLID" id="75DCE168-1FFC-1A43-B7B0-5AF1002E8720">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="HALLCAPACITY" id="D64F1610-3C8E-5EC7-67F4-F8E8B905487E">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="SYS_C007526" id="9D5B3298-2C43-ACB2-329C-878E3F8798C8">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="HALL_PK" id="39953489-951E-E005-F7F7-F678E3814287">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:16 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>38CBBB15-0625-8F04-D397-C18424849D21</schemaObject>
+<segment>B8167763-A3CF-B621-1D21-204CC3B539FA</segment>
+<tableSpace>FBEB6349-A640-6FD6-E797-B404CABCD494</tableSpace>
+<indexSegment>B8167763-A3CF-B621-1D21-204CC3B539FA</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

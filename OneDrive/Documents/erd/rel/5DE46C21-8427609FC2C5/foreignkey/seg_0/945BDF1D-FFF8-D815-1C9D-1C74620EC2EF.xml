@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="945BDF1D-FFF8-D815-1C9D-1C74620EC2EF" containerWithKeyObject="461FB267-E244-3418-6912-4641159209BE" localFKIndex="9D5B3298-2C43-ACB2-329C-878E3F8798C8" name="SYS_C007526">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>KUMARISHALL</sourceObjSchema>
+<sourceObjName>SYS_C007526</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<referredTableLongName>KUMARISHALL.THEATRE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>2631CED0-B847-03F3-6748-74B63C7EAC51</referredTableID>
+<keyObject>2B469780-7617-4D89-8FA5-1381B3869D84</keyObject>
+<referredKeyID>2B469780-7617-4D89-8FA5-1381B3869D84</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>THEATREID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

@@ -1,0 +1,117 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="81B217F8-5AAE-F9E5-249C-427AA9D23679" schemaObject="38CBBB15-0625-8F04-D397-C18424849D21" name="MOVIE">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>KUMARISHALL</sourceObjSchema>
+<sourceObjName>MOVIE</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MOVIEID" id="BADEA284-4255-FCD2-2A7C-66566CD0B581">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>MOVIE</sourceObjSchema>
+<sourceObjName>MOVIEID</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TITLE" id="B8E04B42-8AAF-AC78-6B57-D445C3D23794">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>MOVIE</sourceObjSchema>
+<sourceObjName>TITLE</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DURATION" id="B95F1AA9-E89A-6C55-E787-B3860B4E8B4B">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>MOVIE</sourceObjSchema>
+<sourceObjName>DURATION</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="LANGUAGE" id="0B79FF28-58DB-C0D6-DE0C-99EEB01CEDFD">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>MOVIE</sourceObjSchema>
+<sourceObjName>LANGUAGE</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="GENRE" id="73D28DE2-26E0-8DAA-C4B7-5F94920D09D9">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>MOVIE</sourceObjSchema>
+<sourceObjName>GENRE</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="RELEASEDATE" id="26E8A2E8-44B4-4E7D-4AFE-774C5D071C54">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>MOVIE</sourceObjSchema>
+<sourceObjName>RELEASEDATE</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B0E6B660-6633-7C56-318B-2DE0EAE420BB" schemaObject="38CBBB15-0625-8F04-D397-C18424849D21" name="MOVIE_PK">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>KUMARISHALL</sourceObjSchema>
+<sourceObjName>SYS_C007527</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:16 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="BADEA284-4255-FCD2-2A7C-66566CD0B581"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

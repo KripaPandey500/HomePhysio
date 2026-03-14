@@ -1,0 +1,66 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="TICKET" directorySegmentName="seg_0" id="25482189-197C-83FD-3D3C-6AADC6F89FD6">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>38CBBB15-0625-8F04-D397-C18424849D21</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>C9A9C459-97A5-9575-7EF9-0FB6FBC2B38B</segment>
+<tableSpace>FBEB6349-A640-6FD6-E797-B404CABCD494</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="TICKETID" id="108E791A-772C-7E8D-F6F0-B51453165C9B">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="SHOWID" id="40FCAEA1-1009-52CC-0992-6385E170CB68">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BOOKINGDATE" id="4344561D-9613-F076-E880-E9F6BB72A053">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="STATUS" id="456F5BDD-49A4-435C-3982-121F13924807">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="USERID" id="DC528EAE-0A4D-6DEE-E759-D6C098634E56">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_USER_TICKETS" id="33DCE5B6-2BF8-9F44-1918-F3B5B9F85F01">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_SHOW_TICKETS" id="A0C014F9-5400-F7BF-45AE-AF39B4D5EECA">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="TICKET_PK" id="586CCA3E-5D65-F331-01CA-4B044BB864F1">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:16 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>38CBBB15-0625-8F04-D397-C18424849D21</schemaObject>
+<segment>B8167763-A3CF-B621-1D21-204CC3B539FA</segment>
+<tableSpace>FBEB6349-A640-6FD6-E797-B404CABCD494</tableSpace>
+<indexSegment>B8167763-A3CF-B621-1D21-204CC3B539FA</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

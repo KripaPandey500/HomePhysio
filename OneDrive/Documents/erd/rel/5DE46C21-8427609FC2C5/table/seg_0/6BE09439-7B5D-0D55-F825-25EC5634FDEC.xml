@@ -1,0 +1,141 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="6BE09439-7B5D-0D55-F825-25EC5634FDEC" schemaObject="38CBBB15-0625-8F04-D397-C18424849D21" name="SHOW">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>KUMARISHALL</sourceObjSchema>
+<sourceObjName>SHOW</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="SHOWID" id="85502DBC-8832-848D-7FFE-FC5CA34E5E16">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>SHOW</sourceObjSchema>
+<sourceObjName>SHOWID</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MOVIEID" id="AACDF08E-9DD4-04BF-B270-7A8E2345D55B">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>SHOW</sourceObjSchema>
+<sourceObjName>MOVIEID</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="690B2CEF-33A3-F9CF-9D20-C5B32A058986" referredColumn="BADEA284-4255-FCD2-2A7C-66566CD0B581"/>
+</associations>
+</Column>
+<Column name="HALLID" id="C4613008-F7A2-0767-D315-4B89C43E5AA4">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>SHOW</sourceObjSchema>
+<sourceObjName>HALLID</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F2AC2895-3F88-C871-0B67-79C359FC69E1" referredColumn="75DCE168-1FFC-1A43-B7B0-5AF1002E8720"/>
+</associations>
+</Column>
+<Column name="SHOWTIME" id="F0405376-CBC2-5DFD-698A-4DBC97B6EB03">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>SHOW</sourceObjSchema>
+<sourceObjName>SHOWTIME</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SHOWDATE" id="D525C038-60C3-C829-1F46-7595C783EB52">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>SHOW</sourceObjSchema>
+<sourceObjName>SHOWDATE</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TICKETPRICE" id="3713CD6D-35CE-6FB3-5942-F8D5F5DA1A91">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>SHOW</sourceObjSchema>
+<sourceObjName>TICKETPRICE</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="154ADA90-1742-CE06-664D-CCF034D4DCB1" schemaObject="38CBBB15-0625-8F04-D397-C18424849D21" name="SHOW_PK">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>KUMARISHALL</sourceObjSchema>
+<sourceObjName>SYS_C007528</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:16 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="85502DBC-8832-848D-7FFE-FC5CA34E5E16"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CD00C165-0781-AA36-C038-E78ABA34A3B2" name="SYS_C007529">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AACDF08E-9DD4-04BF-B270-7A8E2345D55B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F5353134-D266-55F3-2F0E-482BB4A03CCE" name="SYS_C007530">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C4613008-F7A2-0767-D315-4B89C43E5AA4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

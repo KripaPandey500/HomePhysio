@@ -1,0 +1,84 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="461FB267-E244-3418-6912-4641159209BE" schemaObject="38CBBB15-0625-8F04-D397-C18424849D21" name="HALL">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>KUMARISHALL</sourceObjSchema>
+<sourceObjName>HALL</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="HALLID" id="75DCE168-1FFC-1A43-B7B0-5AF1002E8720">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>HALL</sourceObjSchema>
+<sourceObjName>HALLID</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="THEATREID" id="38DCCC52-B506-97CC-832A-0271716C802B">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>HALL</sourceObjSchema>
+<sourceObjName>THEATREID</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="945BDF1D-FFF8-D815-1C9D-1C74620EC2EF" referredColumn="EB71A96F-3747-EBBC-2FED-60076A6253A3"/>
+</associations>
+</Column>
+<Column name="HALLCAPACITY" id="D64F1610-3C8E-5EC7-67F4-F8E8B905487E">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>HALL</sourceObjSchema>
+<sourceObjName>HALLCAPACITY</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="39953489-951E-E005-F7F7-F678E3814287" schemaObject="38CBBB15-0625-8F04-D397-C18424849D21" name="HALL_PK">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>KUMARISHALL</sourceObjSchema>
+<sourceObjName>SYS_C007525</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:16 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="75DCE168-1FFC-1A43-B7B0-5AF1002E8720"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9D5B3298-2C43-ACB2-329C-878E3F8798C8" name="SYS_C007526">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="38DCCC52-B506-97CC-832A-0271716C802B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

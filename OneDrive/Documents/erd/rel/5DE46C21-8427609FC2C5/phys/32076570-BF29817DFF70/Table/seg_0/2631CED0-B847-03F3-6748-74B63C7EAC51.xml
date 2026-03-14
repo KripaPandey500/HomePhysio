@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="THEATRE" directorySegmentName="seg_0" id="2631CED0-B847-03F3-6748-74B63C7EAC51">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>38CBBB15-0625-8F04-D397-C18424849D21</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>C9A9C459-97A5-9575-7EF9-0FB6FBC2B38B</segment>
+<tableSpace>FBEB6349-A640-6FD6-E797-B404CABCD494</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="LOCATION" id="6A17E0EF-BB13-1BEB-4AB2-C486C0A3CB39">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="THEATRENAME" id="79D27939-C11B-99C1-9A98-290B3C68EABF">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="THEATRECITY" id="91CA7365-524F-5598-2FCA-C7053ED0AEBC">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="THEATREID" id="EB71A96F-3747-EBBC-2FED-60076A6253A3">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:15 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="THEATRE_PK" id="2B469780-7617-4D89-8FA5-1381B3869D84">
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:16 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<schemaObject>38CBBB15-0625-8F04-D397-C18424849D21</schemaObject>
+<segment>B8167763-A3CF-B621-1D21-204CC3B539FA</segment>
+<tableSpace>FBEB6349-A640-6FD6-E797-B404CABCD494</tableSpace>
+<indexSegment>B8167763-A3CF-B621-1D21-204CC3B539FA</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

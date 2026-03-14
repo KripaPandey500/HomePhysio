@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="690B2CEF-33A3-F9CF-9D20-C5B32A058986" containerWithKeyObject="6BE09439-7B5D-0D55-F825-25EC5634FDEC" localFKIndex="CD00C165-0781-AA36-C038-E78ABA34A3B2" name="SYS_C007529">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>KUMARISHALL</sourceObjSchema>
+<sourceObjName>SYS_C007529</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<referredTableLongName>KUMARISHALL.MOVIE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>81B217F8-5AAE-F9E5-249C-427AA9D23679</referredTableID>
+<keyObject>B0E6B660-6633-7C56-318B-2DE0EAE420BB</keyObject>
+<referredKeyID>B0E6B660-6633-7C56-318B-2DE0EAE420BB</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>MOVIEID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

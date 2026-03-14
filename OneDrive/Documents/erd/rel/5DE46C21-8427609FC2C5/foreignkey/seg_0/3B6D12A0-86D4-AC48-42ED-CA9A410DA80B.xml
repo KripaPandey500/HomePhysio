@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="3B6D12A0-86D4-AC48-42ED-CA9A410DA80B" containerWithKeyObject="25482189-197C-83FD-3D3C-6AADC6F89FD6" localFKIndex="A0C014F9-5400-F7BF-45AE-AF39B4D5EECA" name="FK_SHOW_TICKETS">
+<sourceConnName>KumarisHall</sourceConnName>
+<sourceObjSchema>KUMARISHALL</sourceObjSchema>
+<sourceObjName>FK_SHOW_TICKETS</sourceObjName>
+<createdBy>ADMIN</createdBy>
+<createdTime>2026-03-14 05:10:17 UTC</createdTime>
+<ownerDesignName>erd</ownerDesignName>
+<referredTableLongName>KUMARISHALL.SHOW</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>6BE09439-7B5D-0D55-F825-25EC5634FDEC</referredTableID>
+<keyObject>154ADA90-1742-CE06-664D-CCF034D4DCB1</keyObject>
+<referredKeyID>154ADA90-1742-CE06-664D-CCF034D4DCB1</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>SHOWID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
