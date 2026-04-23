@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sidebar - Yaantra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<aside class="fixed inset-y-0 left-0 z-50 bg-gradient-to-b from-red-600 via-red-700 to-red-800 shadow-xl w-72 min-h-screen flex flex-col">
+    <div class="flex items-center justify-between h-16 bg-gradient-to-r from-red-700 to-red-800 text-white border-b border-red-500 px-4">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                </svg>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold text-amber-400">Admin Panel</h2>
+                <p class="text-xs text-red-100 opacity-90">Yaantra</p>
+            </div>
+        </div>
+    </div>
+    <nav class="flex-1 px-3 py-4 overflow-y-auto">
+        <div class="space-y-1">
+            <a href="/admin/dashboard.html" class="flex items-center px-4 py-3 text-white rounded-lg transition-all duration-200 hover:bg-white hover:bg-opacity-10 hover:shadow-md">
+                <span class="font-medium">Dashboard</span>
+            </a>
+            <div class="pt-6">
+                <p class="px-4 text-xs font-bold text-red-200 uppercase tracking-wider mb-3">Inventory & Vendor Management</p>
+                <div class="space-y-1">
+                    <a href="/admin/parts.html" class="flex items-center px-4 py-3 text-white rounded-lg transition-all duration-200 hover:bg-white hover:bg-opacity-10 hover:shadow-md">Manage Parts</a>
+                    <a href="/admin/vendors.html" class="flex items-center px-4 py-3 text-white rounded-lg transition-all duration-200 hover:bg-white hover:bg-opacity-10 hover:shadow-md">Vendors</a>
+                    <a href="/admin/purchase-invoices.html" class="flex items-center px-4 py-3 text-white rounded-lg transition-all duration-200 hover:bg-white hover:bg-opacity-10 hover:shadow-md">Purchase Invoices</a>
+                </div>
+            </div>
+            <div class="pt-6">
+                <p class="px-4 text-xs font-bold text-red-200 uppercase tracking-wider mb-3">Staff Management</p>
+                <div class="space-y-1">
+                    <a href="/auth/register-staff.html" class="flex items-center px-4 py-3 text-white rounded-lg transition-all duration-200 hover:bg-white hover:bg-opacity-10 hover:shadow-md">Staff Registration</a>
+                </div>
+            </div>
+            <div class="pt-6">
+                <p class="px-4 text-xs font-bold text-red-200 uppercase tracking-wider mb-3">Staff & Customer Management</p>
+                <div class="space-y-1">
+                    <a href="/admin/staff.html" class="flex items-center px-4 py-3 text-white rounded-lg transition-all duration-200 hover:bg-white hover:bg-opacity-10 hover:shadow-md">Manage Staff</a>
+                    <a href="/admin/customers.html" class="flex items-center px-4 py-3 text-white rounded-lg transition-all duration-200 hover:bg-white hover:bg-opacity-10 hover:shadow-md">Customers</a>
+                </div>
+            </div>
+            <div class="pt-6">
+                <p class="px-4 text-xs font-bold text-red-200 uppercase tracking-wider mb-3">Reports & Settings</p>
+                <div class="space-y-1">
+                    <a href="/admin/reports.html" class="flex items-center px-4 py-3 text-white rounded-lg transition-all duration-200 hover:bg-white hover:bg-opacity-10 hover:shadow-md">Financial Reports</a>
+                    <a href="/admin/settings.html" class="flex items-center px-4 py-3 text-white rounded-lg transition-all duration-200 hover:bg-white hover:bg-opacity-10 hover:shadow-md">Settings</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="mt-auto bg-gradient-to-t from-red-800 to-red-700 border-t border-red-500 px-3 py-4">
+        <div class="space-y-1">
+            <a href="/" class="flex items-center px-4 py-2 text-white rounded-lg transition-all duration-200 hover:bg-white hover:bg-opacity-10 hover:shadow-md">
+                <span class="font-medium text-sm">Back to Website</span>
+            </a>
+            <a href="/admin/logout.html" class="flex items-center px-4 py-2 text-white rounded-lg transition-all duration-200 hover:bg-white hover:bg-opacity-10 hover:shadow-md">
+                <span class="font-medium text-sm">Logout</span>
+            </a>
+        </div>
+    </div>
+</aside>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Registration</title>
+    <style>
+        body { font-family: Arial; background: #f4f4f4; }
+        .container { width: 400px; margin: 50px auto; padding: 20px; background: white; border-radius: 10px; }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; }
+        button { width: 100%; padding: 10px; background: #f59e42; color: white; border: none; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Register Vendor</h2>
+    <input type="text" id="firstName" placeholder="First Name">
+    <input type="text" id="lastName" placeholder="Last Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <input type="text" id="phone" placeholder="Phone">
+    <input type="file" id="profilePicture" accept="image/*" placeholder="Profile Picture">
+    <input type="text" id="address" placeholder="Address">
+    <select id="gender">
+        <option value="">Select Gender</option>
+        <option value="Female">Female</option>
+        <option value="Male">Male</option>
+    </select>
+    <input type="date" id="dob">
+    <button type="button" onclick="registerVendor()">Register</button>
+    <p id="message"></p>
+</div>
+<script src="../assets/js/register-vendor.js"></script>
+</body>
+</html>

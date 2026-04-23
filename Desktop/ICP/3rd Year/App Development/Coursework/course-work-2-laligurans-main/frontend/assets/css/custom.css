@@ -1,0 +1,112 @@
+.ts-alert-success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border-radius: 0.5rem;
+    padding: 0.75em 1em;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 1em;
+}
+.ts-alert-error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-radius: 0.5rem;
+    padding: 0.75em 1em;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 1em;
+}
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+}
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-light);
+    transform: scale(1.05);
+}
+.btn-danger {
+    background-color: #ef4444;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+.btn-danger:hover {
+    background-color: #dc2626;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.top-contact-bar {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    position: static;
+    width: 100%;
+    z-index: 900;
+}
+
+nav a {
+    color: var(--color-accent);
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: var(--color-primary-hover);
+}
+.section-dark {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+}
+h1, h2, h3, h4, h5 {
+  --color-accent:  #000000;   
+}
+.hero-overlay {
+    background-color: rgba(27,96,193,0.3);
+}
+.section-light {
+    background-color: var(--color-light);
+}
+.section-dark {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+}
+.group-hover\:scale-110:hover {
+    transform: scale(1.1);
+}
+html, body {
+height: 100%;
+margin: 0;
+padding: 0;
+font-family: Arial, sans-serif;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-content {
+    flex: 1 0 auto;
+    padding-top: 0;
+}
+.site-footer {
+  flex-shrink: 0;
+  width: 100%;
+  z-index: 40;
+}
+
+

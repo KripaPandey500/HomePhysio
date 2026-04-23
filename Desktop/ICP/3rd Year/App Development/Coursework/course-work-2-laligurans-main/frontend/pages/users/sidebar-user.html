@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Sidebar - Yaantra</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f4f6fb]">
+<aside class="fixed inset-y-0 left-0 z-50 bg-gradient-to-b from-red-600 via-red-700 to-red-800 shadow-2xl w-72 min-h-screen flex flex-col">
+    <!-- Logo and Panel Title -->
+    <div class="flex items-center h-20 bg-gradient-to-r from-red-700 to-red-800 text-white border-b border-red-500 px-6">
+        <div class="flex items-center space-x-3">
+            <!-- Logo Placeholder -->
+            <div class="w-12 h-12 bg-white bg-opacity-30 rounded-lg flex items-center justify-center">
+                <!-- Replace with <img src='/path/to/logo.png' alt='Logo' class='h-8'> if you have a logo -->
+                <span class="text-2xl font-bold text-red-600">Y</span>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-amber-400 tracking-wide">User Panel</h2>
+                <p class="text-xs text-red-100 opacity-90">Yaantra</p>
+            </div>
+        </div>
+    </div>
+    <nav class="flex-1 px-4 py-6 overflow-y-auto">
+        <div class="space-y-6">
+            <div>
+                <a href="/user/dashboard.html" class="flex items-center px-4 py-3 text-white rounded-lg font-medium transition hover:bg-white hover:bg-opacity-10 hover:text-red-700">
+                    Dashboard
+                </a>
+            </div>
+            <div>
+                <p class="px-2 text-xs font-bold text-red-200 uppercase tracking-wider mb-2">My Account</p>
+                <div class="space-y-1">
+                    <a href="/user/profile.html" class="flex items-center px-4 py-3 text-white rounded-lg transition hover:bg-white hover:bg-opacity-10 hover:text-red-700">Profile</a>
+                    <a href="/user/vehicles.html" class="flex items-center px-4 py-3 text-white rounded-lg transition hover:bg-white hover:bg-opacity-10 hover:text-red-700">My Vehicles</a>
+                </div>
+            </div>
+            <div>
+                <p class="px-2 text-xs font-bold text-red-200 uppercase tracking-wider mb-2">History & Services</p>
+                <div class="space-y-1">
+                    <a href="/user/history.html" class="flex items-center px-4 py-3 text-white rounded-lg transition hover:bg-white hover:bg-opacity-10 hover:text-red-700">Purchase/Service History</a>
+                    <a href="/user/appointments.html" class="flex items-center px-4 py-3 text-white rounded-lg transition hover:bg-white hover:bg-opacity-10 hover:text-red-700">Book Appointment</a>
+                    <a href="/user/request-part.html" class="flex items-center px-4 py-3 text-white rounded-lg transition hover:bg-white hover:bg-opacity-10 hover:text-red-700">Request Part</a>
+                    <a href="/user/reviews.html" class="flex items-center px-4 py-3 text-white rounded-lg transition hover:bg-white hover:bg-opacity-10 hover:text-red-700">My Reviews</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="mt-auto bg-gradient-to-t from-red-800 to-red-700 border-t border-red-500 px-6 py-5">
+        <a href="/" class="flex items-center px-4 py-2 text-white rounded-lg hover:bg-white hover:bg-opacity-10 hover:text-red-700">Back to Website</a>
+        <a href="/user/logout.html" class="flex items-center px-4 py-2 text-white rounded-lg hover:bg-white hover:bg-opacity-10 hover:text-red-700 mt-2">Logout</a>
+    </div>
+</aside>
+</body>
+</html>

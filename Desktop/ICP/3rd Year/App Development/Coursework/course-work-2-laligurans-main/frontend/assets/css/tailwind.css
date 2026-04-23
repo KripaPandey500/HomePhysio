@@ -1,0 +1,32 @@
+:root {
+  --color-primary: #1b60c1;  
+  --color-secondary: #f6faf6; 
+  --color-accent:  #000000;   
+  --color-light: #f0f0f0;     
+  --color-primary-hover: #1966b0;
+}
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-light);
+}
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-accent {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+}
+.btn-accent:hover {
+  background-color: var(--color-accent-hover);
+  color: var(--color-light);
+}
+
+.btn-light {
+  background-color: var(--color-light);
+  color: var(--color-primary);
+}
+.btn-light:hover {
+  background-color: var(--color-light-hover);
+  color: var(--color-primary);
+}
