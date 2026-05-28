@@ -2,7 +2,7 @@
  * routine.js — Routine creation and management (routines.html)
  */
 
-const API = 'http://localhost:5000';
+const API = 'http://localhost:5000'
 
 let currentUser = null;
 let allRoutines = [];

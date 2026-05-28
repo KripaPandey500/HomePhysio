@@ -4,7 +4,7 @@
  * and logs completion to the backend.
  */
 
-const API = 'http://localhost:5000';
+const API = 'http://localhost:5000'
 
 let routine          = null;
 let currentIndex     = 0;

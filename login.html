@@ -39,15 +39,21 @@
     .divider { text-align: center; font-size: 0.83rem; color: #888; margin: 1rem 0; }
     .divider a { color: #0077cc; font-weight: 700; text-decoration: none; }
     /* Close button on right panel */
-    .close-right { position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border-radius: 50%; background: #f0f4f8; border: none; font-size: 0.95rem; cursor: pointer; color: #888; display: flex; align-items: center; justify-content: center; transition: 0.2s; text-decoration: none; }
+    .close-right {
+  position: absolute; top: 14px; right: 14px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #f0f4f8; border: none; font-size: 1rem;
+  cursor: pointer; color: #666; display: flex;
+  align-items: center; justify-content: center;
+  transition: 0.2s; text-decoration: none; z-index: 5;
+}
     .close-right:hover { background: #fee2e2; color: #e74c3c; }
     @media(max-width: 680px) { .left { display: none; } .right { width: 100%; border-radius: 24px; } }
   </style>
 </head>
 <body>
 <div class="wrap">
-  <!-- Home exit button (top right of whole card) -->
-  <a href="index.html" class="home-btn" title="Back to Home"><i class="fas fa-home"></i></a>
+
 
   <!-- Left -->
   <div class="left">
@@ -89,7 +95,7 @@
 </div>
 
 <script>
-  const API = 'http://localhost:5000';
+const API = 'http://localhost:5000';
 
   async function doLogin() {
     const email  = document.getElementById('email').value.trim();
@@ -126,7 +132,7 @@
       }
 
       // Login successful — redirect to profile
-      window.location.href = 'profile.html';
+     window.location.href = 'http://localhost:5000/profile.html';
     } catch {
       err.textContent = 'Cannot connect to server. Make sure npm start is running in the backend folder.';
       err.style.display = 'block';

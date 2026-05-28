@@ -2,7 +2,7 @@
  * progress.js — Progress tracking page
  */
 
-const API = 'http://localhost:5000';
+const API = 'http://localhost:5000'
 
 document.addEventListener('DOMContentLoaded', async () => {
     await checkSession();
