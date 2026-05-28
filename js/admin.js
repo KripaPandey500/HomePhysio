@@ -1,12 +1,22 @@
-/* ==================== HEADER ==================== */
+/* ==================== GLOBAL STATE ==================== */
+let adminData = null;
+let exercises = [];
+let users = [];
+let routines = [];
+let currentExerciseId = null; // Track edit mode
+
+/* ==================== HEADER & UI ==================== */
 document.getElementById('headerPic').onclick = () => showSection('profile');
 
+<<<<<<< HEAD
 /* ==================== DATABASE ==================== */
 let db = JSON.parse(localStorage.getItem("db") || '{"users":[],"exercises":[],"routines":[],"profile":{}}');
 let currentAdminId = null; // MongoDB admin _id when loaded from server
 let currentExerciseId = null; // ✅ Track edit mode
 
 /* ==================== TOAST & UI ==================== */
+=======
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
 function showToast(msg) {
     const t = document.getElementById('toast');
     t.innerText = msg;
@@ -16,8 +26,12 @@ function showToast(msg) {
 
 function toggleTheme() {
     document.body.classList.toggle('dark');
-    document.getElementById('themeToggle').classList.toggle('fa-moon');
-    document.getElementById('themeToggle').classList.toggle('fa-sun');
+    const icon = document.getElementById('themeToggle');
+    if (document.body.classList.contains('dark')) {
+        icon.classList.replace('fa-sun', 'fa-moon');
+    } else {
+        icon.classList.replace('fa-moon', 'fa-sun');
+    }
 }
 
 function toggleSidebar() {
@@ -44,12 +58,167 @@ function closeModal(id) {
     document.getElementById(id).style.display = 'none';
 }
 
-function logout() {
-    showToast("Logged out successfully!");
-    setTimeout(() => window.location.href = "index.html", 1500);
+async function logout() {
+    try {
+        await fetch(`${API_BASE_URL}/logout`, { method: "POST" });
+        showToast("Logged out successfully!");
+        setTimeout(() => window.location.href = "index.html", 1500);
+    } catch (err) {
+        console.error("Logout failed", err);
+        window.location.href = "index.html";
+    }
 }
 
-/* ==================== PROFILE ==================== */
+/* ==================== DATA FETCHING ==================== */
+async function fetchData() {
+    await Promise.all([loadAdminProfile(), loadUsers(), loadExercises(), loadRoutines()]);
+    updateDashboardCounts();
+}
+
+async function loadAdminProfile() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/admin/profile`, { credentials: "include" });
+        if (res.status === 401) {
+            window.location.href = "adminlogin.html";
+            return;
+        }
+        if (!res.ok) throw new Error("Failed to load profile");
+
+        adminData = await res.json();
+        renderProfile();
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function loadUsers() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/users`);
+        if (res.ok) {
+            users = await res.json();
+            renderUsersTable();
+        }
+    } catch (err) {
+        console.error("Error loading users", err);
+    }
+}
+
+async function loadExercises() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/exercises`);
+        if (res.ok) {
+            exercises = await res.json();
+            renderExercisesTable();
+        }
+    } catch (err) {
+        console.error("Error loading exercises", err);
+    }
+}
+
+async function loadRoutines() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/routines`);
+        if (res.ok) {
+            routines = await res.json();
+            renderRoutinesTable();
+        }
+    } catch (err) {
+        console.error("Error loading routines", err);
+    }
+}
+
+/* ==================== RENDERING ==================== */
+function renderProfile() {
+    if (!adminData) return;
+
+    // Default values if missing
+    const name = adminData.name || "Admin";
+    const email = adminData.email || "admin@homephysio.com";
+    const desc = adminData.desc || "Managing the physiotherapy app efficiently."; // Note: 'desc' might not be in schema yet
+    const pic = adminData.pic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"; // Note: 'pic' might not be in schema yet
+
+    // View Mode
+    document.getElementById('viewName').innerText = name;
+    document.getElementById('viewEmail').innerText = email;
+    document.getElementById('viewDesc').innerText = desc;
+    document.getElementById('viewPic').src = pic;
+
+    // Header & Sidebar
+    document.getElementById('headerPic').src = pic;
+    document.getElementById('sidebarPic').src = pic;
+    document.getElementById('sidebarGreeting').innerText = `Hello, ${name} 👋`;
+
+    // Edit Mode Inputs
+    document.getElementById('adminName').value = name;
+    document.getElementById('adminEmail').value = email;
+    document.getElementById('adminDesc').value = desc;
+}
+
+function renderUsersTable() {
+    const tbody = document.getElementById("users-table");
+    if (!tbody) return;
+    tbody.innerHTML = users.map((u, i) => `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${u.name}</td>
+            <td>${u.email}</td>
+            <td>********</td>
+            <td>
+                <button class='btn delete' onclick='deleteUser("${u._id}")'>Delete</button>
+            </td>
+        </tr>
+    `).join("");
+}
+
+function renderExercisesTable() {
+    const tbody = document.getElementById("exercises-table");
+    if (!tbody) return;
+    tbody.innerHTML = exercises.map((e, i) => `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${e.name}</td>
+            <td>${e.category}</td>
+            <td>${e.reps}</td>
+            <td>${e.sets}</td>
+            <td class="description" title="${e.description}">${e.description}</td>
+            <td>${e.image ? '<img src="' + e.image + '" style="width:40px;height:40px;border-radius:5px;">' : ''}</td>
+            <td>${e.difficulty}</td>
+            <td>
+                <button class='btn edit' onclick='editExercise("${e._id}")'>Edit</button>
+                <button class='btn delete' onclick='deleteExercise("${e._id}")'>Delete</button>
+            </td>
+        </tr>
+    `).join("");
+}
+
+function renderRoutinesTable() {
+    const tbody = document.getElementById("routines-table");
+    if (!tbody) return;
+    tbody.innerHTML = routines.map((r, i) => `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${r.name}</td>
+            <td>${r.userEmail}</td>
+            <td>
+                <button class='btn delete' onclick='deleteRoutine("${r._id}")'>Delete</button>
+            </td>
+        </tr>
+    `).join("");
+}
+
+function updateDashboardCounts() {
+    const uc = document.getElementById("userCount");
+    const ec = document.getElementById("exerciseCount");
+    const rc = document.getElementById("routineCount");
+
+    if (uc) uc.innerText = users.length;
+    if (ec) ec.innerText = exercises.length;
+    if (rc) rc.innerText = routines.length;
+}
+
+/* ==================== ACTIONS ==================== */
+
+// --- Profile ---
 function toggleEditProfile(edit) {
     document.getElementById('profileView').style.display = edit ? 'none' : 'block';
     document.getElementById('profileEdit').style.display = edit ? 'block' : 'none';
@@ -60,15 +229,21 @@ function updateProfilePic(e) {
     if (!f) return;
     const r = new FileReader();
     r.onload = () => {
+<<<<<<< HEAD
         // Use DOM elements explicitly
         const viewPic = document.getElementById('viewPic');
         const headerPic = document.getElementById('headerPic');
         const sidebarPic = document.getElementById('sidebarPic');
         viewPic.src = headerPic.src = sidebarPic.src = r.result;
+=======
+        // Preview only, not saved yet
+        document.getElementById('viewPic').src = r.result;
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
     };
     r.readAsDataURL(f);
 }
 
+<<<<<<< HEAD
 function saveProfile() {
     const name = document.getElementById('adminName').value.trim();
     const email = document.getElementById('adminEmail').value.trim();
@@ -163,23 +338,35 @@ function updateTables() {
                 </td>
             </tr>
         `).join("");
+=======
+async function saveProfile() {
+    const name = document.getElementById('adminName').value;
+    const email = document.getElementById('adminEmail').value;
+    const desc = document.getElementById('adminDesc').value;
+    const pic = document.getElementById('viewPic').src; // Get the src (base64)
+
+    try {
+        const res = await fetch(`${API_BASE_URL}/admin/update/${adminData._id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, pic, desc }) // Note: Backend needs to support 'desc' and 'pic' in Admin model
+        });
+
+        if (res.ok) {
+            showToast("Profile updated!");
+            loadAdminProfile(); // Reload to confirm
+            toggleEditProfile(false);
+        } else {
+            showToast("Failed to update profile");
+        }
+    } catch (err) {
+        console.error(err);
+        showToast("Error saving profile");
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
     }
-
-    const uc = document.getElementById("userCount");
-    const ec = document.getElementById("exerciseCount");
-    const rc = document.getElementById("routineCount");
-
-    if (uc) uc.innerText = db.users.length;
-    if (ec) ec.innerText = db.exercises.length;
-    if (rc) rc.innerText = db.routines.length;
 }
 
-function saveAndUpdate() {
-    localStorage.setItem('db', JSON.stringify(db));
-    updateTables();
-}
-
-/* ==================== EXERCISES ==================== */
+// --- Exercises ---
 async function addExercise() {
     const name = document.getElementById('exerciseName').value.trim();
     const desc = document.getElementById('exerciseDesc').value.trim();
@@ -198,9 +385,9 @@ async function addExercise() {
         const exerciseData = { name, description: desc, difficulty: diff, category, reps, sets, image: imageData };
 
         try {
-            const url = currentExerciseId 
-                ? `http://localhost:5000/api/exercises/${currentExerciseId}` 
-                : "http://localhost:5000/api/exercises";
+            const url = currentExerciseId
+                ? `${API_BASE_URL}/api/exercises/${currentExerciseId}`
+                : `${API_BASE_URL}/api/exercises`;
             const method = currentExerciseId ? "PUT" : "POST";
 
             const res = await fetch(url, {
@@ -209,22 +396,17 @@ async function addExercise() {
                 body: JSON.stringify(exerciseData)
             });
 
-            if (!res.ok) throw new Error("Failed to save exercise in MongoDB");
+            if (!res.ok) throw new Error("Failed to save exercise");
 
-            currentExerciseId = null; // reset edit mode
-
-            const refresh = await fetch("http://localhost:5000/api/exercises");
-            db.exercises = await refresh.json();
-
-            saveAndUpdate();
-            updateTables();
+            currentExerciseId = null;
             closeModal('exerciseModal');
             clearExerciseForm();
-
-            showToast("Exercise saved successfully!");
+            showToast("Exercise saved!");
+            loadExercises(); // Refresh list
+            updateDashboardCounts();
         } catch (err) {
             console.error(err);
-            showToast("Error adding exercise!");
+            showToast("Error saving exercise");
         }
     };
 
@@ -233,42 +415,50 @@ async function addExercise() {
         reader.onload = (e) => processExercise(e.target.result);
         reader.readAsDataURL(file);
     } else {
-        processExercise(null);
+        // If editing and no new file, keep old image? 
+        // For simplicity, if no file and editing, we might need to handle keeping the old image.
+        // But the backend PUT replaces the whole object usually. 
+        // Let's assume for now we just send what we have. 
+        // Ideally we should check if we are editing and use the existing image if 'file' is null.
+        if (currentExerciseId) {
+            const existing = exercises.find(e => e._id === currentExerciseId);
+            processExercise(existing ? existing.image : null);
+        } else {
+            processExercise(null);
+        }
     }
 }
 
-function editExercise(index) {
-    const e = db.exercises[index];
-    currentExerciseId = e._id; // ✅ Save MongoDB ID for PUT request
+function editExercise(id) {
+    const e = exercises.find(ex => ex._id === id);
+    if (!e) return;
 
+    currentExerciseId = id;
     document.getElementById('exerciseName').value = e.name;
     document.getElementById('exerciseDesc').value = e.description;
     document.getElementById('exerciseDiff').value = e.difficulty;
     document.getElementById('exerciseCategory').value = e.category;
     document.getElementById('exerciseReps').value = e.reps;
     document.getElementById('exerciseSets').value = e.sets;
-    document.getElementById('exerciseImage').value = '';
+    document.getElementById('exerciseImage').value = ''; // Reset file input
 
     openModal('exerciseModal');
 }
 
-async function deleteExercise(index) {
-    const exercise = db.exercises[index];
-    if (!exercise || !exercise._id) return showToast("Invalid exercise!");
-
-    if (confirm("Are you sure you want to delete this exercise?")) {
-        try {
-            const res = await fetch(`http://localhost:5000/api/exercises/${exercise._id}`, { method: "DELETE" });
-            if (!res.ok) throw new Error("Failed to delete exercise in MongoDB");
-
-            db.exercises.splice(index, 1);
-            saveAndUpdate();
-            updateTables();
-            showToast("Exercise deleted!");
-        } catch (err) {
-            console.error(err);
-            showToast("Error deleting exercise!");
+async function deleteExercise(id) {
+    if (!confirm("Are you sure?")) return;
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/exercises/${id}`, { method: "DELETE" });
+        if (res.ok) {
+            showToast("Exercise deleted");
+            loadExercises();
+            updateDashboardCounts();
+        } else {
+            showToast("Failed to delete");
         }
+    } catch (err) {
+        console.error(err);
+        showToast("Error deleting exercise");
     }
 }
 
@@ -280,16 +470,45 @@ function clearExerciseForm() {
     document.getElementById('exerciseReps').value = '';
     document.getElementById('exerciseSets').value = '';
     document.getElementById('exerciseImage').value = '';
+    currentExerciseId = null;
 }
 
-/* ==================== INITIAL LOAD ==================== */
-window.onload = async () => {
-    loadProfile();
+// --- Users ---
+async function deleteUser(id) {
+    if (!confirm("Are you sure you want to delete this user?")) return;
     try {
-        const res = await fetch("http://localhost:5000/api/exercises");
-        db.exercises = await res.json();
+        const res = await fetch(`${API_BASE_URL}/api/users/${id}`, { method: "DELETE" });
+        if (res.ok) {
+            showToast("User deleted");
+            loadUsers();
+            updateDashboardCounts();
+        } else {
+            showToast("Failed to delete user");
+        }
     } catch (err) {
-        console.error("Failed to load exercises:", err);
+        console.error(err);
+        showToast("Error deleting user");
     }
-    saveAndUpdate();
-};
+}
+
+// --- Routines ---
+async function deleteRoutine(id) {
+    if (!confirm("Are you sure you want to delete this routine?")) return;
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/routines/${id}`, { method: "DELETE" });
+        if (res.ok) {
+            showToast("Routine deleted");
+            loadRoutines();
+            updateDashboardCounts();
+        } else {
+            showToast("Failed to delete routine");
+        }
+    } catch (err) {
+        console.error(err);
+        showToast("Error deleting routine");
+    }
+}
+
+
+/* ==================== INITIAL LOAD ==================== */
+window.onload = fetchData;

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,28 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+<<<<<<< HEAD
     .profile-wrap { max-width:900px; margin:0 auto; padding:6rem 2rem 3rem; }
     .profile-hero {
       background:linear-gradient(135deg,#003d7a,#0077cc,#00aaff);
       border-radius:24px; padding:3rem 2rem 2rem;
       text-align:center; color:white; margin-bottom:2rem;
       position:relative; overflow:hidden;
+=======
+    /* Modal background */
+    .modal {
+      display: none;
+      /* hidden by default */
+      position: fixed;
+      z-index: 200;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding-top: 60px;
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
     }
     .profile-hero::before {
       content:''; position:absolute; top:-40px; right:-40px;
@@ -42,6 +59,7 @@
     .stat-pill strong { display:block; font-size:1.5rem; font-weight:800; }
     .stat-pill span { font-size:0.75rem; opacity:0.85; }
 
+<<<<<<< HEAD
     .quick-links { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:2rem; }
     .quick-link {
       background:white; border-radius:16px; padding:1.5rem;
@@ -49,6 +67,19 @@
       border:1px solid #dde8f5; text-decoration:none; color:#1a1a2e;
       display:flex; align-items:center; gap:1rem;
       transition:all 0.2s;
+=======
+    /* Modal content */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 400px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.4s;
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
     }
     .quick-link:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,119,204,0.18); border-color:#0077cc; }
     .ql-icon {
@@ -63,11 +94,24 @@
     .quick-link h4 { font-size:0.95rem; font-weight:700; margin-bottom:0.2rem; }
     .quick-link p { font-size:0.8rem; color:#888; margin:0; }
 
+<<<<<<< HEAD
     .info-card {
       background:white; border-radius:16px;
       box-shadow:0 4px 16px rgba(0,119,204,0.08);
       border:1px solid #dde8f5; padding:1.8rem;
       margin-bottom:1.5rem;
+=======
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
     }
     .info-card h3 { font-size:1rem; font-weight:800; color:#0077cc; margin-bottom:1.2rem; border-bottom:2px solid #e8f4fd; padding-bottom:0.7rem; }
     .info-row { display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0; border-bottom:1px solid #f0f5ff; }
@@ -84,7 +128,9 @@
     .logout-btn:hover { background:#e74c3c; color:white; border-color:#e74c3c; }
   </style>
 </head>
+
 <body>
+<<<<<<< HEAD
 <header>
   <a href="index.html" class="logo"><img src="assets/images/Logo.png" alt="HomePhysio"><span class="logo-text">HomePhysio</span></a>
   <nav class="nav-links">
@@ -138,6 +184,60 @@
         <div class="ql-icon ql-purple"><i class="fas fa-info-circle"></i></div>
         <div><h4>About HomePhysio</h4><p>App info & tech stack</p></div>
       </a>
+=======
+  <!-- Header -->
+  <header>
+    <a href="../index.html" class="logo">
+      <img src="assets/images/logo.png" alt="HomePhysio Logo">
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="exercises.html">Exercises</a>
+      <a href="progress.html">My Progress</a>
+      <a href="routines.html">My Routines</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="#" id="profileIcon"><i class="fas fa-user-circle"></i></a>
+    </nav>
+  </header>
+  <!-- Registration/Login Modal -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+
+      <!-- Registration Form -->
+      <div id="registerForm">
+        <div class="modal-header">
+          <h2>Register</h2>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="regName" placeholder="Full Name" required>
+          <input type="email" id="regEmail" placeholder="Email" required>
+          <input type="password" id="regPassword" placeholder="Password" required>
+          <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
+          <button onclick="registerUser()">Register</button>
+          <button onclick="clearRegisterForm()" style="background:#ccc;color:#333;margin-top:5px;">Clear</button>
+          <p style="text-align:center;margin-top:10px;">
+            Already have an account? <a href="#" onclick="showLoginForm()">Login</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <div id="loginForm" style="display:none;">
+        <div class="modal-header">
+          <h2>Login</h2>
+        </div>
+        <div class="modal-body">
+          <input type="email" id="loginEmail" placeholder="Email" required>
+          <input type="password" id="loginPassword" placeholder="Password" required>
+          <button onclick="loginUser()">Login</button>
+          <button onclick="clearLoginForm()" style="background:#ccc;color:#333;margin-top:5px;">Clear</button>
+          <p style="text-align:center;margin-top:10px;">
+            Don't have an account? <a href="#" onclick="showRegisterForm()">Register</a>
+          </p>
+        </div>
+      </div>
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
     </div>
 
     <!-- Account info -->
@@ -154,8 +254,8 @@
       <i class="fas fa-sign-out-alt"></i> Sign Out of HomePhysio
     </button>
   </div>
-</div>
 
+<<<<<<< HEAD
 <footer style="margin-top:3rem">
   <div class="footer-grid">
     <div class="footer-brand"><img src="assets/images/Logo.png"><div class="footer-brand-name">HomePhysio</div><p>Your home physiotherapy companion.</p></div>
@@ -208,3 +308,78 @@ window.onload=async()=>{
 </script>
 </body>
 </html>
+=======
+  <script src="js/config.js"></script>
+  <script>
+    // ✅ Function to check if user is authenticated via server session
+    async function checkAuth() {
+      try {
+        const res = await fetch(`${API_BASE_URL}/profile`, {
+          credentials: "include" // important to send cookies
+        });
+
+        if (!res.ok) return null; // not authenticated
+        const data = await res.json();
+        return data;
+
+      } catch (err) {
+        console.error("Auth check failed:", err);
+        return null;
+      }
+    }
+
+    window.onload = async () => {
+      try {
+        const userData = await checkAuth(); // get session info
+
+        if (!userData) {
+          // No session → redirect to login
+          window.location.href = "login.html";
+          return;
+        }
+
+        // ✅ Display user profile
+        const mainContent = document.createElement('main');
+        mainContent.innerHTML = `
+        <div style="padding: 20px; text-align: center;">
+          <h2>Welcome, ${userData.name}!</h2>
+          <p>Your email: ${userData.email}</p>
+          <button id="logoutBtn" style="
+            padding: 10px 20px; 
+            margin-top: 20px; 
+            background: #00aaff; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer;
+          ">Logout</button>
+        </div>
+      `;
+        document.querySelector('header').insertAdjacentElement('afterend', mainContent);
+
+        // ✅ Logout functionality
+        document.getElementById("logoutBtn").onclick = async () => {
+          try {
+            const res = await fetch(`${API_BASE_URL}/logout`, {
+              method: "POST",
+              credentials: "include"
+            });
+
+            if (res.ok) {
+              alert("Logged out successfully!");
+              window.location.href = "login.html";
+            } else {
+              alert("Logout failed!");
+            }
+          } catch (err) {
+            console.error("Logout failed:", err);
+          }
+        };
+
+      } catch (err) {
+        console.error("Error loading profile:", err);
+        window.location.href = "login.html";
+      }
+    };
+  </script>
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c

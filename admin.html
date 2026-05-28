@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+<<<<<<< HEAD
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard - HomePhysio</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+=======
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - HomePhysio</title>
+
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
 </head>
+
 <body>
   <div class="admin-layout">
     <!-- Sidebar -->
@@ -119,11 +133,47 @@
 
   <div id="toast" class="toast"></div>
 
+<<<<<<< HEAD
   <script>
     const API = 'http://localhost:5000';
     let editingExId = null;
 
     function toast(msg, type='success') { const t=document.getElementById('toast'); t.textContent=msg; t.className=`toast show ${type}`; setTimeout(()=>t.className='toast',3000); }
+=======
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="section active-section">
+            <div class="cards">
+                <div class="card">
+                    <h3>Users</h3>
+                    <p id="userCount">0</p>
+                </div>
+                <div class="card">
+                    <h3>Exercises</h3>
+                    <p id="exerciseCount">0</p>
+                </div>
+                <div class="card">
+                    <h3>Routines</h3>
+                    <p id="routineCount">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Section -->
+        <div id="users" class="section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table"></tbody>
+            </table>
+        </div>
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
 
     async function init() {
       const s = await (await fetch(`${API}/admin/check-session`,{credentials:'include'})).json();
@@ -133,6 +183,7 @@
       loadDashboard();
     }
 
+<<<<<<< HEAD
     function showSection(name, li) {
       document.querySelectorAll('.admin-main > div').forEach(d => d.style.display='none');
       document.getElementById(`sec-${name}`).style.display = 'block';
@@ -159,6 +210,43 @@
         document.getElementById('dWorkouts').textContent  = progs.length;
       } catch {}
     }
+=======
+        <!-- Exercises Section -->
+        <div id="exercises" class="section">
+            <button class="btn add" onclick="openModal('exerciseModal')">Add Exercise</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Reps</th>
+                        <th>Sets</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Difficulty</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="exercises-table"></tbody>
+            </table>
+        </div>
+
+        <!-- Routines Section -->
+        <div id="routines" class="section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Routine Name</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="routines-table"></tbody>
+            </table>
+        </div>
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
 
     async function loadExercises() {
       const exs = await (await fetch(`${API}/api/exercises`)).json();
@@ -176,6 +264,7 @@
         </tr>`).join('') : '<tr><td colspan="6" style="text-align:center;color:#888;padding:2rem">No exercises. Click "Add Exercise" to add some.</td></tr>';
     }
 
+<<<<<<< HEAD
     async function loadUsers() {
       const users = await (await fetch(`${API}/admin/users`,{credentials:'include'})).json();
       document.getElementById('userTable').innerHTML = users.length ? users.map(u => `
@@ -185,6 +274,35 @@
           <td>${new Date(u.createdAt).toLocaleDateString()}</td>
         </tr>`).join('') : '<tr><td colspan="3" style="text-align:center;color:#888;padding:2rem">No users yet.</td></tr>';
     }
+=======
+        <!-- Profile Section -->
+        <div id="profile" class="section">
+            <div class="profile-container" id="profileView">
+                <img id="viewPic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+                <h3 id="viewName">Admin</h3>
+                <p><strong>Email:</strong> <span id="viewEmail">admin@homephysio.com</span></p>
+                <p><strong>Description:</strong> <span id="viewDesc">Managing the physiotherapy app efficiently.</span>
+                </p>
+                <button class="btn add" onclick="toggleEditProfile(true)">Edit Profile</button>
+            </div>
+            <div class="profile-edit" id="profileEdit">
+                <span class="close" onclick="toggleEditProfile(false)">&times;</span>
+                <h2>Edit Profile</h2>
+                <label>Profile Picture</label>
+                <input type="file" accept="image/*" onchange="updateProfilePic(event)">
+                <label>Name</label>
+                <input type="text" id="adminName" value="Admin">
+                <label>Email</label>
+                <input type="email" id="adminEmail" value="admin@homephysio.com">
+                <label>Description</label>
+                <textarea id="adminDesc">Managing the physiotherapy app efficiently.</textarea>
+                <div class="button-group">
+                    <button class="btn add" onclick="saveProfile()">Save</button>
+                    <button class="btn delete" onclick="toggleEditProfile(false)">Cancel</button>
+                </div>
+            </div>
+        </div>
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
 
     async function loadProgress() {
       const logs = await (await fetch(`${API}/admin/progress`,{credentials:'include'})).json();
@@ -251,6 +369,7 @@
       toast('Exercise deleted.','error'); loadExercises(); loadDashboard();
     }
 
+<<<<<<< HEAD
     async function doLogout() {
       await fetch(`${API}/admin/logout`,{method:'POST',credentials:'include'});
       window.location.href='adminlogin.html';
@@ -259,4 +378,11 @@
     init();
   </script>
 </body>
+=======
+    <!-- Main JS -->
+    <script src="js/config.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+>>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
 </html>
