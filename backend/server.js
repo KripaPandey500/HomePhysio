@@ -4,7 +4,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const path = require('path');
-
+const MongoStore = require('connect-mongo');  
 const app = express();
 const PORT = 5000;
 
@@ -32,16 +32,20 @@ if (isProd) app.set('trust proxy', 1);
 
 const cookieOptions = {
     httpOnly: true,
-    secure: isProd,
-    sameSite: isProd ? 'none' : 'lax',
-    maxAge: 24 * 60 * 60 * 1000
+    secure: false,
+    sameSite: 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000
 };
 
 app.use(session({
     name: 'hp.sid',
     secret: process.env.SESSION_SECRET || 'homephysioSecret123',
-    resave: true,
+    resave: false,
     saveUninitialized: false,
+store: MongoStore.create({
+    mongoUrl: 'mongodb://127.0.0.1:27017/homephysio',
+    ttl: 7 * 24 * 60 * 60
+}),
     cookie: cookieOptions
 }));
 
