@@ -1,316 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register - HomePhysio</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-<<<<<<< HEAD
-    body { margin:0; padding:0; min-height:100vh; background:linear-gradient(135deg,#003d7a,#0077cc); display:flex; align-items:center; justify-content:center; }
-    .reg-wrap { display:flex; width:min(900px,96vw); min-height:580px; border-radius:24px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,0.3); }
-    .reg-left { flex:1; background:linear-gradient(160deg,#001f4d,#0055aa); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2.5rem; color:white; text-align:center; }
-    .reg-left img { width:200px; height:200px; object-fit:contain; border-radius:16px; margin-bottom:1.5rem; background:rgba(255,255,255,0.08); padding:1rem; }
-    .reg-left h2 { font-size:1.5rem; font-weight:800; margin-bottom:0.5rem; }
-    .reg-left p { font-size:0.88rem; opacity:0.85; line-height:1.7; }
-    .reg-right { width:400px; background:white; padding:2.5rem; display:flex; flex-direction:column; justify-content:center; overflow-y:auto; }
-    .reg-right .logo-row { display:flex; align-items:center; gap:0.6rem; margin-bottom:1.2rem; }
-    .reg-right .logo-row img { width:36px; }
-    .reg-right .logo-row span { font-weight:800; font-size:1.1rem; color:#0077cc; }
-    .reg-right h2 { font-size:1.4rem; font-weight:800; color:#1a1a2e; margin-bottom:0.2rem; }
-    .reg-right p { font-size:0.85rem; color:#888; margin-bottom:1.2rem; }
-    .form-group { margin-bottom:0.9rem; }
-    .form-group label { display:block; font-weight:700; font-size:0.85rem; color:#444; margin-bottom:0.35rem; }
-    .form-group input { width:100%; padding:0.72rem 1rem; border:2px solid #e0e8f5; border-radius:10px; font-size:0.9rem; color:#1a1a2e; background:#f8faff; transition:0.2s; }
-    .form-group input:focus { outline:none; border-color:#0077cc; background:white; box-shadow:0 0 0 3px rgba(0,119,204,0.1); }
-    .err { background:#fee2e2; color:#991b1b; padding:0.65rem 1rem; border-radius:8px; font-size:0.85rem; font-weight:600; margin-bottom:0.8rem; display:none; border-left:3px solid #e74c3c; }
-    .btn-reg { width:100%; padding:0.85rem; background:#0077cc; color:white; border:none; border-radius:10px; font-size:0.95rem; font-weight:700; cursor:pointer; transition:0.2s; margin-top:0.3rem; }
-    .btn-reg:hover { background:#005fa3; }
-    .divider { text-align:center; font-size:0.85rem; color:#888; margin:0.8rem 0; }
-    .divider a { color:#0077cc; font-weight:700; text-decoration:none; }
-    @media(max-width:700px){ .reg-left{display:none;} .reg-right{width:100%;border-radius:24px;} }
-=======
-    body {
-      font-family: Arial, sans-serif;
-      background: url('assets/images/home-bg.jpg') no-repeat center center fixed;
-      background-size: cover;
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .form-container {
-      background: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      width: 100%;
-      max-width: 400px;
-      position: relative;
-    }
-
-    .form-container h2 {
-      text-align: center;
-      color: #00aaff;
-      margin-bottom: 20px;
-    }
-
-    .form-container input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    .form-container button {
-      width: 48%;
-      padding: 10px;
-      margin: 5px 1%;
-      border: none;
-      border-radius: 6px;
-      background: #309bd0;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .form-container button:hover {
-      background: #0088cc;
-    }
-
-    .clear-btn {
-      background: #ccc;
-      color: #333;
-    }
-
-    .clear-btn:hover {
-      background: #bbb;
-    }
-
-    .form-container p {
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .form-container a {
-      color: #00aaff;
-      text-decoration: none;
-    }
-
-    .form-container a:hover {
-      text-decoration: underline;
-    }
-
-    /* Password eye icon styles */
-    .password-wrapper {
-      position: relative;
-    }
-
-    .password-wrapper input {
-      padding-right: -5px;
-      /* space for eye icon */
-    }
-
-    .password-wrapper .toggle-password {
-      position: absolute;
-      right: -80px;
-      top: 40%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      color: #555;
-      padding: 0;
-
-    }
-
-    .password-wrapper .toggle-password:focus,
-    .password-wrapper .toggle-password:hover {
-      background: none;
-      /* prevents any hover bg */
-      outline: none;
-      /* prevents focus outline */
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 22px;
-      color: #888;
-      cursor: pointer;
-    }
-
-    .close-btn:hover {
-      color: #333;
-    }
->>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; min-height: 100vh; background: linear-gradient(135deg, #003d7a, #0077cc); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .wrap { display: flex; width: min(900px, 96vw); min-height: 560px; border-radius: 24px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.35); }
+    /* Left panel */
+    .left { flex: 1; background: linear-gradient(160deg, #001f4d, #0055aa); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem; color: white; text-align: center; }
+    .left img { width: 200px; height: 200px; object-fit: contain; border-radius: 16px; margin-bottom: 1.5rem; background: rgba(255,255,255,0.08); padding: 1rem; }
+    .left h2 { font-size: 1.45rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .left p { font-size: 0.85rem; opacity: 0.85; line-height: 1.7; }
+    /* Right panel */
+    .right { width: 400px; background: white; padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; position: relative; }
+    .close-btn { position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border-radius: 50%; background: #f0f4f8; border: none; font-size: 0.95rem; cursor: pointer; color: #888; display: flex; align-items: center; justify-content: center; transition: 0.2s; text-decoration: none; }
+    .close-btn:hover { background: #fee2e2; color: #e74c3c; }
+    .logo-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem; }
+    .logo-row img { width: 36px; }
+    .logo-row span { font-weight: 800; font-size: 1.1rem; color: #0077cc; }
+    h2 { font-size: 1.4rem; font-weight: 800; color: #1a1a2e; margin-bottom: 0.2rem; }
+    p.sub { font-size: 0.84rem; color: #888; margin-bottom: 1.2rem; }
+    .fg { margin-bottom: 0.9rem; }
+    .fg label { display: block; font-weight: 700; font-size: 0.82rem; color: #444; margin-bottom: 0.35rem; }
+    .fg input { width: 100%; padding: 0.72rem 1rem; border: 2px solid #e0e8f5; border-radius: 10px; font-size: 0.9rem; color: #1a1a2e; background: #f8faff; transition: 0.2s; font-family: inherit; }
+    .fg input:focus { outline: none; border-color: #0077cc; background: white; box-shadow: 0 0 0 3px rgba(0,119,204,0.1); }
+    .err { background: #fee2e2; color: #991b1b; padding: 0.65rem 1rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.8rem; display: none; border-left: 3px solid #e74c3c; }
+    .suc { background: #d1fae5; color: #065f46; padding: 0.65rem 1rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.8rem; display: none; border-left: 3px solid #10b981; }
+    .btn { width: 100%; padding: 0.88rem; background: #0077cc; color: white; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: 0.2s; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+    .btn:hover:not(:disabled) { background: #005fa3; }
+    .btn:disabled { opacity: 0.65; cursor: not-allowed; }
+    .divider { text-align: center; font-size: 0.83rem; color: #888; margin: 0.8rem 0; }
+    .divider a { color: #0077cc; font-weight: 700; text-decoration: none; }
+    @media(max-width: 680px) { .left { display: none; } .right { width: 100%; border-radius: 24px; } }
   </style>
 </head>
-
 <body>
-<<<<<<< HEAD
-  <div class="reg-wrap">
-    <div class="reg-left">
-      <img src="assets/images/home workout.png" alt="Home Workout" onerror="this.src='assets/images/Logo.png'">
-      <h2>Start Your Recovery</h2>
-      <p>Create your free account and begin your personalized physiotherapy journey today.</p>
-    </div>
-    <div class="reg-right">
-      <div class="logo-row">
-        <img src="assets/images/Logo.png" alt="HomePhysio">
-        <span>HomePhysio</span>
-      </div>
-      <h2>Create Account</h2>
-      <p>Free — takes less than a minute</p>
-      <div id="err" class="err"></div>
-      <div class="form-group">
-        <label><i class="fas fa-user"></i> Full Name</label>
-        <input type="text" id="name" placeholder="Your full name">
-      </div>
-      <div class="form-group">
-        <label><i class="fas fa-envelope"></i> Email Address</label>
-        <input type="email" id="email" placeholder="you@example.com">
-      </div>
-      <div class="form-group">
-        <label><i class="fas fa-lock"></i> Password</label>
-        <input type="password" id="password" placeholder="At least 6 characters">
-      </div>
-      <div class="form-group">
-        <label><i class="fas fa-lock"></i> Confirm Password</label>
-        <input type="password" id="confirm" placeholder="Repeat your password">
-      </div>
-      <button class="btn-reg" onclick="doRegister()"><i class="fas fa-user-plus"></i> &nbsp;Create Account</button>
-      <div class="divider">Already have an account? <a href="login.html">Sign in here</a></div>
-    </div>
+<div class="wrap">
+  <div class="left">
+    <img src="assets/images/home workout.png" alt="Home Workout" onerror="this.src='assets/images/Logo.png'">
+    <h2>Start Your Recovery</h2>
+    <p>Create your free account and begin your personalized physiotherapy journey today.</p>
   </div>
-
-  <script>
-    const API = 'http://localhost:5000';
-    async function doRegister() {
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const confirm = document.getElementById('confirm').value;
-      const err = document.getElementById('err');
-      err.style.display = 'none';
-      if (!name || !email || !password) { err.textContent = 'Please fill in all fields.'; err.style.display = 'block'; return; }
-      if (password.length < 6) { err.textContent = 'Password must be at least 6 characters.'; err.style.display = 'block'; return; }
-      if (password !== confirm) { err.textContent = 'Passwords do not match. Please check and try again.'; err.style.display = 'block'; return; }
-      try {
-        const res = await fetch(`${API}/register`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name, email, password}) });
-        const data = await res.json();
-        if (!res.ok) { err.textContent = data.msg; err.style.display = 'block'; return; }
-        alert('Account created successfully! Please sign in.');
-        window.location.href = 'login.html';
-      } catch { err.textContent = 'Cannot connect to server. Make sure npm start is running.'; err.style.display = 'block'; }
-    }
-  </script>
-</body>
-=======
-
-  <div class="form-container">
-    <span class="close-btn" onclick="window.location.href='../index.html'">&times;</span>
-    <h2>Register</h2>
-    <form id="registerForm">
-      <input type="text" id="fullname" placeholder="Full Name" required>
-      <input type="email" id="email" placeholder="Email" required>
-
-      <div class="password-wrapper">
-        <input type="password" id="password" placeholder="Password" required>
-        <button type="button" class="toggle-password" data-target="password">
-          <i class="fa-regular fa-eye"></i>
-        </button>
-      </div>
-
-      <div class="password-wrapper">
-        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
-        <button type="button" class="toggle-password" data-target="confirmPassword">
-          <i class="fa-regular fa-eye"></i>
-        </button>
-      </div>
-
-      <div style="display:flex; justify-content:space-between;">
-        <button type="submit">Register</button>
-        <button type="reset" class="clear-btn">Clear</button>
-      </div>
-    </form>
-    <p>Already have an account? <a href="login.html">Login</a></p>
-    <p>Or Are you an <a href="adminlogin.html">Admin?</a></p>
+  <div class="right">
+    <a href="index.html" class="close-btn" title="Back to Home"><i class="fas fa-times"></i></a>
+    <div class="logo-row">
+      <img src="assets/images/Logo.png" alt="HomePhysio">
+      <span>HomePhysio</span>
+    </div>
+    <h2>Create Account</h2>
+    <p class="sub">Free &mdash; takes less than a minute</p>
+    <div id="err" class="err"></div>
+    <div id="suc" class="suc"></div>
+    <div class="fg">
+      <label><i class="fas fa-user"></i> Full Name</label>
+      <input type="text" id="name" placeholder="Your full name" autocomplete="name">
+    </div>
+    <div class="fg">
+      <label><i class="fas fa-envelope"></i> Email Address</label>
+      <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="fg">
+      <label><i class="fas fa-lock"></i> Password</label>
+      <input type="password" id="password" placeholder="At least 6 characters" autocomplete="new-password">
+    </div>
+    <div class="fg">
+      <label><i class="fas fa-lock"></i> Confirm Password</label>
+      <input type="password" id="confirm" placeholder="Repeat your password" autocomplete="new-password">
+    </div>
+    <button class="btn" id="regBtn" onclick="doRegister()">
+      <i class="fas fa-user-plus"></i> Create Account
+    </button>
+    <div class="divider">Already have an account? <a href="login.html">Sign in here</a></div>
   </div>
+</div>
 
-  <script src="js/config.js"></script>
-  <script>
-    // ✅ Toggle password visibility
-    document.querySelectorAll(".toggle-password").forEach(button => {
-      button.addEventListener("click", () => {
-        const targetId = button.getAttribute("data-target");
-        const input = document.getElementById(targetId);
-        const icon = button.querySelector("i");
+<script>
+  const API = 'http://localhost:5000';
 
-        if (input.type === "password") {
-          input.type = "text";
-          icon.classList.remove("fa-eye");
-          icon.classList.add("fa-eye-slash");
-          icon.style.color = "#00aaff"; // eye color changes when active
-        } else {
-          input.type = "password";
-          icon.classList.remove("fa-eye-slash");
-          icon.classList.add("fa-eye");
-          icon.style.color = "#555";
-        }
+  async function doRegister() {
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const pwd     = document.getElementById('password').value;
+    const confirm = document.getElementById('confirm').value;
+    const err     = document.getElementById('err');
+    const suc     = document.getElementById('suc');
+    const btn     = document.getElementById('regBtn');
+    err.style.display = 'none';
+    suc.style.display = 'none';
+
+    if (!name || !email || !pwd) { err.textContent = 'Please fill in all fields.'; err.style.display = 'block'; return; }
+    if (pwd.length < 6) { err.textContent = 'Password must be at least 6 characters.'; err.style.display = 'block'; return; }
+    if (pwd !== confirm) { err.textContent = 'Passwords do not match.'; err.style.display = 'block'; return; }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
+
+    try {
+      const res  = await fetch(`${API}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password: pwd })
       });
-    });
-
-    // ✅ Backend Registration Logic
-    document.getElementById("registerForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById("fullname").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
-
-      if (!name || !email || !password || !confirmPassword) {
-        alert("Please fill in all fields!");
-        return;
+      const data = await res.json();
+      if (!res.ok) {
+        err.textContent = data.msg || 'Registration failed.';
+        err.style.display = 'block';
+      } else {
+        suc.textContent = 'Account created! Redirecting to login...';
+        suc.style.display = 'block';
+        setTimeout(() => window.location.href = 'login.html', 1500);
       }
+    } catch {
+      err.textContent = 'Cannot connect to server. Make sure npm start is running in the backend folder.';
+      err.style.display = 'block';
+    }
 
-      if (password !== confirmPassword) {
-        alert("Passwords do not match!");
-        return;
-      }
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+  }
 
-      try {
-        const res = await fetch(`${API_BASE_URL}/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password })
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-          alert("Registration successful! Please login.");
-          window.location.href = "login.html";
-        } else {
-          alert(data.msg || "Registration failed");
-        }
-      } catch (err) {
-        console.error("Error registering:", err);
-        alert("Server error. Please try again later.");
-      }
-    });
-  </script>
-
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') doRegister(); });
+</script>
 </body>
-
->>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
 </html>

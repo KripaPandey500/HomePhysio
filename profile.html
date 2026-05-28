@@ -1,136 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Profile - HomePhysio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-<<<<<<< HEAD
-    .profile-wrap { max-width:900px; margin:0 auto; padding:6rem 2rem 3rem; }
-    .profile-hero {
-      background:linear-gradient(135deg,#003d7a,#0077cc,#00aaff);
-      border-radius:24px; padding:3rem 2rem 2rem;
-      text-align:center; color:white; margin-bottom:2rem;
-      position:relative; overflow:hidden;
-=======
-    /* Modal background */
-    .modal {
-      display: none;
-      /* hidden by default */
-      position: fixed;
-      z-index: 200;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding-top: 60px;
->>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
-    }
-    .profile-hero::before {
-      content:''; position:absolute; top:-40px; right:-40px;
-      width:200px; height:200px; border-radius:50%;
-      background:rgba(255,255,255,0.07);
-    }
-    .avatar {
-      width:90px; height:90px; border-radius:50%;
-      background:white; color:#0077cc;
-      font-size:2.2rem; font-weight:900;
-      display:flex; align-items:center; justify-content:center;
-      margin:0 auto 1rem;
-      box-shadow:0 6px 20px rgba(0,0,0,0.2);
-    }
-    .profile-hero h2 { font-size:1.8rem; font-weight:800; margin-bottom:0.3rem; }
-    .profile-hero .email { opacity:0.85; font-size:0.95rem; margin-bottom:1.5rem; }
-    .stats-row {
-      display:flex; gap:1rem; justify-content:center;
-      flex-wrap:wrap; margin-bottom:0; 
-    }
-    .stat-pill {
-      background:rgba(255,255,255,0.15);
-      border:1px solid rgba(255,255,255,0.25);
-      border-radius:30px; padding:0.6rem 1.4rem;
-      text-align:center; min-width:110px;
-    }
-    .stat-pill strong { display:block; font-size:1.5rem; font-weight:800; }
-    .stat-pill span { font-size:0.75rem; opacity:0.85; }
-
-<<<<<<< HEAD
-    .quick-links { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:2rem; }
-    .quick-link {
-      background:white; border-radius:16px; padding:1.5rem;
-      box-shadow:0 4px 16px rgba(0,119,204,0.1);
-      border:1px solid #dde8f5; text-decoration:none; color:#1a1a2e;
-      display:flex; align-items:center; gap:1rem;
-      transition:all 0.2s;
-=======
-    /* Modal content */
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto;
-      border: 1px solid #888;
-      width: 90%;
-      max-width: 400px;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 0.4s;
->>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
-    }
-    .quick-link:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,119,204,0.18); border-color:#0077cc; }
-    .ql-icon {
-      width:52px; height:52px; border-radius:14px;
-      display:flex; align-items:center; justify-content:center;
-      font-size:1.3rem; flex-shrink:0;
-    }
-    .ql-blue { background:#e8f4fd; color:#0077cc; }
-    .ql-green { background:#d4edda; color:#27ae60; }
-    .ql-orange { background:#fff3cd; color:#f39c12; }
-    .ql-purple { background:#f0e6ff; color:#9b59b6; }
-    .quick-link h4 { font-size:0.95rem; font-weight:700; margin-bottom:0.2rem; }
-    .quick-link p { font-size:0.8rem; color:#888; margin:0; }
-
-<<<<<<< HEAD
-    .info-card {
-      background:white; border-radius:16px;
-      box-shadow:0 4px 16px rgba(0,119,204,0.08);
-      border:1px solid #dde8f5; padding:1.8rem;
-      margin-bottom:1.5rem;
-=======
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-50px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
->>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
-    }
-    .info-card h3 { font-size:1rem; font-weight:800; color:#0077cc; margin-bottom:1.2rem; border-bottom:2px solid #e8f4fd; padding-bottom:0.7rem; }
-    .info-row { display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0; border-bottom:1px solid #f0f5ff; }
-    .info-row:last-child { border-bottom:none; }
-    .info-row .lbl { font-size:0.88rem; color:#888; font-weight:600; }
-    .info-row .val { font-size:0.95rem; font-weight:700; color:#1a1a2e; }
-    .logout-btn {
-      width:100%; padding:1rem; background:#fee2e2; color:#991b1b;
-      border:2px solid #fecaca; border-radius:14px;
-      font-size:1rem; font-weight:700; cursor:pointer;
-      transition:0.2s; display:flex; align-items:center;
-      justify-content:center; gap:0.6rem;
-    }
-    .logout-btn:hover { background:#e74c3c; color:white; border-color:#e74c3c; }
-  </style>
 </head>
-
 <body>
-<<<<<<< HEAD
 <header>
   <a href="index.html" class="logo"><img src="assets/images/Logo.png" alt="HomePhysio"><span class="logo-text">HomePhysio</span></a>
   <nav class="nav-links">
@@ -139,25 +17,31 @@
     <a href="routines.html">My Routines</a>
     <a href="progress.html">My Progress</a>
     <a href="aboutus.html">About Us</a>
-    <a href="profile.html" class="active"><i class="fas fa-user-circle"></i></a>
+    <a href="profile.html" class="active nav-icon"><i class="fas fa-user-circle"></i></a>
     <button class="theme-toggle" onclick="toggleTheme()"><i id="ti" class="fas fa-moon"></i></button>
   </nav>
+  <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu"><i class="fas fa-bars"></i></button>
 </header>
+<div class="nav-mobile" id="mobileNav">
+  <a href="index.html"><i class="fas fa-home"></i> Home</a>
+  <a href="exercises.html"><i class="fas fa-dumbbell"></i> Exercises</a>
+  <a href="routines.html"><i class="fas fa-list-check"></i> My Routines</a>
+  <a href="progress.html"><i class="fas fa-chart-bar"></i> My Progress</a>
+  <a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a>
+  <a href="profile.html" class="active"><i class="fas fa-user-circle"></i> Profile</a>
+</div>
 
 <div class="profile-wrap">
-  <!-- Loading -->
   <div id="loadingDiv" style="text-align:center;padding:4rem;color:#888">
     <i class="fas fa-spinner fa-spin" style="font-size:2.5rem;color:#0077cc"></i>
-    <p style="margin-top:1rem;font-size:1rem">Loading your profile...</p>
+    <p style="margin-top:1rem">Loading your profile...</p>
   </div>
 
-  <!-- Profile content (hidden until loaded) -->
   <div id="profileContent" style="display:none">
-    <!-- Hero card -->
     <div class="profile-hero">
-      <div class="avatar" id="avatarEl">D</div>
-      <h2 id="nameEl">Loading...</h2>
-      <p class="email" id="emailEl">loading...</p>
+      <div class="avatar" id="avatarEl">?</div>
+      <h2 id="nameEl">—</h2>
+      <p class="email" id="emailEl">—</p>
       <div class="stats-row">
         <div class="stat-pill"><strong id="sWorkouts">0</strong><span>Workouts</span></div>
         <div class="stat-pill"><strong id="sRoutines">0</strong><span>Routines</span></div>
@@ -166,7 +50,6 @@
       </div>
     </div>
 
-    <!-- Quick links -->
     <div class="quick-links">
       <a href="exercises.html" class="quick-link">
         <div class="ql-icon ql-blue"><i class="fas fa-dumbbell"></i></div>
@@ -182,65 +65,10 @@
       </a>
       <a href="aboutus.html" class="quick-link">
         <div class="ql-icon ql-purple"><i class="fas fa-info-circle"></i></div>
-        <div><h4>About HomePhysio</h4><p>App info & tech stack</p></div>
+        <div><h4>About HomePhysio</h4><p>App info &amp; tech stack</p></div>
       </a>
-=======
-  <!-- Header -->
-  <header>
-    <a href="../index.html" class="logo">
-      <img src="assets/images/logo.png" alt="HomePhysio Logo">
-    </a>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="exercises.html">Exercises</a>
-      <a href="progress.html">My Progress</a>
-      <a href="routines.html">My Routines</a>
-      <a href="aboutus.html">About Us</a>
-      <a href="#" id="profileIcon"><i class="fas fa-user-circle"></i></a>
-    </nav>
-  </header>
-  <!-- Registration/Login Modal -->
-  <div id="authModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-
-      <!-- Registration Form -->
-      <div id="registerForm">
-        <div class="modal-header">
-          <h2>Register</h2>
-        </div>
-        <div class="modal-body">
-          <input type="text" id="regName" placeholder="Full Name" required>
-          <input type="email" id="regEmail" placeholder="Email" required>
-          <input type="password" id="regPassword" placeholder="Password" required>
-          <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
-          <button onclick="registerUser()">Register</button>
-          <button onclick="clearRegisterForm()" style="background:#ccc;color:#333;margin-top:5px;">Clear</button>
-          <p style="text-align:center;margin-top:10px;">
-            Already have an account? <a href="#" onclick="showLoginForm()">Login</a>
-          </p>
-        </div>
-      </div>
-
-      <!-- Login Form -->
-      <div id="loginForm" style="display:none;">
-        <div class="modal-header">
-          <h2>Login</h2>
-        </div>
-        <div class="modal-body">
-          <input type="email" id="loginEmail" placeholder="Email" required>
-          <input type="password" id="loginPassword" placeholder="Password" required>
-          <button onclick="loginUser()">Login</button>
-          <button onclick="clearLoginForm()" style="background:#ccc;color:#333;margin-top:5px;">Clear</button>
-          <p style="text-align:center;margin-top:10px;">
-            Don't have an account? <a href="#" onclick="showRegisterForm()">Register</a>
-          </p>
-        </div>
-      </div>
->>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
     </div>
 
-    <!-- Account info -->
     <div class="info-card">
       <h3><i class="fas fa-user"></i> Account Information</h3>
       <div class="info-row"><span class="lbl">Full Name</span><span class="val" id="infoName">—</span></div>
@@ -249,16 +77,15 @@
       <div class="info-row"><span class="lbl">App Version</span><span class="val">HomePhysio v1.0</span></div>
     </div>
 
-    <!-- Logout -->
     <button class="logout-btn" onclick="doLogout()">
       <i class="fas fa-sign-out-alt"></i> Sign Out of HomePhysio
     </button>
   </div>
+</div>
 
-<<<<<<< HEAD
-<footer style="margin-top:3rem">
+<footer>
   <div class="footer-grid">
-    <div class="footer-brand"><img src="assets/images/Logo.png"><div class="footer-brand-name">HomePhysio</div><p>Your home physiotherapy companion.</p></div>
+    <div class="footer-brand"><img src="assets/images/Logo.png" alt=""><div class="footer-brand-name">HomePhysio</div><p>Your home physiotherapy companion.</p></div>
     <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="exercises.html">Exercises</a></li><li><a href="routines.html">My Routines</a></li><li><a href="progress.html">My Progress</a></li></ul></div>
     <div class="footer-col"><h4>Account</h4><ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li></ul></div>
     <div class="footer-col"><h4>Admin</h4><ul><li><a href="adminlogin.html">Admin Login</a></li><li><a href="admin.html">Dashboard</a></li></ul></div>
@@ -267,119 +94,63 @@
 </footer>
 
 <script>
-const API='http://localhost:5000';
-if(localStorage.getItem('theme')==='dark'){document.body.classList.add('dark-mode');document.getElementById('ti').className='fas fa-sun';}
-function toggleTheme(){document.body.classList.toggle('dark-mode');const d=document.body.classList.contains('dark-mode');document.getElementById('ti').className=d?'fas fa-sun':'fas fa-moon';localStorage.setItem('theme',d?'dark':'light');}
+const API = 'http://localhost:5000';
+if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('ti').className = 'fas fa-sun'; }
+function toggleTheme() { document.body.classList.toggle('dark-mode'); const d = document.body.classList.contains('dark-mode'); document.getElementById('ti').className = d ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', d ? 'dark' : 'light'); }
+function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+document.addEventListener('click', e => { const mn = document.getElementById('mobileNav'); if (mn && mn.classList.contains('open') && !e.target.closest('.hamburger') && !e.target.closest('.nav-mobile')) mn.classList.remove('open'); });
 
-async function doLogout(){
-  await fetch(`${API}/logout`,{method:'POST',credentials:'include'});
-  window.location.href='login.html';
+async function doLogout() {
+  await fetch(`${API}/logout`, { method: 'POST', credentials: 'include' });
+  window.location.href = 'login.html';
 }
 
-window.onload=async()=>{
-  try{
-    const s=await(await fetch(`${API}/check-session`,{credentials:'include'})).json();
-    if(!s.loggedIn){window.location.href='login.html';return;}
-    const[progRes,routRes]=await Promise.all([
-      fetch(`${API}/progress`,{credentials:'include'}),
-      fetch(`${API}/routines`,{credentials:'include'})
+window.onload = async () => {
+  // ── Step 1: Auth check ── only this block may redirect to login
+  let userName = '', userEmail = '';
+  try {
+    const s = await (await fetch(`${API}/check-session`, { credentials: 'include' })).json();
+    if (!s.loggedIn) { window.location.href = 'login.html'; return; }
+    userName  = s.user.name;
+    userEmail = s.user.email;
+  } catch {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  // ── Step 2: Data fetch ── never redirects to login; shows 0s on failure
+  let logs = [], routines = [];
+  try {
+    const [pr, rr] = await Promise.all([
+      fetch(`${API}/progress`, { credentials: 'include' }),
+      fetch(`${API}/routines`, { credentials: 'include' })
     ]);
-    const logs=await progRes.json();
-    const routines=await routRes.json();
-    const today=new Date();today.setHours(0,0,0,0);
-    const daySet=new Set(logs.map(l=>{const d=new Date(l.completedAt);d.setHours(0,0,0,0);return d.getTime();}));
-    let streak=0,chk=today.getTime();
-    while(daySet.has(chk)){streak++;chk-=86400000;}
-    const mins=Math.round(logs.reduce((a,l)=>a+(l.duration||0),0)/60);
-    const name=s.user.name;
-    document.getElementById('avatarEl').textContent=name.charAt(0).toUpperCase();
-    document.getElementById('nameEl').textContent=name;
-    document.getElementById('emailEl').textContent=s.user.email;
-    document.getElementById('infoName').textContent=name;
-    document.getElementById('infoEmail').textContent=s.user.email;
-    document.getElementById('sWorkouts').textContent=logs.length;
-    document.getElementById('sRoutines').textContent=routines.length;
-    document.getElementById('sStreak').textContent=streak;
-    document.getElementById('sMinutes').textContent=mins;
-    document.getElementById('loadingDiv').style.display='none';
-    document.getElementById('profileContent').style.display='block';
-  }catch{window.location.href='login.html';}
+    const ld = await pr.json();
+    const rd = await rr.json();
+    logs     = Array.isArray(ld) ? ld : [];
+    routines = Array.isArray(rd) ? rd : [];
+  } catch { /* show 0s below */ }
+
+  // ── Step 3: Render ──
+  const today  = new Date(); today.setHours(0,0,0,0);
+  const daySet = new Set(logs.map(l => { const d = new Date(l.completedAt); d.setHours(0,0,0,0); return d.getTime(); }));
+  let streak = 0, chk = today.getTime();
+  while (daySet.has(chk)) { streak++; chk -= 86400000; }
+  const mins = Math.round(logs.reduce((a, l) => a + (l.duration || 0), 0) / 60);
+
+  document.getElementById('avatarEl').textContent  = userName.charAt(0).toUpperCase();
+  document.getElementById('nameEl').textContent    = userName;
+  document.getElementById('emailEl').textContent   = userEmail;
+  document.getElementById('infoName').textContent  = userName;
+  document.getElementById('infoEmail').textContent = userEmail;
+  document.getElementById('sWorkouts').textContent = logs.length;
+  document.getElementById('sRoutines').textContent = routines.length;
+  document.getElementById('sStreak').textContent   = streak;
+  document.getElementById('sMinutes').textContent  = mins;
+
+  document.getElementById('loadingDiv').style.display     = 'none';
+  document.getElementById('profileContent').style.display = 'block';
 };
 </script>
 </body>
 </html>
-=======
-  <script src="js/config.js"></script>
-  <script>
-    // ✅ Function to check if user is authenticated via server session
-    async function checkAuth() {
-      try {
-        const res = await fetch(`${API_BASE_URL}/profile`, {
-          credentials: "include" // important to send cookies
-        });
-
-        if (!res.ok) return null; // not authenticated
-        const data = await res.json();
-        return data;
-
-      } catch (err) {
-        console.error("Auth check failed:", err);
-        return null;
-      }
-    }
-
-    window.onload = async () => {
-      try {
-        const userData = await checkAuth(); // get session info
-
-        if (!userData) {
-          // No session → redirect to login
-          window.location.href = "login.html";
-          return;
-        }
-
-        // ✅ Display user profile
-        const mainContent = document.createElement('main');
-        mainContent.innerHTML = `
-        <div style="padding: 20px; text-align: center;">
-          <h2>Welcome, ${userData.name}!</h2>
-          <p>Your email: ${userData.email}</p>
-          <button id="logoutBtn" style="
-            padding: 10px 20px; 
-            margin-top: 20px; 
-            background: #00aaff; 
-            color: white; 
-            border: none; 
-            border-radius: 5px; 
-            cursor: pointer;
-          ">Logout</button>
-        </div>
-      `;
-        document.querySelector('header').insertAdjacentElement('afterend', mainContent);
-
-        // ✅ Logout functionality
-        document.getElementById("logoutBtn").onclick = async () => {
-          try {
-            const res = await fetch(`${API_BASE_URL}/logout`, {
-              method: "POST",
-              credentials: "include"
-            });
-
-            if (res.ok) {
-              alert("Logged out successfully!");
-              window.location.href = "login.html";
-            } else {
-              alert("Logout failed!");
-            }
-          } catch (err) {
-            console.error("Logout failed:", err);
-          }
-        };
-
-      } catch (err) {
-        console.error("Error loading profile:", err);
-        window.location.href = "login.html";
-      }
-    };
-  </script>
->>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c

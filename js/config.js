@@ -1,3 +1,2 @@
-const API_BASE_URL = "https://homephysio.vercel.app";
-// When you get the Vercel URL, replace the line above with:
-// const API_BASE_URL = "https://your-project.vercel.app";
+// API base URL — always use the local server (served from backend/server.js)
+const API_BASE_URL = 'http://localhost:5000';

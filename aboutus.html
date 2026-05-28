@@ -4,19 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us - HomePhysio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin:2rem 0;}
-    .feat-box{background:var(--card);border-radius:16px;padding:2rem;box-shadow:var(--shadow);border:1px solid var(--border);text-align:center;}
-    .feat-box i{font-size:2.5rem;color:var(--blue);margin-bottom:1rem;}
-    .feat-box h3{font-size:1.1rem;margin-bottom:0.5rem;}
-    .feat-box p{font-size:0.88rem;color:var(--text-light);line-height:1.7;}
-    .tech-badges{display:flex;flex-wrap:wrap;gap:0.8rem;justify-content:center;margin-top:1.5rem;}
-    .tech-badge{background:var(--blue-light);color:var(--blue);padding:0.5rem 1.2rem;border-radius:25px;font-weight:700;font-size:0.9rem;}
+    .about-hero {
+      background: linear-gradient(135deg, var(--dark-blue), var(--blue));
+      color: white; text-align: center; padding: 5rem 2rem 3rem;
+      margin-top: 68px;
+    }
+    .about-hero h1 { font-size: 2rem; font-weight: 900; margin-bottom: 0.8rem; }
+    .about-hero p  { opacity: 0.88; font-size: 1rem; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+    .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+    .feat-box  { background: var(--card); border-radius: 16px; padding: 2rem; box-shadow: 0 4px 16px rgba(0,119,204,0.08); border: 1px solid var(--border); text-align: center; transition: transform 0.2s; }
+    .feat-box:hover { transform: translateY(-4px); }
+    .feat-box i  { font-size: 2.3rem; color: var(--blue); margin-bottom: 1rem; }
+    .feat-box h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+    .feat-box p  { font-size: 0.85rem; color: var(--text-light); line-height: 1.7; }
+
+    .tech-badges { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; margin-top: 1.5rem; }
+    .tech-badge  { background: #e8f4fd; color: var(--blue); padding: 0.5rem 1.2rem; border-radius: 25px; font-weight: 700; font-size: 0.88rem; }
+
+    .card { background: var(--card); border-radius: 18px; box-shadow: 0 4px 16px rgba(0,119,204,0.08); border: 1px solid var(--border); }
   </style>
 </head>
 <body>
+
+<!-- HEADER — identical structure to exercises.html, routines.html, etc. -->
 <header>
   <a href="index.html" class="logo"><img src="assets/images/Logo.png" alt="HomePhysio"><span class="logo-text">HomePhysio</span></a>
   <nav class="nav-links">
@@ -25,22 +40,34 @@
     <a href="routines.html">My Routines</a>
     <a href="progress.html">My Progress</a>
     <a href="aboutus.html" class="active">About Us</a>
-    <a href="profile.html"><i class="fas fa-user-circle"></i></a>
+    <a href="profile.html" class="nav-icon"><i class="fas fa-user-circle"></i></a>
     <button class="theme-toggle" onclick="toggleTheme()"><i id="ti" class="fas fa-moon"></i></button>
   </nav>
+  <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu"><i class="fas fa-bars"></i></button>
 </header>
+<div class="nav-mobile" id="mobileNav">
+  <a href="index.html"><i class="fas fa-home"></i> Home</a>
+  <a href="exercises.html"><i class="fas fa-dumbbell"></i> Exercises</a>
+  <a href="routines.html"><i class="fas fa-list-check"></i> My Routines</a>
+  <a href="progress.html"><i class="fas fa-chart-bar"></i> My Progress</a>
+  <a href="aboutus.html" class="active"><i class="fas fa-info-circle"></i> About Us</a>
+  <a href="profile.html"><i class="fas fa-user-circle"></i> Profile</a>
+</div>
 
+<!-- Hero — sits directly below the fixed 68px header -->
 <div class="about-hero">
   <h1><i class="fas fa-heartbeat"></i> About HomePhysio</h1>
   <p>Making physiotherapy accessible, guided and trackable for everyone — right from the comfort of home.</p>
 </div>
 
-<div class="page">
-  <!-- Mission -->
-  <div class="card" style="text-align:center;margin-bottom:2rem;padding:3rem">
-    <img src="assets/images/home workout.png" alt="Home Workout" style="width:100%;max-height:300px;object-fit:cover;border-radius:14px;margin-bottom:2rem" onerror="this.style.display='none'">
-    <h2 style="color:var(--blue);font-size:1.8rem;margin-bottom:1rem">Our Mission</h2>
-    <p style="max-width:700px;margin:auto;font-size:1rem;line-height:1.9;color:var(--text-light)">
+<div class="page" style="padding-top: 2rem">
+  <!-- Mission card -->
+  <div class="card" style="text-align:center; margin-bottom:2rem; padding:3rem">
+    <img src="assets/images/home workout.png" alt="Home Workout"
+         style="width:100%;max-height:280px;object-fit:cover;border-radius:14px;margin-bottom:2rem"
+         onerror="this.style.display='none'">
+    <h2 style="color:var(--blue);font-size:1.7rem;margin-bottom:1rem">Our Mission</h2>
+    <p style="max-width:700px;margin:auto;font-size:0.95rem;line-height:1.9;color:var(--text-light)">
       HomePhysio was built as an internship project to help physiotherapy patients follow their prescribed exercise routines at home — without needing printed papers, expensive apps, or visiting a clinic.
       <br><br>
       We believe recovery should be simple, guided and consistent. HomePhysio gives every patient a personal exercise plan, clear step-by-step instructions, countdown timers for each exercise, and automatic progress tracking — all stored in a real MongoDB database.
@@ -48,55 +75,55 @@
   </div>
 
   <!-- Features grid -->
-  <h2 style="text-align:center;color:var(--blue);margin-bottom:0.5rem">What HomePhysio Offers</h2>
-  <p style="text-align:center;color:var(--text-light);margin-bottom:1.5rem">Everything patients need in one place</p>
+  <h2 style="text-align:center;color:var(--blue);margin-bottom:0.4rem">What HomePhysio Offers</h2>
+  <p style="text-align:center;color:var(--text-light);margin-bottom:1.5rem;font-size:0.9rem">Everything patients need in one place</p>
   <div class="feat-grid">
     <div class="feat-box">
       <i class="fas fa-dumbbell"></i>
       <h3>14+ Exercises</h3>
-      <p>A complete library of physiotherapy exercises covering neck, shoulder, back, knee, ankle, leg and hand — each with real images and detailed instructions.</p>
+      <p>A complete library covering neck, shoulder, back, knee, ankle, leg and hand — each with real images and detailed step-by-step instructions.</p>
     </div>
     <div class="feat-box">
       <i class="fas fa-list-check"></i>
       <h3>Custom Routines</h3>
-      <p>Patients can build their own personalized routines by selecting exercises, setting repetitions and cycles, and saving them to the MongoDB database.</p>
+      <p>Patients build personalized routines by selecting exercises, setting repetitions and cycles, saved directly to MongoDB.</p>
     </div>
     <div class="feat-box">
       <i class="fas fa-stopwatch"></i>
       <h3>Guided Workout Timer</h3>
-      <p>A built-in countdown timer guides patients through each set, with automatic rest periods between sets and clear visual indicators.</p>
+      <p>A built-in countdown timer guides patients through each set, with automatic rest periods and clear visual indicators.</p>
     </div>
     <div class="feat-box">
       <i class="fas fa-chart-line"></i>
       <h3>Progress Tracking</h3>
-      <p>Every completed workout is automatically saved. Patients can view their history, day streak, total workouts and an activity calendar.</p>
+      <p>Every completed workout is auto-saved. View history, day streak, total workouts and a 7-week activity calendar heatmap.</p>
     </div>
     <div class="feat-box">
       <i class="fas fa-user-shield"></i>
       <h3>Admin Dashboard</h3>
-      <p>Administrators can add, edit and delete exercises, view all registered patients, and monitor workout logs from a dedicated dashboard.</p>
+      <p>Admins can add, edit and delete exercises, view all registered patients and monitor every workout log from one dashboard.</p>
     </div>
     <div class="feat-box">
       <i class="fas fa-mobile-alt"></i>
       <h3>Works Everywhere</h3>
-      <p>Fully responsive design works on desktop, laptop, tablet and mobile — patients can use it on any device without installing anything.</p>
+      <p>Fully responsive — works on desktop, laptop, tablet and mobile. No app installation needed.</p>
     </div>
   </div>
 
-  <!-- Images section -->
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:2rem 0">
-    <img src="assets/images/rehab.png" alt="Rehabilitation" style="width:100%;height:220px;object-fit:cover;border-radius:16px;box-shadow:var(--shadow)" onerror="this.style.display='none'">
-    <img src="assets/images/yoga.png" alt="Yoga" style="width:100%;height:220px;object-fit:cover;border-radius:16px;box-shadow:var(--shadow)" onerror="this.style.display='none'">
-    <img src="assets/images/home workout.png" alt="Home Workout" style="width:100%;height:220px;object-fit:cover;border-radius:16px;box-shadow:var(--shadow)" onerror="this.style.display='none'">
+  <!-- Images row -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:2rem 0">
+    <img src="assets/images/rehab.png"        alt="Rehabilitation"  style="width:100%;height:200px;object-fit:cover;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,0.1)" onerror="this.style.display='none'">
+    <img src="assets/images/yoga.png"         alt="Yoga"            style="width:100%;height:200px;object-fit:cover;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,0.1)" onerror="this.style.display='none'">
+    <img src="assets/images/home workout.png" alt="Home Workout"    style="width:100%;height:200px;object-fit:cover;border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,0.1)" onerror="this.style.display='none'">
   </div>
 
   <!-- Tech stack -->
   <div class="card" style="text-align:center;padding:2.5rem">
-    <h2 style="color:var(--blue);margin-bottom:0.5rem">Technology Used</h2>
-    <p style="color:var(--text-light);margin-bottom:1rem">Built as a full-stack web application for the internship project</p>
+    <h2 style="color:var(--blue);margin-bottom:0.4rem">Technology Used</h2>
+    <p style="color:var(--text-light);margin-bottom:1rem;font-size:0.9rem">Built as a full-stack web application for the internship</p>
     <div class="tech-badges">
       <span class="tech-badge"><i class="fab fa-node-js"></i> Node.js</span>
-      <span class="tech-badge">Express.js</span>
+      <span class="tech-badge">Express.js 5</span>
       <span class="tech-badge"><i class="fas fa-database"></i> MongoDB</span>
       <span class="tech-badge">Mongoose</span>
       <span class="tech-badge"><i class="fab fa-html5"></i> HTML5</span>
@@ -105,26 +132,46 @@
       <span class="tech-badge">bcrypt Auth</span>
       <span class="tech-badge">Session Management</span>
     </div>
-    <div style="margin-top:2.5rem">
+    <div style="margin-top:2.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
       <a href="register.html" class="btn btn-primary btn-lg"><i class="fas fa-rocket"></i> Get Started Free</a>
-      <a href="exercises.html" class="btn btn-outline btn-lg" style="margin-left:1rem"><i class="fas fa-dumbbell"></i> Browse Exercises</a>
+      <a href="exercises.html" class="btn btn-outline btn-lg"><i class="fas fa-dumbbell"></i> Browse Exercises</a>
     </div>
   </div>
 </div>
 
 <footer>
   <div class="footer-grid">
-    <div class="footer-brand"><img src="assets/images/Logo.png"><div class="footer-brand-name">HomePhysio</div><p>Your home physiotherapy companion. Built with Node.js and MongoDB.</p><div class="footer-social"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
-    <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="exercises.html">Exercises</a></li><li><a href="routines.html">My Routines</a></li><li><a href="progress.html">My Progress</a></li></ul></div>
-    <div class="footer-col"><h4>Account</h4><ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="profile.html">Profile</a></li></ul></div>
-    <div class="footer-col"><h4>Tech Stack</h4><ul><li><a href="#">Node.js + Express</a></li><li><a href="#">MongoDB + Mongoose</a></li><li><a href="#">HTML5 + CSS3</a></li><li><a href="#">Vanilla JavaScript</a></li></ul></div>
+    <div class="footer-brand">
+      <img src="assets/images/Logo.png" alt="">
+      <div class="footer-brand-name">HomePhysio</div>
+      <p>Your home physiotherapy companion. Built with Node.js and MongoDB.</p>
+    </div>
+    <div class="footer-col"><h4>Pages</h4><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="exercises.html">Exercises</a></li>
+      <li><a href="routines.html">My Routines</a></li>
+      <li><a href="progress.html">My Progress</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Account</h4><ul>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Tech Stack</h4><ul>
+      <li><a href="#">Node.js + Express</a></li>
+      <li><a href="#">MongoDB + Mongoose</a></li>
+      <li><a href="#">HTML5 + CSS3</a></li>
+      <li><a href="#">Vanilla JavaScript</a></li>
+    </ul></div>
   </div>
   <div class="footer-bottom"><span>&copy; 2025 HomePhysio — Internship Project by Arjan KC</span></div>
 </footer>
 
 <script>
-if(localStorage.getItem('theme')==='dark'){document.body.classList.add('dark-mode');document.getElementById('ti').className='fas fa-sun';}
-function toggleTheme(){document.body.classList.toggle('dark-mode');const d=document.body.classList.contains('dark-mode');document.getElementById('ti').className=d?'fas fa-sun':'fas fa-moon';localStorage.setItem('theme',d?'dark':'light');}
+if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('ti').className = 'fas fa-sun'; }
+function toggleTheme() { document.body.classList.toggle('dark-mode'); const d = document.body.classList.contains('dark-mode'); document.getElementById('ti').className = d ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', d ? 'dark' : 'light'); }
+function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+document.addEventListener('click', e => { const mn = document.getElementById('mobileNav'); if (mn && mn.classList.contains('open') && !e.target.closest('.hamburger') && !e.target.closest('.nav-mobile')) mn.classList.remove('open'); });
 </script>
 </body>
 </html>

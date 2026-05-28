@@ -1,312 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - HomePhysio</title>
-<<<<<<< HEAD
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { margin:0; padding:0; min-height:100vh; background:linear-gradient(135deg,#003d7a,#0077cc); display:flex; align-items:center; justify-content:center; }
-    .login-wrap { display:flex; width:min(900px,96vw); min-height:520px; border-radius:24px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,0.3); }
-    .login-left { flex:1; background:linear-gradient(160deg,#001f4d,#0055aa); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:2.5rem; color:white; text-align:center; }
-    .login-left img { width:220px; height:220px; object-fit:contain; border-radius:16px; margin-bottom:1.5rem; background:rgba(255,255,255,0.08); padding:1rem; }
-    .login-left h2 { font-size:1.5rem; font-weight:800; margin-bottom:0.5rem; }
-    .login-left p { font-size:0.88rem; opacity:0.85; line-height:1.7; }
-    .login-left .features { list-style:none; padding:0; margin-top:1.2rem; text-align:left; }
-    .login-left .features li { font-size:0.85rem; margin-bottom:0.5rem; opacity:0.9; }
-    .login-left .features li i { color:#7dd3fc; margin-right:0.5rem; }
-    .login-right { width:380px; background:white; padding:2.5rem; display:flex; flex-direction:column; justify-content:center; }
-    .login-right .logo-row { display:flex; align-items:center; gap:0.6rem; margin-bottom:1.5rem; }
-    .login-right .logo-row img { width:38px; }
-    .login-right .logo-row span { font-weight:800; font-size:1.1rem; color:#0077cc; }
-    .login-right h2 { font-size:1.5rem; font-weight:800; color:#1a1a2e; margin-bottom:0.3rem; }
-    .login-right p { font-size:0.85rem; color:#888; margin-bottom:1.5rem; }
-    .form-group { margin-bottom:1rem; }
-    .form-group label { display:block; font-weight:700; font-size:0.85rem; color:#444; margin-bottom:0.4rem; }
-    .form-group input { width:100%; padding:0.75rem 1rem; border:2px solid #e0e8f5; border-radius:10px; font-size:0.92rem; color:#1a1a2e; background:#f8faff; transition:0.2s; }
-    .form-group input:focus { outline:none; border-color:#0077cc; background:white; box-shadow:0 0 0 3px rgba(0,119,204,0.1); }
-    .err { background:#fee2e2; color:#991b1b; padding:0.7rem 1rem; border-radius:8px; font-size:0.85rem; font-weight:600; margin-bottom:1rem; display:none; border-left:3px solid #e74c3c; }
-    .btn-login { width:100%; padding:0.85rem; background:#0077cc; color:white; border:none; border-radius:10px; font-size:0.95rem; font-weight:700; cursor:pointer; transition:0.2s; margin-top:0.5rem; }
-    .btn-login:hover { background:#005fa3; transform:translateY(-1px); }
-    .divider { text-align:center; font-size:0.85rem; color:#888; margin:1rem 0; }
-    .divider a { color:#0077cc; font-weight:700; text-decoration:none; }
-    @media(max-width:700px){ .login-left{display:none;} .login-right{width:100%;border-radius:24px;} }
-=======
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    body {
-      font-family: Arial;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #f0f0f0;
-    }
-
-    .form-container {
-      position: relative;
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      width: 300px;
-    }
-
-    .close-btn,
-    .back-btn {
-      position: absolute;
-      top: 10px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      cursor: pointer;
-      color: #333;
-    }
-
-    .close-btn {
-      right: 15px;
-    }
-
-    .close-btn:hover {
-      color: #00aaff;
-    }
-
-    .back-btn {
-      left: 15px;
-    }
-
-    .back-btn:hover {
-      color: #00aaff;
-    }
-
-    h2 {
-      text-align: center;
-      color: #00aaff;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      height: 40px;
-      box-sizing: border-box;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 6px;
-      background: #00aaff;
-      color: white;
-      cursor: pointer;
-    }
-
-    .clear-btn {
-      background: #e44848;
-      color: #333;
-      margin-top: 5px;
-    }
-
-    /* Password wrapper */
-    .password-wrapper {
-      position: relative;
-      width: 100%;
-    }
-
-    .password-wrapper input {
-      width: 100%;
-      padding-right: 35px;
-      height: 40px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    .password-wrapper .toggle-password {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      color: #555;
-      font-size: 1.1rem;
-      user-select: none;
-    }
->>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; min-height: 100vh; background: linear-gradient(135deg, #003d7a, #0077cc); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .wrap { display: flex; width: min(900px, 96vw); min-height: 520px; border-radius: 24px; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.35); position: relative; }
+    /* Home button */
+    .home-btn { position: absolute; top: 14px; right: 14px; z-index: 10; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); border: none; color: white; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; text-decoration: none; }
+    .home-btn:hover { background: rgba(255,255,255,0.3); }
+    /* Left panel */
+    .left { flex: 1; background: linear-gradient(160deg, #001f4d, #0055aa); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem; color: white; text-align: center; }
+    .left img { width: 200px; height: 200px; object-fit: contain; border-radius: 16px; margin-bottom: 1.5rem; background: rgba(255,255,255,0.08); padding: 1rem; }
+    .left h2 { font-size: 1.45rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .left p { font-size: 0.85rem; opacity: 0.85; line-height: 1.7; }
+    .left ul { list-style: none; margin-top: 1.2rem; text-align: left; }
+    .left ul li { font-size: 0.83rem; margin-bottom: 0.5rem; opacity: 0.9; }
+    .left ul li i { color: #7dd3fc; margin-right: 0.5rem; }
+    /* Right panel */
+    .right { width: 380px; background: white; padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .logo-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem; }
+    .logo-row img { width: 36px; }
+    .logo-row span { font-weight: 800; font-size: 1.1rem; color: #0077cc; }
+    h2 { font-size: 1.45rem; font-weight: 800; color: #1a1a2e; margin-bottom: 0.3rem; }
+    p.sub { font-size: 0.84rem; color: #888; margin-bottom: 1.5rem; }
+    .fg { margin-bottom: 1rem; }
+    .fg label { display: block; font-weight: 700; font-size: 0.82rem; color: #444; margin-bottom: 0.4rem; }
+    .fg input { width: 100%; padding: 0.75rem 1rem; border: 2px solid #e0e8f5; border-radius: 10px; font-size: 0.9rem; color: #1a1a2e; background: #f8faff; transition: 0.2s; font-family: inherit; }
+    .fg input:focus { outline: none; border-color: #0077cc; background: white; box-shadow: 0 0 0 3px rgba(0,119,204,0.1); }
+    .err { background: #fee2e2; color: #991b1b; padding: 0.7rem 1rem; border-radius: 8px; font-size: 0.83rem; font-weight: 600; margin-bottom: 1rem; display: none; border-left: 3px solid #e74c3c; }
+    .btn { width: 100%; padding: 0.88rem; background: #0077cc; color: white; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: 0.2s; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+    .btn:hover:not(:disabled) { background: #005fa3; transform: translateY(-1px); }
+    .btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+    .divider { text-align: center; font-size: 0.83rem; color: #888; margin: 1rem 0; }
+    .divider a { color: #0077cc; font-weight: 700; text-decoration: none; }
+    /* Close button on right panel */
+    .close-right { position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border-radius: 50%; background: #f0f4f8; border: none; font-size: 0.95rem; cursor: pointer; color: #888; display: flex; align-items: center; justify-content: center; transition: 0.2s; text-decoration: none; }
+    .close-right:hover { background: #fee2e2; color: #e74c3c; }
+    @media(max-width: 680px) { .left { display: none; } .right { width: 100%; border-radius: 24px; } }
   </style>
 </head>
-
 <body>
-<<<<<<< HEAD
-  <div class="login-wrap">
-    <!-- Left panel -->
-    <div class="login-left">
-      <img src="assets/images/rehab.png" alt="Physiotherapy" onerror="this.src='assets/images/Logo.png'">
-      <h2>Welcome to HomePhysio</h2>
-      <p>Your personal physiotherapy companion for guided exercises and progress tracking.</p>
-      <ul class="features">
-        <li><i class="fas fa-check-circle"></i> 14+ guided exercises</li>
-        <li><i class="fas fa-check-circle"></i> Custom routine builder</li>
-        <li><i class="fas fa-check-circle"></i> Workout timer & rest periods</li>
-        <li><i class="fas fa-check-circle"></i> Progress tracking & streaks</li>
-      </ul>
-    </div>
-    <!-- Right panel - form -->
-    <div class="login-right">
-      <div class="logo-row">
-        <img src="assets/images/Logo.png" alt="HomePhysio">
-        <span>HomePhysio</span>
-      </div>
-      <h2>Welcome Back</h2>
-      <p>Sign in to access your routines and progress</p>
-      <div id="err" class="err"></div>
-      <div class="form-group">
-        <label><i class="fas fa-envelope"></i> Email Address</label>
-        <input type="email" id="email" placeholder="you@example.com">
-      </div>
-      <div class="form-group">
-        <label><i class="fas fa-lock"></i> Password</label>
-        <input type="password" id="password" placeholder="Your password">
-      </div>
-      <button class="btn-login" onclick="doLogin()"><i class="fas fa-sign-in-alt"></i> &nbsp;Sign In</button>
-      <div class="divider">Don't have an account? <a href="register.html">Create one free</a></div>
-      <div class="divider"><a href="adminlogin.html" style="color:#888;font-size:0.82rem">Admin Login →</a></div>
-    </div>
+<div class="wrap">
+  <!-- Home exit button (top right of whole card) -->
+  <a href="index.html" class="home-btn" title="Back to Home"><i class="fas fa-home"></i></a>
+
+  <!-- Left -->
+  <div class="left">
+    <img src="assets/images/rehab.png" alt="Physiotherapy" onerror="this.src='assets/images/Logo.png'">
+    <h2>Welcome to HomePhysio</h2>
+    <p>Your personal physiotherapy companion for guided exercises and progress tracking.</p>
+    <ul>
+      <li><i class="fas fa-check-circle"></i> 14+ guided exercises</li>
+      <li><i class="fas fa-check-circle"></i> Custom routine builder</li>
+      <li><i class="fas fa-check-circle"></i> Workout timer &amp; rest periods</li>
+      <li><i class="fas fa-check-circle"></i> Progress tracking &amp; streaks</li>
+    </ul>
   </div>
 
-  <script>
-    const API = 'http://localhost:5000';
-    async function doLogin() {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const err = document.getElementById('err');
-      err.style.display = 'none';
-      if (!email || !password) { err.textContent = 'Please fill in both fields.'; err.style.display = 'block'; return; }
-      try {
-        const res = await fetch(`${API}/login`, { method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body: JSON.stringify({email, password}) });
-        const data = await res.json();
-        if (!res.ok) { err.textContent = data.msg; err.style.display = 'block'; return; }
-        window.location.href = 'profile.html';
-      } catch { err.textContent = 'Cannot connect to server. Make sure npm start is running.'; err.style.display = 'block'; }
+  <!-- Right -->
+  <div class="right">
+    <a href="index.html" class="close-right" title="Back to Home"><i class="fas fa-times"></i></a>
+    <div class="logo-row">
+      <img src="assets/images/Logo.png" alt="HomePhysio">
+      <span>HomePhysio</span>
+    </div>
+    <h2>Welcome Back</h2>
+    <p class="sub">Sign in to access your routines and progress</p>
+    <div id="err" class="err"></div>
+    <div class="fg">
+      <label><i class="fas fa-envelope"></i> Email Address</label>
+      <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+    </div>
+    <div class="fg">
+      <label><i class="fas fa-lock"></i> Password</label>
+      <input type="password" id="password" placeholder="Your password" autocomplete="current-password">
+    </div>
+    <button class="btn" id="loginBtn" onclick="doLogin()">
+      <i class="fas fa-sign-in-alt"></i> Sign In
+    </button>
+    <div class="divider">Don't have an account? <a href="register.html">Create one free</a></div>
+    <div class="divider"><a href="adminlogin.html" style="color:#aaa;font-size:0.8rem">Admin Login &rarr;</a></div>
+  </div>
+</div>
+
+<script>
+  const API = 'http://localhost:5000';
+
+  async function doLogin() {
+    const email  = document.getElementById('email').value.trim();
+    const pwd    = document.getElementById('password').value;
+    const err    = document.getElementById('err');
+    const btn    = document.getElementById('loginBtn');
+    err.style.display = 'none';
+
+    if (!email || !pwd) {
+      err.textContent = 'Please fill in both fields.';
+      err.style.display = 'block';
+      return;
     }
-    document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-  </script>
-</body>
-=======
 
-  <div class="form-container">
-    <span class="close-btn" onclick="window.location.href='index.html'">&times;</span>
-    <span class="back-btn" onclick="window.location.href='register.html'">&#8592;</span>
-    <h2>Login</h2>
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="Email" required>
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
 
-      <div class="password-wrapper">
-        <input type="password" id="password" placeholder="Password" required>
-        <span class="toggle-password" data-target="password"
-          style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #555;">
-          <i class="fa-regular fa-eye"></i>
-        </span>
-      </div>
-
-      <button type="submit">Login</button>
-      <button type="button" class="clear-btn" onclick="clearFields()">Clear</button>
-    </form>
-    <p>Don't have an account? <a href="register.html">Register</a></p>
-  </div>
-
-  <script src="js/config.js"></script>
-  <script>
-
-    // ✅ Toggle password visibility
-    document.querySelectorAll(".toggle-password").forEach(button => {
-      button.addEventListener("click", () => {
-        const targetId = button.getAttribute("data-target");
-        const input = document.getElementById(targetId);
-        const icon = button.querySelector("i");
-
-        if (input.type === "password") {
-          input.type = "text";
-          icon.classList.remove("fa-eye");
-          icon.classList.add("fa-eye-slash");
-          icon.style.color = "#00aaff"; // eye color changes when active
-        } else {
-          input.type = "password";
-          icon.classList.remove("fa-eye-slash");
-          icon.classList.add("fa-eye");
-          icon.style.color = "#555";
-        }
+    try {
+      // Step 1: Login
+      const res  = await fetch(`${API}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email, password: pwd })
       });
-    });
+      const data = await res.json();
 
-    document.getElementById("loginForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      try {
-        let res, data;
-
-        if (email === "admin@gmail.com") {
-          // Admin login
-          res = await fetch(`${API_BASE_URL}/admin/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({ email, password })
-          });
-
-          data = await res.json();
-
-          if (res.ok && data.msg === "Admin login successful!") {
-            localStorage.setItem("loggedInEmail", email);
-            alert("Admin successfully logged in!");
-            window.location.href = "admin.html"; // redirect admin
-          } else {
-            alert(data.msg || "Access denied. Invalid credentials!");
-          }
-
-        } else {
-          // Normal user login
-          res = await fetch(`${API_BASE_URL}/login`, {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
-          });
-
-          data = await res.json();
-
-          if (res.ok && data.user) {
-            localStorage.setItem("userName", data.user.name);
-            localStorage.setItem("userEmail", data.user.email);
-            alert("User successfully logged in!");
-            window.location.href = "profile.html";
-          } else {
-            alert(data.msg || "Login failed. Please check your details.");
-          }
-        }
-
-
-      } catch (err) {
-        console.error(err);
-        alert("An error occurred during login. Please try again.");
+      if (!res.ok) {
+        err.textContent = data.msg || 'Invalid email or password.';
+        err.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+        return;
       }
-    });
 
+      // Login successful — redirect to profile
+      window.location.href = 'profile.html';
+    } catch {
+      err.textContent = 'Cannot connect to server. Make sure npm start is running in the backend folder.';
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+    }
+  }
 
-  </script>
-
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+</script>
 </body>
-
->>>>>>> b2e0aa5ccfdae253210393b608a98c8d9e904f1c
 </html>
