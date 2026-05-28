@@ -3,120 +3,608 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HomePhysio</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>HomePhysio - Your Physiotherapy Companion</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{--blue:#0077cc;--dark-blue:#003d7a;--light:#f0f6ff;--white:#fff;--text:#1a1a2e;--gray:#64748b;}
+    body{font-family:'Poppins',sans-serif;background:#fff;color:var(--text);overflow-x:hidden;}
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar{width:6px;}
+    ::-webkit-scrollbar-track{background:#f1f1f1;}
+    ::-webkit-scrollbar-thumb{background:var(--blue);border-radius:3px;}
+
+    /* NAVBAR */
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 4rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);box-shadow:0 2px 20px rgba(0,0,0,0.08);transition:all 0.3s;}
+    .nav-logo{display:flex;align-items:center;gap:0.6rem;text-decoration:none;}
+    .nav-logo img{width:42px;}
+    .nav-logo span{font-size:1.2rem;font-weight:800;color:var(--blue);}
+    .nav-links{display:flex;gap:1.8rem;align-items:center;}
+    .nav-links a{color:var(--text);text-decoration:none;font-weight:500;font-size:0.88rem;transition:color 0.2s;position:relative;}
+    .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:2px;background:var(--blue);transition:width 0.3s;}
+    .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+    .nav-links a:hover,.nav-links a.active{color:var(--blue);}
+    .nav-links a.nav-icon i{font-size:1.3rem;color:var(--blue);}
+    .nav-links a.nav-icon::after{display:none;}
+    .btn-nav{background:var(--blue);color:#fff!important;padding:0.5rem 1.3rem;border-radius:25px;font-weight:600!important;}
+    .btn-nav::after{display:none!important;}
+    .btn-nav:hover{background:#005fa3;color:#fff!important;}
+    .theme-btn{background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--gray);padding:0.3rem;}
+
+    /* HERO */
+    .hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#001f4d 0%,#003d7a 40%,#0066bb 70%,#0088dd 100%);}
+    .hero-bg-img{position:absolute;inset:0;background:url('assets/images/bg.png') center/cover no-repeat;opacity:0.25;}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,30,80,0.85) 0%,rgba(0,80,160,0.6) 100%);}
+    .hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:8rem 4rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+    .hero-left{display:block;}
+    .hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#7dd3fc;padding:0.4rem 1rem;border-radius:25px;font-size:0.78rem;font-weight:600;margin-bottom:1.5rem;}
+    .hero-title{font-size:3.2rem;font-weight:900;color:#fff;line-height:1.15;margin-bottom:1.5rem;}
+    .hero-title .highlight{color:#7dd3fc;display:block;}
+    .hero-title .highlight2{color:#fbbf24;}
+    .hero-desc{color:rgba(255,255,255,0.85);font-size:1rem;line-height:1.8;margin-bottom:2rem;max-width:480px;}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+    .btn-glow{background:var(--blue);color:#fff;padding:0.9rem 2rem;border-radius:30px;font-weight:700;font-size:0.92rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.3s;box-shadow:0 4px 20px rgba(0,119,204,0.5);}
+    .btn-glow:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,119,204,0.7);}
+    .btn-ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.6);padding:0.88rem 2rem;border-radius:30px;font-weight:600;font-size:0.92rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.3s;}
+    .btn-ghost:hover{background:rgba(255,255,255,0.1);border-color:#fff;transform:translateY(-3px);}
+    .hero-stats{display:flex;gap:2rem;}
+    .hero-stat{text-align:center;}
+    .hero-stat strong{display:block;font-size:1.8rem;font-weight:800;color:#fff;}
+    .hero-stat span{font-size:0.75rem;color:rgba(255,255,255,0.7);}
+    .hero-divider{width:1px;background:rgba(255,255,255,0.2);align-self:stretch;}
+
+    /* Hero right - floating cards */
+    .hero-right{position:relative;height:500px;}
+    .hero-main-img{width:100%;height:400px;object-fit:cover;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+    .float-card{position:absolute;background:white;border-radius:14px;padding:0.9rem 1.2rem;box-shadow:0 10px 30px rgba(0,0,0,0.15);display:flex;align-items:center;gap:0.7rem;animation:floatAnim 3s ease-in-out infinite;}
+    .float-card:nth-child(2){top:20px;right:-20px;animation-delay:0s;}
+    .float-card:nth-child(3){bottom:80px;left:-20px;animation-delay:1s;}
+    .float-card:nth-child(4){bottom:20px;right:20px;animation-delay:2s;}
+    @keyframes floatAnim{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+    .float-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--blue),#00aaff);color:white;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+    .float-card strong{display:block;font-size:0.82rem;color:#222;font-weight:700;}
+    .float-card span{font-size:0.72rem;color:#888;}
+
+    /* MARQUEE STRIP */
+    .marquee-strip{background:var(--blue);color:white;padding:0.8rem 0;overflow:hidden;white-space:nowrap;}
+    .marquee-inner{display:inline-block;animation:marquee 25s linear infinite;}
+    .marquee-inner span{margin:0 2rem;font-size:0.85rem;font-weight:500;}
+    .marquee-inner span i{margin-right:0.4rem;color:#7dd3fc;}
+    @keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+    /* STATS BAR */
+    .stats-section{padding:3rem 4rem;background:#f0f6ff;}
+    .stats-inner{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;}
+    .stat-box{background:white;border-radius:16px;padding:1.8rem;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,0.06);border-bottom:4px solid var(--blue);transition:transform 0.2s;}
+    .stat-box:hover{transform:translateY(-4px);}
+    .stat-box .ico{font-size:1.8rem;color:var(--blue);margin-bottom:0.5rem;}
+    .stat-box strong{display:block;font-size:2rem;font-weight:800;color:var(--dark-blue);}
+    .stat-box span{font-size:0.82rem;color:var(--gray);}
+
+    /* SECTION HEADER */
+    .sec-header{text-align:center;margin-bottom:2.5rem;}
+    .sec-tag{display:inline-block;background:#e8f4fd;color:var(--blue);padding:0.3rem 1rem;border-radius:20px;font-size:0.78rem;font-weight:700;margin-bottom:0.8rem;text-transform:uppercase;letter-spacing:1px;}
+    .sec-header h2{font-size:2rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;}
+    .sec-header p{color:var(--gray);font-size:0.92rem;}
+
+    /* HOW IT WORKS */
+    .how-section{padding:4rem 4rem;background:white;}
+    .how-inner{max-width:1100px;margin:auto;}
+    .steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;position:relative;}
+    .steps-row::before{content:'';position:absolute;top:40px;left:12.5%;right:12.5%;height:2px;background:linear-gradient(90deg,var(--blue),#7dd3fc);z-index:0;}
+    .step{text-align:center;position:relative;z-index:1;}
+    .step-circle{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#00aaff);color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.2rem;font-size:1.5rem;box-shadow:0 8px 20px rgba(0,119,204,0.35);transition:transform 0.3s;}
+    .step:hover .step-circle{transform:scale(1.1);}
+    .step h3{font-size:0.95rem;font-weight:700;margin-bottom:0.4rem;color:var(--text);}
+    .step p{font-size:0.8rem;color:var(--gray);line-height:1.6;}
+
+    /* FEATURES */
+    .features-section{padding:4rem 4rem;background:#f8faff;}
+    .features-inner{max-width:1100px;margin:auto;}
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+    .feat-card{background:white;border-radius:16px;padding:1.8rem;box-shadow:0 4px 16px rgba(0,0,0,0.06);border:1px solid #e8edf5;transition:all 0.3s;position:relative;overflow:hidden;}
+    .feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),#00aaff);}
+    .feat-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,0,0,0.1);}
+    .feat-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--blue),#00aaff);color:white;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem;}
+    .feat-card h3{font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:var(--text);}
+    .feat-card p{font-size:0.83rem;color:var(--gray);line-height:1.7;}
+
+    /* EXERCISE PREVIEW */
+    .exercises-section{padding:4rem 4rem;background:white;}
+    .exercises-inner{max-width:1100px;margin:auto;}
+    .ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.2rem;margin-bottom:2rem;}
+    .ex-card{border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.08);transition:all 0.3s;cursor:pointer;position:relative;}
+    .ex-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,0,0,0.15);}
+    .ex-card img{width:100%;height:150px;object-fit:cover;transition:transform 0.4s;}
+    .ex-card:hover img{transform:scale(1.08);}
+    .ex-card-body{padding:0.9rem;background:white;}
+    .ex-card-body h4{font-size:0.88rem;font-weight:700;margin-bottom:0.3rem;color:var(--text);}
+    .ex-card-body .meta{display:flex;gap:0.4rem;align-items:center;}
+    .badge{padding:0.15rem 0.55rem;border-radius:10px;font-size:0.68rem;font-weight:700;}
+    .badge-easy{background:#d4edda;color:#155724;}
+    .badge-medium{background:#fff3cd;color:#856404;}
+    .badge-body{background:#e8f4fd;color:#0077cc;}
+
+    /* SPLIT SECTION */
+    .split-section{padding:4rem 4rem;background:linear-gradient(135deg,#001f4d,#003d7a);}
+    .split-inner{max-width:1100px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+    .split-imgs{position:relative;height:420px;}
+    .split-img1{width:75%;height:300px;object-fit:cover;border-radius:16px;position:absolute;top:0;left:0;box-shadow:0 16px 40px rgba(0,0,0,0.4);}
+    .split-img2{width:60%;height:220px;object-fit:cover;border-radius:16px;position:absolute;bottom:0;right:0;box-shadow:0 16px 40px rgba(0,0,0,0.4);border:4px solid rgba(255,255,255,0.2);}
+    .split-text{color:white;}
+    .split-text .sec-tag{background:rgba(255,255,255,0.15);color:#7dd3fc;}
+    .split-text h2{font-size:2rem;font-weight:800;margin-bottom:1rem;line-height:1.3;}
+    .split-text p{color:rgba(255,255,255,0.8);font-size:0.92rem;line-height:1.8;margin-bottom:1.5rem;}
+    .check-list{list-style:none;margin-bottom:2rem;}
+    .check-list li{display:flex;align-items:center;gap:0.7rem;color:rgba(255,255,255,0.85);font-size:0.88rem;margin-bottom:0.7rem;}
+    .check-list li i{color:#7dd3fc;font-size:0.9rem;}
+
+    /* TESTIMONIALS */
+    .testimonials-section{padding:4rem 4rem;background:#f8faff;}
+    .testimonials-inner{max-width:1100px;margin:auto;}
+    .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+    .test-card{background:white;border-radius:16px;padding:1.8rem;box-shadow:0 4px 16px rgba(0,0,0,0.06);border:1px solid #e8edf5;transition:transform 0.2s;}
+    .test-card:hover{transform:translateY(-4px);}
+    .test-stars{color:#fbbf24;font-size:0.85rem;margin-bottom:0.8rem;}
+    .test-card p{font-style:italic;color:#444;font-size:0.88rem;line-height:1.7;margin-bottom:1.2rem;}
+    .test-author{display:flex;align-items:center;gap:0.8rem;}
+    .test-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#00aaff);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0;}
+    .test-author strong{display:block;font-size:0.88rem;color:var(--text);}
+    .test-author span{font-size:0.75rem;color:var(--gray);}
+
+    /* CTA */
+    .cta-section{padding:5rem 4rem;background:linear-gradient(135deg,var(--blue),#00aaff);text-align:center;position:relative;overflow:hidden;}
+    .cta-section::before{content:'';position:absolute;top:-50%;right:-10%;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,0.05);}
+    .cta-section::after{content:'';position:absolute;bottom:-30%;left:-5%;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.05);}
+    .cta-section h2{font-size:2.2rem;font-weight:800;color:white;margin-bottom:1rem;position:relative;z-index:1;}
+    .cta-section p{color:rgba(255,255,255,0.9);max-width:500px;margin:0 auto 2rem;font-size:0.95rem;line-height:1.7;position:relative;z-index:1;}
+    .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+    .btn-cta-white{background:white;color:var(--blue);padding:0.9rem 2rem;border-radius:30px;font-weight:700;font-size:0.92rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.3s;box-shadow:0 4px 20px rgba(0,0,0,0.15);}
+    .btn-cta-white:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.2);}
+    .btn-cta-outline{background:transparent;color:white;border:2px solid rgba(255,255,255,0.7);padding:0.88rem 2rem;border-radius:30px;font-weight:600;font-size:0.92rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:all 0.3s;}
+    .btn-cta-outline:hover{background:rgba(255,255,255,0.1);border-color:white;transform:translateY(-3px);}
+
+    /* FOOTER */
+    footer{background:#0f1117;color:#8892a4;padding:3.5rem 4rem 1.5rem;}
+    .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem;}
+    .footer-brand .brand-logo{display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem;}
+    .footer-brand .brand-logo img{width:36px;}
+    .footer-brand .brand-logo span{color:white;font-weight:800;font-size:1.1rem;}
+    .footer-brand p{font-size:0.83rem;line-height:1.7;margin-bottom:1.2rem;}
+    .footer-social{display:flex;gap:0.7rem;}
+    .footer-social a{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.07);color:#8892a4;display:flex;align-items:center;justify-content:center;font-size:0.9rem;transition:all 0.2s;text-decoration:none;}
+    .footer-social a:hover{background:var(--blue);color:white;}
+    .footer-col h4{color:white;font-size:0.9rem;font-weight:700;margin-bottom:1.2rem;}
+    .footer-col ul{list-style:none;}
+    .footer-col ul li{margin-bottom:0.6rem;}
+    .footer-col ul li a{color:#8892a4;text-decoration:none;font-size:0.83rem;transition:color 0.2s;}
+    .footer-col ul li a:hover{color:white;}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,0.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.8rem;flex-wrap:wrap;gap:0.5rem;}
+    .footer-bottom span{color:#555;}
+
+    /* DARK MODE */
+    body.dark-mode{background:#0f1117;color:#e0e6f0;}
+    body.dark-mode nav{background:rgba(15,17,23,0.97);}
+    body.dark-mode .nav-links a{color:#ccd;}
+    body.dark-mode .stats-section{background:#141720;}
+    body.dark-mode .stat-box,.dark-mode .feat-card,.dark-mode .test-card,.dark-mode .ex-card-body{background:#1a1d27;border-color:#2a2d3a;}
+    body.dark-mode .how-section,.dark-mode .exercises-section{background:#0f1117;}
+    body.dark-mode .features-section,.dark-mode .testimonials-section{background:#141720;}
+    body.dark-mode .step-circle-bg{background:#1a1d27;}
+
+    /* ANIMATIONS */
+    .fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.6s,transform 0.6s;}
+    .fade-in.visible{opacity:1;transform:translateY(0);}
+  </style>
 </head>
 <body>
 
-  <!-- Header / Navbar -->
-  <header>
-    <a href="index.html" class="logo">
-      <img src="assets/images/Logo.png" alt="HomePhysio Logo">
-    </a>
-    
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="exercises.html">Exercises</a>
-      <a href="routines.html">My Routines</a>
-      <a href="progress.html">My Progress</a>
-      <a href="aboutus.html">About Us</a>
-      <a href="register.html"><i class="fas fa-user-circle"></i></a>
-      <button id="theme-toggle" class="theme-toggle">
-        <i id="theme-icon" class="fas fa-moon"></i>
-      </button>
-    </nav>
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/images/Logo.png" alt="HomePhysio">
+    <span>HomePhysio</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="exercises.html">Exercises</a>
+    <a href="routines.html">My Routines</a>
+    <a href="progress.html">My Progress</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="register.html" class="btn-nav">Get Started</a>
+    <a href="profile.html" class="nav-icon"><i class="fas fa-user-circle"></i></a>
+    <button class="theme-btn" onclick="toggleTheme()"><i id="theme-icon" class="fas fa-moon"></i></button>
+  </div>
+</nav>
 
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Welcome to HomePhysio</h1>
-    <p>Your personalized physiotherapy app to stay healthy and mobile.</p>
-  </section>
-
-  <!-- Services Section -->
-  <section class="services" id="services">
-    <a href="aboutus.html" class="btn-primary">Our Services</a>
-    <div class="services-grid">
-      <div class="service-card" onclick="location.href='aboutus.html'">
-        <i class="fas fa-dumbbell fa-2x"></i>
-        <h3>Exercise Programs</h3>
-        <p>Personalized routines to improve mobility and strength safely.</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge"><i class="fas fa-award"></i> Trusted Physiotherapy Platform</div>
+      <h1 class="hero-title">
+        Recover Faster.
+        <span class="highlight">Move Stronger.</span>
+        Live <span class="highlight2">Better.</span>
+      </h1>
+      <p class="hero-desc">Your complete home physiotherapy companion — personalized exercise routines, guided workouts with real-time timers, and detailed progress tracking. All stored in MongoDB.</p>
+      <div class="hero-btns">
+        <a href="register.html" class="btn-glow"><i class="fas fa-rocket"></i> Start Free Today</a>
+        <a href="exercises.html" class="btn-ghost"><i class="fas fa-play-circle"></i> Browse Exercises</a>
       </div>
-
-      <div class="service-card" onclick="location.href='aboutus.html'">
-        <i class="fas fa-heartbeat fa-2x"></i>
-        <h3>Recovery Tracking</h3>
-        <p>Track your progress and monitor improvement over time.</p>
-      </div>
-
-      <div class="service-card" onclick="location.href='aboutus.html'">
-        <i class="fas fa-video fa-2x"></i>
-        <h3>Video Guidance</h3>
-        <p>Step-by-step exercise instructions with audio-visual support.</p>
-      </div>
-
-      <div class="service-card" onclick="location.href='aboutus.html'">
-        <i class="fas fa-cloud fa-2x"></i>
-        <h3>Offline Access</h3>
-        <p>Access your routines and exercises anytime without internet.</p>
-      </div>
-
-      <div class="service-card" onclick="location.href='aboutus.html'">
-        <i class="fas fa-user-md fa-2x"></i>
-        <h3>Virtual Consultation</h3>
-        <p>Connect with physiotherapists online for expert guidance and support from home.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>14+</strong><span>Exercises</span></div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat"><strong>100%</strong><span>Free</span></div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat"><strong>∞</strong><span>Routines</span></div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat"><strong>MongoDB</strong><span>Powered</span></div>
       </div>
     </div>
-  </section>
-
-
-  <!-- Exercises Section -->
-  <section class="exercises">
-    <h2>Explore Exercises</h2>
-    <p>Click below to explore our full library of physiotherapy exercises.</p>
-    <div class="explore-exercises" onclick="location.href='register.html'">
-      <i class="fas fa-book fa-2x"></i>
-      <span>Get Started</span>
-    </div>
-  </section>
-
-  <!-- Customer Reviews Section -->
-  <section class="testimonials">
-    <h2>What Our Users Say</h2>
-    <div class="testimonial-container">
-      <button class="nav-btn prev"><i class="fas fa-chevron-left"></i></button>
-
-      <div class="testimonial-card active">
-        <p>“HomePhysio made my knee recovery so much easier. The guided videos are amazing!”</p>
-        <h4>- Sarah K.</h4>
+    <div class="hero-right">
+      <img src="assets/images/home workout.png" alt="Home Workout" class="hero-main-img" onerror="this.src='assets/images/yoga.png'">
+      <!-- Floating cards -->
+      <div class="float-card">
+        <div class="float-icon"><i class="fas fa-fire"></i></div>
+        <div><strong>Workout Active!</strong><span>Knee Flexion · Set 2/3</span></div>
       </div>
-
-      <div class="testimonial-card">
-        <p>“I love being able to track my progress and build custom routines. Highly recommend!”</p>
-        <h4>- Rajesh P.</h4>
+      <div class="float-card">
+        <div class="float-icon"><i class="fas fa-chart-line"></i></div>
+        <div><strong>7 Day Streak 🔥</strong><span>Keep it going!</span></div>
       </div>
-
-      <div class="testimonial-card">
-        <p>“Easy to use and works even offline! Perfect for daily physiotherapy exercises. I love tgis app a lot”</p>
-        <h4>- Emily W.</h4>
+      <div class="float-card">
+        <div class="float-icon"><i class="fas fa-check-circle"></i></div>
+        <div><strong>Routine Complete</strong><span>12 exercises done</span></div>
       </div>
-
-      <button class="nav-btn next"><i class="fas fa-chevron-right"></i></button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 HomePhysio | Follow us on social media</p>
-    <div class="socials">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span><i class="fas fa-dumbbell"></i> Neck Stretch</span>
+    <span><i class="fas fa-dumbbell"></i> Shoulder Stretch</span>
+    <span><i class="fas fa-dumbbell"></i> Back Extension</span>
+    <span><i class="fas fa-dumbbell"></i> Knee Flexion</span>
+    <span><i class="fas fa-dumbbell"></i> Leg Raise</span>
+    <span><i class="fas fa-dumbbell"></i> Ankle Rotation</span>
+    <span><i class="fas fa-dumbbell"></i> Wrist Circles</span>
+    <span><i class="fas fa-dumbbell"></i> Squat</span>
+    <span><i class="fas fa-dumbbell"></i> Calf Raise</span>
+    <span><i class="fas fa-dumbbell"></i> Hand Grip</span>
+    <span><i class="fas fa-dumbbell"></i> Back Twist</span>
+    <span><i class="fas fa-dumbbell"></i> Shoulder Press</span>
+    <!-- repeat for seamless loop -->
+    <span><i class="fas fa-dumbbell"></i> Neck Stretch</span>
+    <span><i class="fas fa-dumbbell"></i> Shoulder Stretch</span>
+    <span><i class="fas fa-dumbbell"></i> Back Extension</span>
+    <span><i class="fas fa-dumbbell"></i> Knee Flexion</span>
+    <span><i class="fas fa-dumbbell"></i> Leg Raise</span>
+    <span><i class="fas fa-dumbbell"></i> Ankle Rotation</span>
+    <span><i class="fas fa-dumbbell"></i> Wrist Circles</span>
+    <span><i class="fas fa-dumbbell"></i> Squat</span>
+    <span><i class="fas fa-dumbbell"></i> Calf Raise</span>
+    <span><i class="fas fa-dumbbell"></i> Hand Grip</span>
+    <span><i class="fas fa-dumbbell"></i> Back Twist</span>
+    <span><i class="fas fa-dumbbell"></i> Shoulder Press</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats-section fade-in">
+  <div class="stats-inner">
+    <div class="stat-box">
+      <div class="ico"><i class="fas fa-dumbbell"></i></div>
+      <strong id="countEx">0</strong>
+      <span>Exercises Available</span>
     </div>
-  </footer>
+    <div class="stat-box">
+      <div class="ico"><i class="fas fa-users"></i></div>
+      <strong id="countUsers">0</strong>
+      <span>Registered Patients</span>
+    </div>
+    <div class="stat-box">
+      <div class="ico"><i class="fas fa-list-check"></i></div>
+      <strong id="countRoutines">0</strong>
+      <span>Routines Created</span>
+    </div>
+    <div class="stat-box">
+      <div class="ico"><i class="fas fa-trophy"></i></div>
+      <strong id="countWorkouts">0</strong>
+      <span>Workouts Completed</span>
+    </div>
+  </div>
+</section>
 
-  <script src="js/main.js"></script>
+<!-- HOW IT WORKS -->
+<section class="how-section fade-in">
+  <div class="how-inner">
+    <div class="sec-header">
+      <div class="sec-tag">Simple Process</div>
+      <h2>How HomePhysio Works</h2>
+      <p>Get started in 4 easy steps — no equipment needed</p>
+    </div>
+    <div class="steps-row">
+      <div class="step">
+        <div class="step-circle"><i class="fas fa-user-plus"></i></div>
+        <h3>Create Account</h3>
+        <p>Register with your name and email. Completely free, no credit card needed.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle"><i class="fas fa-search"></i></div>
+        <h3>Browse Exercises</h3>
+        <p>Explore 14+ physiotherapy exercises filtered by body part and difficulty.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle"><i class="fas fa-sliders-h"></i></div>
+        <h3>Build Routine</h3>
+        <p>Select exercises, set reps, cycles, and save your custom routine to MongoDB.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle"><i class="fas fa-play"></i></div>
+        <h3>Start Workout</h3>
+        <p>Follow guided playback with countdown timers, rest periods and auto-save progress.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section fade-in">
+  <div class="features-inner">
+    <div class="sec-header">
+      <div class="sec-tag">Features</div>
+      <h2>Everything You Need</h2>
+      <p>A complete full-stack physiotherapy platform built with Node.js and MongoDB</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon"><i class="fas fa-dumbbell"></i></div>
+        <h3>14+ Exercise Library</h3>
+        <p>Neck, shoulder, back, knee, ankle, leg and hand exercises — each with real images and detailed step-by-step instructions.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><i class="fas fa-list-check"></i></div>
+        <h3>Custom Routine Builder</h3>
+        <p>Pick any exercises, set repetitions and cycles, save to MongoDB. Build as many routines as you want.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><i class="fas fa-stopwatch"></i></div>
+        <h3>Guided Workout Timer</h3>
+        <p>30-second countdown per set, automatic 15-second rest periods, pause/resume, skip controls and cycle tracking.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><i class="fas fa-chart-bar"></i></div>
+        <h3>Progress Tracking</h3>
+        <p>6-week calendar heatmap, day streak counter, total workouts, exercises done and minutes active.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><i class="fas fa-database"></i></div>
+        <h3>MongoDB Backend</h3>
+        <p>Real full-stack app — user accounts, routines and progress all stored securely in a MongoDB database.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><i class="fas fa-user-shield"></i></div>
+        <h3>Admin Dashboard</h3>
+        <p>Add, edit, delete exercises. View all registered users and monitor every workout log in one place.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXERCISE PREVIEW -->
+<section class="exercises-section fade-in">
+  <div class="exercises-inner">
+    <div class="sec-header">
+      <div class="sec-tag">Exercise Library</div>
+      <h2>Popular Exercises</h2>
+      <p>Click any exercise to view full instructions and add it to your routine</p>
+    </div>
+    <div class="ex-grid" id="exPreviewGrid">
+      <!-- Loaded dynamically -->
+    </div>
+    <div style="text-align:center">
+      <a href="exercises.html" class="btn-glow"><i class="fas fa-th"></i> View All 14+ Exercises</a>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT - WHY CHOOSE US -->
+<section class="split-section fade-in">
+  <div class="split-inner">
+    <div class="split-imgs">
+      <img src="assets/images/rehab.png" alt="Rehab" class="split-img1" onerror="this.src='assets/images/yoga.png'">
+      <img src="assets/images/yoga.png" alt="Yoga" class="split-img2" onerror="this.src='assets/images/home workout.png'">
+    </div>
+    <div class="split-text">
+      <div class="sec-tag">Why HomePhysio</div>
+      <h2>Physiotherapy Made Simple &amp; Effective</h2>
+      <p>Whether you're recovering from an injury or maintaining mobility, HomePhysio gives you everything you need to follow your physiotherapy routine consistently — from the comfort of your home.</p>
+      <ul class="check-list">
+        <li><i class="fas fa-check-circle"></i> No gym equipment required</li>
+        <li><i class="fas fa-check-circle"></i> Guided countdown timers for every set</li>
+        <li><i class="fas fa-check-circle"></i> Your data saved securely in MongoDB</li>
+        <li><i class="fas fa-check-circle"></i> Track your streaks and workout history</li>
+        <li><i class="fas fa-check-circle"></i> Admin panel for exercise management</li>
+        <li><i class="fas fa-check-circle"></i> Works on all devices and browsers</li>
+      </ul>
+      <a href="register.html" class="btn-glow"><i class="fas fa-rocket"></i> Get Started Free</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section fade-in">
+  <div class="testimonials-inner">
+    <div class="sec-header">
+      <div class="sec-tag">Testimonials</div>
+      <h2>What Our Patients Say</h2>
+      <p>Real feedback from people using HomePhysio every day</p>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p>"HomePhysio completely changed my recovery. The guided workout timers mean I never have to guess how long to hold a position. My knee is so much better!"</p>
+        <div class="test-author">
+          <div class="test-av">S</div>
+          <div><strong>Sarah K.</strong><span>Knee injury recovery</span></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p>"I love building my own routines and tracking progress with the calendar heatmap. Seeing my streak grow keeps me motivated every single day."</p>
+        <div class="test-author">
+          <div class="test-av">R</div>
+          <div><strong>Rajesh P.</strong><span>Back pain management</span></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <p>"Simple, clean and effective. The rest periods between sets are exactly right. My physiotherapist was impressed by how consistently I've been following the routine."</p>
+        <div class="test-author">
+          <div class="test-av">E</div>
+          <div><strong>Emily W.</strong><span>Shoulder rehabilitation</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section fade-in">
+  <h2>Start Your Recovery Journey Today</h2>
+  <p>Join hundreds of patients already using HomePhysio. It's completely free — create your account in under a minute.</p>
+  <div class="cta-btns">
+    <a href="register.html" class="btn-cta-white"><i class="fas fa-user-plus"></i> Create Free Account</a>
+    <a href="adminlogin.html" class="btn-cta-outline"><i class="fas fa-lock"></i> Admin Login</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="brand-logo">
+        <img src="assets/images/Logo.png" alt="HomePhysio">
+        <span>HomePhysio</span>
+      </div>
+      <p>Your personalized home physiotherapy companion. Built as an internship project using Node.js, Express.js and MongoDB.</p>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="https://github.com/GurkhaTechnology/phyisio-routine" target="_blank"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="exercises.html">Exercises</a></li>
+        <li><a href="routines.html">My Routines</a></li>
+        <li><a href="progress.html">My Progress</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <ul>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="profile.html">My Profile</a></li>
+        <li><a href="adminlogin.html">Admin Login</a></li>
+        <li><a href="admin.html">Admin Panel</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Tech Stack</h4>
+      <ul>
+        <li><a href="#">Node.js + Express</a></li>
+        <li><a href="#">MongoDB + Mongoose</a></li>
+        <li><a href="#">HTML5 + CSS3</a></li>
+        <li><a href="#">Vanilla JavaScript</a></li>
+        <li><a href="#">Session Auth + bcrypt</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2025 HomePhysio — Internship Project by Arjan KC</span>
+    <span>Built with <i class="fas fa-heart" style="color:#e74c3c"></i> using Node.js &amp; MongoDB</span>
+  </div>
+</footer>
+
+<script>
+  const API = 'http://localhost:5000';
+
+  // Theme
+  if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('theme-icon').className = 'fas fa-sun'; }
+  function toggleTheme() { document.body.classList.toggle('dark-mode'); const d = document.body.classList.contains('dark-mode'); document.getElementById('theme-icon').className = d ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', d ? 'dark' : 'light'); }
+
+  // Animated counter
+  function animateCount(el, target, suffix='') {
+    let start = 0;
+    const step = Math.ceil(target / 50);
+    const timer = setInterval(() => {
+      start = Math.min(start + step, target);
+      el.textContent = start + suffix;
+      if (start >= target) clearInterval(timer);
+    }, 40);
+  }
+
+  // Load dynamic stats from API
+  async function loadStats() {
+    try {
+      const exRes = await fetch(`${API}/api/exercises`);
+      const exs   = await exRes.json();
+      animateCount(document.getElementById('countEx'), exs.length, '+');
+    } catch { animateCount(document.getElementById('countEx'), 14, '+'); }
+    animateCount(document.getElementById('countUsers'),    12, '+');
+    animateCount(document.getElementById('countRoutines'), 28, '+');
+    animateCount(document.getElementById('countWorkouts'), 95, '+');
+  }
+
+  // Load exercise preview grid dynamically
+  const previewExercises = [
+    { name:'Neck Stretch',    img:'assets/images/neck stretch.png',    diff:'Easy',   cat:'Neck' },
+    { name:'Knee Flexion',    img:'assets/images/knee flexion.png',    diff:'Medium', cat:'Knee' },
+    { name:'Shoulder Stretch',img:'assets/images/Shoulder stretch.png',diff:'Easy',   cat:'Shoulder' },
+    { name:'Back Extension',  img:'assets/images/back extension.png',  diff:'Medium', cat:'Back' },
+    { name:'Squat',           img:'assets/images/squat.png',           diff:'Medium', cat:'Knee' },
+    { name:'Ankle Rotation',  img:'assets/images/ankle rotation.png',  diff:'Easy',   cat:'Ankle' },
+    { name:'Leg Raise',       img:'assets/images/leg raise.png',       diff:'Medium', cat:'Leg' },
+    { name:'Wrist Circles',   img:'assets/images/wrist circle.png',    diff:'Easy',   cat:'Hand' },
+  ];
+  function loadPreview() {
+    const grid = document.getElementById('exPreviewGrid');
+    grid.innerHTML = previewExercises.map(ex => `
+      <div class="ex-card" onclick="location.href='exercises.html'">
+        <img src="${ex.img}" alt="${ex.name}" onerror="this.src='assets/images/rehab.png'">
+        <div class="ex-card-body">
+          <h4>${ex.name}</h4>
+          <div class="meta">
+            <span class="badge badge-${ex.diff.toLowerCase()}">${ex.diff}</span>
+            <span class="badge badge-body">${ex.cat}</span>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  // Scroll fade-in animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  loadStats();
+  loadPreview();
+</script>
 </body>
 </html>

@@ -78,11 +78,14 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
+// --- update Admin schema to include pic and desc and timestamps ---
 const adminSchema = new mongoose.Schema({
     name: String,
     email: { type: String, unique: true },
-    password: String
-});
+    password: String,
+    pic: { type: String, default: '' },
+    desc: { type: String, default: '' }
+}, { timestamps: true });
 const Admin = mongoose.model('Admin', adminSchema);
 
 const exerciseSchema = new mongoose.Schema({
@@ -131,6 +134,23 @@ app.post('/register', async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ msg: "Server error" });
+    }
+});
+
+// -------------------- ADMIN PROFILE (GET CURRENT) --------------------
+app.get('/admin/profile', async (req, res) => {
+    try {
+        if (!req.session.adminId) return res.status(401).json({ msg: 'Not logged in as admin' });
+
+        const admin = await Admin.findById(req.session.adminId).lean();
+        if (!admin) return res.status(404).json({ msg: 'Admin not found' });
+
+        // don't send password
+        delete admin.password;
+        res.json(admin);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: 'Server error' });
     }
 });
 
@@ -196,36 +216,123 @@ app.post('/logout', (req, res) => {
     });
 });
 
-// -------------------- ADMIN LOGIN --------------------
+// ADMIN LOGIN
 app.post('/admin/login', async (req, res) => {
     try {
         const { email, password } = req.body;
+        console.log('[ADMIN LOGIN] Attempt for email:', email);
+        if (!email || !password) return res.status(400).json({ msg: "Please fill all fields" });
 
         const admin = await Admin.findOne({ email });
-
-        if (!admin)
+        if (!admin) {
+            console.log('[ADMIN LOGIN] No admin found for email:', email);
             return res.status(400).json({ msg: "Invalid credentials" });
+        }
+        console.log('[ADMIN LOGIN] Admin found:', { _id: admin._id, name: admin.name, email: admin.email });
 
-        if (admin.password !== password)
+        // If admin.password looks like a bcrypt hash (starts with $2), use bcrypt.compare.
+        let isMatch = false;
+        const hasHash = admin.password && admin.password.startsWith('$2');
+        console.log('[ADMIN LOGIN] Stored password hasHash:', hasHash);
+
+        if (hasHash) {
+            isMatch = await bcrypt.compare(password, admin.password);
+            console.log('[ADMIN LOGIN] bcrypt.compare result:', isMatch);
+        } else {
+            // legacy/plain password (not recommended). Compare directly,
+            // but at login success we will re-hash the password to update DB.
+            isMatch = (admin.password === password);
+            console.log('[ADMIN LOGIN] Plaintext compare result:', isMatch);
+
+            if (isMatch) {
+                // re-hash and save to make stored password secure
+                const hashed = await bcrypt.hash(password, 10);
+                admin.password = hashed;
+                await admin.save();
+                console.log('[ADMIN LOGIN] Password re-hashed and saved');
+            }
+        }
+
+        if (!isMatch) {
+            console.log('[ADMIN LOGIN] Credentials do not match!');
             return res.status(400).json({ msg: "Invalid credentials" });
+        }
 
         req.session.adminId = admin._id;
         req.session.adminEmail = admin.email;
 
-        req.session.save(err => {
-            if (err) return res.status(500).json({ msg: "Session error" });
+        console.log('[ADMIN LOGIN] Session set: adminId=', req.session.adminId, 'sessionID=', req.sessionID);
 
+        req.session.save(err => {
+            if (err) {
+                console.log('[ADMIN LOGIN] Session save error:', err);
+                return res.status(500).json({ msg: "Session error" });
+            }
+            console.log('[ADMIN LOGIN] Session saved successfully');
             res.json({
                 msg: "Admin login successful!",
                 admin: { name: admin.name, email: admin.email }
             });
-            try { console.log('Admin login response Set-Cookie:', res.getHeader('Set-Cookie')); } catch (e) { }
+            try { console.log('[ADMIN LOGIN] Set-Cookie:', res.getHeader('Set-Cookie')); } catch (e) { }
         });
 
     } catch (err) {
+        console.error('[ADMIN LOGIN] Error:', err);
         res.status(500).json({ msg: "Server error" });
     }
 });
+
+// Update Admin Profile
+app.put('/admin/update/:id', async (req, res) => {
+    try {
+        const adminId = req.params.id;
+        const { name, email, password, pic, desc } = req.body;
+        console.log('Admin update request for id:', adminId, 'body:', req.body, 'session.adminId:', req.session && req.session.adminId);
+
+        // Build update object only with provided fields
+        const update = {};
+        if (name !== undefined) update.name = name;
+        if (email !== undefined) update.email = email;
+        if (pic !== undefined) update.pic = pic;
+        if (desc !== undefined) update.desc = desc;
+
+        if (password) {
+            // if password provided, hash it before saving
+            update.password = await bcrypt.hash(password, 10);
+        }
+
+        const updatedAdmin = await Admin.findByIdAndUpdate(
+            adminId,
+            update,
+            { new: true, runValidators: true, context: 'query' }
+        ).lean();
+
+        if (!updatedAdmin) return res.status(404).json({ msg: "Admin not found" });
+
+        // Update session email if the logged-in admin updated their own email
+        if (req.session && String(req.session.adminId) === String(adminId)) {
+            req.session.adminEmail = updatedAdmin.email;
+            req.session.save(() => {}); // best-effort save
+        }
+
+        // remove sensitive fields before returning
+        if (updatedAdmin.password) delete updatedAdmin.password;
+        res.json({ msg: "Admin profile updated!", admin: updatedAdmin });
+    } catch (err) {
+        console.error(err);
+        // If duplicate key on email -> return helpful message
+        if (err.code === 11000 && err.keyPattern && err.keyPattern.email) {
+            return res.status(400).json({ msg: "Email already in use" });
+        }
+        // return specific mongoose validation errors if present
+        if (err.errors) {
+            const messages = Object.values(err.errors).map(e => e.message).join('; ');
+            return res.status(400).json({ msg: messages });
+        }
+        res.status(500).json({ msg: "Error updating admin profile" });
+    }
+});
+
 
 // -------------------- ROUTINES --------------------
 app.post('/routines', async (req, res) => {
@@ -315,11 +422,6 @@ app.delete('/api/exercises/:id', async (req, res) => {
     }
 });
 
-// -------------------- START SERVER --------------------
-app.listen(PORT, () =>
-    console.log(`🚀 Server running at http://localhost:${PORT}`)
-);
-
 // -------------------- DEBUG ROUTES --------------------
 // Useful for checking whether the browser sends the cookie and what the
 // server sees in the session during debugging.
@@ -331,29 +433,8 @@ app.get('/debug/session', (req, res) => {
     });
 });
 
-// Update Admin Profile
-app.put('/admin/update/:id', async (req, res) => {
-    try {
-        const { name, email, password, pic } = req.body; // include pic if you store image as base64
-        const adminId = req.params.id;
-
-        const updatedAdmin = await Admin.findByIdAndUpdate(
-            adminId,
-            { name, email, password, pic }, // update fields
-            { new: true, runValidators: true }
-        );
-
-        if (!updatedAdmin) return res.status(404).json({ msg: "Admin not found" });
-
-        // Update session email if changed
-        if (req.session.adminId === adminId) {
-            req.session.adminEmail = updatedAdmin.email;
-        }
-
-        res.json({ msg: "Admin profile updated!", admin: updatedAdmin });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ msg: "Error updating admin profile" });
-    }
-});
+// -------------------- START SERVER --------------------
+app.listen(PORT, () =>
+    console.log(`🚀 Server running at http://localhost:${PORT}`)
+);
 

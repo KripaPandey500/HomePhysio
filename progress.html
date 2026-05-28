@@ -1,624 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>My Progress - HomePhysio</title>
-<link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<style>
-:root {
-  --primary-color: #0077cc;
-  --accent-color: #005fa3;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - HomePhysio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .profile-wrap { max-width:900px; margin:0 auto; padding:6rem 2rem 3rem; }
+    .profile-hero {
+      background:linear-gradient(135deg,#003d7a,#0077cc,#00aaff);
+      border-radius:24px; padding:3rem 2rem 2rem;
+      text-align:center; color:white; margin-bottom:2rem;
+      position:relative; overflow:hidden;
+    }
+    .profile-hero::before {
+      content:''; position:absolute; top:-40px; right:-40px;
+      width:200px; height:200px; border-radius:50%;
+      background:rgba(255,255,255,0.07);
+    }
+    .avatar {
+      width:90px; height:90px; border-radius:50%;
+      background:white; color:#0077cc;
+      font-size:2.2rem; font-weight:900;
+      display:flex; align-items:center; justify-content:center;
+      margin:0 auto 1rem;
+      box-shadow:0 6px 20px rgba(0,0,0,0.2);
+    }
+    .profile-hero h2 { font-size:1.8rem; font-weight:800; margin-bottom:0.3rem; }
+    .profile-hero .email { opacity:0.85; font-size:0.95rem; margin-bottom:1.5rem; }
+    .stats-row {
+      display:flex; gap:1rem; justify-content:center;
+      flex-wrap:wrap; margin-bottom:0; 
+    }
+    .stat-pill {
+      background:rgba(255,255,255,0.15);
+      border:1px solid rgba(255,255,255,0.25);
+      border-radius:30px; padding:0.6rem 1.4rem;
+      text-align:center; min-width:110px;
+    }
+    .stat-pill strong { display:block; font-size:1.5rem; font-weight:800; }
+    .stat-pill span { font-size:0.75rem; opacity:0.85; }
 
-body {
-  background-color: #ffffff;
-  color: #333;
-  transition: background 0.3s, color 0.3s;
-  font-family: "Poppins", sans-serif;
-}
+    .quick-links { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:2rem; }
+    .quick-link {
+      background:white; border-radius:16px; padding:1.5rem;
+      box-shadow:0 4px 16px rgba(0,119,204,0.1);
+      border:1px solid #dde8f5; text-decoration:none; color:#1a1a2e;
+      display:flex; align-items:center; gap:1rem;
+      transition:all 0.2s;
+    }
+    .quick-link:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,119,204,0.18); border-color:#0077cc; }
+    .ql-icon {
+      width:52px; height:52px; border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.3rem; flex-shrink:0;
+    }
+    .ql-blue { background:#e8f4fd; color:#0077cc; }
+    .ql-green { background:#d4edda; color:#27ae60; }
+    .ql-orange { background:#fff3cd; color:#f39c12; }
+    .ql-purple { background:#f0e6ff; color:#9b59b6; }
+    .quick-link h4 { font-size:0.95rem; font-weight:700; margin-bottom:0.2rem; }
+    .quick-link p { font-size:0.8rem; color:#888; margin:0; }
 
-section.content {
-  padding: 6rem 2rem 3rem 2rem;
-  max-width: 1100px;
-  margin: auto;
-}
-
-h1 {
-  color: var(--primary-color);
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-p.subtext {
-  text-align: center;
-  color: #415572;
-  margin-bottom: 2rem;
-}
-
-.buttons-container {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin: 2rem 0;
-  flex-wrap: wrap;
-}
-
-.buttons-container button {
-  padding: 0.8rem 1.8rem;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: 600;
-  background: var(--primary-color);
-  color: white;
-  transition: 0.3s;
-}
-
-.buttons-container button:hover {
-  background: var(--accent-color);
-}
-
-.buttons-container button.active {
-  background: var(--accent-color);
-  transform: scale(1.05);
-}
-
-
-/* Page content */
-section.content { padding: 6rem 2rem 2rem 2rem; min-height: 90vh; max-width:1100px; margin:0 auto; }
-h1 { font-size: 2rem; color: #222; text-align: center; margin-bottom: 0.25rem; }
-p.lead { color: #555; text-align: center; margin-bottom: 1.5rem; }
-
-/* Stats */
-.stats-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-.stat-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  text-align: center;
-  padding: 12px;
-}
-.stat-card h2 { margin: 0; font-size: 1.6rem; color: #0077cc; }
-.stat-card p { margin: 6px 0 0 0; color: #555; font-size: 0.95rem; }
-
-/* Calendar container: horizontal scroll of month cards */
-.calendar-controls {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:8px;
-}
-.legend { display:flex; gap:10px; align-items:center; font-size:0.9rem; color:#444; }
-.legend .dot { width:14px; height:14px; border-radius:3px; display:inline-block; margin-right:6px; }
-
-/* container scroll area */
-.calendar-container {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 10px 6px 18px 6px;
-  -webkit-overflow-scrolling: touch;
-}
-.month-calendar {
-  min-width: 280px;
-  background: white;
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  flex: 0 0 auto;
-}
-.month-calendar h3 { text-align:center; margin:4px 0 8px 0; color: #0077cc; font-size:1rem; }
-.days-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-}
-.days-grid .day {
-  height: 30px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:0.8rem;
-  border-radius:6px;
-  background:#f4faff;
-  color:#333;
-  cursor:pointer;
-  user-select:none;
-  border:1px solid rgba(0,0,0,0.04);
-}
-.days-grid .day.empty { background: transparent; border: none; cursor: default; }
-.days-grid .day.today {
-  outline: 2px solid #0077cc;
-  background:#fff;
-  color:#0077cc;
-  font-weight:700;
-}
-.days-grid .day.inactive { background: #fbe9e9; color:#7a1f1f; } /* red-ish inactive */
-.days-grid .day.level-1 { background: #e6f7e9; color: #0a6b2a; }  /* light green */
-.days-grid .day.level-2 { background: #9be69f; color: #063e12; }  /* medium */
-.days-grid .day.level-3 { background: #2f9b3a; color: #fff; }     /* dark green */
-
-/* Recent activity */
-.recent-activity {
-  background:white;
-  border-radius:12px;
-  padding:12px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.08);
-  margin-top: 16px;
-}
-.recent-activity h3 { color:#0077cc; margin-bottom:8px; }
-.activity-item { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #eee; }
-.activity-item:last-child { border-bottom:none; }
-
-/* Water tracker styling inside recent-activity */
-.water-tracker {
-  display:flex;
-  gap:8px;
-  align-items:center;
-  margin-top:8px;
-}
-.water-tracker .count {
-  font-weight:700;
-  min-width:40px;
-  text-align:center;
-}
-.water-tracker button {
-  background:#0077cc; color:#fff; border:none; padding:6px 10px; border-radius:8px; cursor:pointer;
-}
-.water-tracker button:active { transform:translateY(1px); }
-
-/* small popup modal for day exercises */
-.day-popup {
-  position:fixed;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  background:#fff;
-  border-radius:10px;
-  box-shadow:0 8px 30px rgba(0,0,0,0.25);
-  padding:16px;
-  z-index:2000;
-  max-width:90%;
-  width:360px;
-}
-.day-popup h4{ margin:0 0 8px 0; color:#0077cc; }
-.day-popup ul{ margin:8px 0 0 18px; padding:0; color:#333; }
-.day-popup .close-popup{ position:absolute; right:10px; top:8px; cursor:pointer; color:#666; }
-
-/* Dark mode adjustments */
-body.dark-mode {
-  background: #121212;
-  color: #e0e0e0;
-}
-body.dark-mode header, body.dark-mode footer { background:#1e1e1e; color:#e0e0e0; }
-body.dark-mode .stat-card, body.dark-mode .month-calendar, body.dark-mode .recent-activity, body.dark-mode .day-popup {
-  background:#1e1e1e;
-  color:#e0e0e0;
-  border: 1px solid #333;
-  box-shadow: none;
-}
-body.dark-mode .days-grid .day { background:#2c2c2c; color:#bbb; border:1px solid rgba(255,255,255,0.03); }
-body.dark-mode .days-grid .day.today { outline: 2px solid #8ab4f8; background:#1e1e1e; color:#8ab4f8; }
-body.dark-mode .days-grid .day.inactive { background: #3a1f1f; color:#ffdede; }
-body.dark-mode .days-grid .day.level-1 { background: #2b5f2f; color:#e0f7e7; }
-body.dark-mode .days-grid .day.level-2 { background: #1e7b2c; color:#fff; }
-body.dark-mode .days-grid .day.level-3 { background: #0f5b1f; color:#fff; }
-
-/* small responsive fixes */
-@media (max-width:520px){
-  .month-calendar { min-width:240px; padding:8px; }
-  header{ padding:12px; }
-  header .logo img{ height:36px; }
-}
-</style>
+    .info-card {
+      background:white; border-radius:16px;
+      box-shadow:0 4px 16px rgba(0,119,204,0.08);
+      border:1px solid #dde8f5; padding:1.8rem;
+      margin-bottom:1.5rem;
+    }
+    .info-card h3 { font-size:1rem; font-weight:800; color:#0077cc; margin-bottom:1.2rem; border-bottom:2px solid #e8f4fd; padding-bottom:0.7rem; }
+    .info-row { display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0; border-bottom:1px solid #f0f5ff; }
+    .info-row:last-child { border-bottom:none; }
+    .info-row .lbl { font-size:0.88rem; color:#888; font-weight:600; }
+    .info-row .val { font-size:0.95rem; font-weight:700; color:#1a1a2e; }
+    .logout-btn {
+      width:100%; padding:1rem; background:#fee2e2; color:#991b1b;
+      border:2px solid #fecaca; border-radius:14px;
+      font-size:1rem; font-weight:700; cursor:pointer;
+      transition:0.2s; display:flex; align-items:center;
+      justify-content:center; gap:0.6rem;
+    }
+    .logout-btn:hover { background:#e74c3c; color:white; border-color:#e74c3c; }
+  </style>
 </head>
 <body>
-
 <header>
-  <a href="index.html" class="logo"><img src="assets/images/logo.png" alt="HomePhysio Logo" /></a>
+  <a href="index.html" class="logo"><img src="assets/images/Logo.png" alt="HomePhysio"><span class="logo-text">HomePhysio</span></a>
   <nav class="nav-links">
     <a href="index.html">Home</a>
     <a href="exercises.html">Exercises</a>
     <a href="routines.html">My Routines</a>
     <a href="progress.html">My Progress</a>
     <a href="aboutus.html">About Us</a>
-    <a href="register.html"><i class="fas fa-user-circle"></i></a>
-    <button id="theme-toggle" class="theme-toggle"><i id="theme-icon" class="fas fa-moon"></i></button>
+    <a href="profile.html" class="active"><i class="fas fa-user-circle"></i></a>
+    <button class="theme-toggle" onclick="toggleTheme()"><i id="ti" class="fas fa-moon"></i></button>
   </nav>
 </header>
 
-<section class="content">
-  <h1>My Progress</h1>
-  <p class="lead">A summary of your routines and exercise activity. Scroll the calendar horizontally to see previous months.</p>
-
-  <div class="stats-container">
-    <div class="stat-card">
-      <h2 id="totalRoutines">0</h2>
-      <p>Total Routines</p>
-    </div>
-    <div class="stat-card">
-      <h2 id="totalExercises">0</h2>
-      <p>Total Exercises (in routines)</p>
-    </div>
-    <div class="stat-card">
-      <h2 id="savedExercisesCount">0</h2>
-      <p>Saved Exercises</p>
-    </div>
-    <div class="stat-card">
-      <h2 id="activeMinutes">0</h2>
-      <p>Active Minutes (session)</p>
-    </div>
+<div class="profile-wrap">
+  <!-- Loading -->
+  <div id="loadingDiv" style="text-align:center;padding:4rem;color:#888">
+    <i class="fas fa-spinner fa-spin" style="font-size:2.5rem;color:#0077cc"></i>
+    <p style="margin-top:1rem;font-size:1rem">Loading your profile...</p>
   </div>
 
-  <div class="activity-section">
-    <div class="calendar-controls">
-      <div>
-        <h3 style="margin:0;color:#0077cc;">Activity Calendar</h3>
-        <p style="margin:6px 0 0 0;color:#555;">Heatmap shows days with saved exercises. Darker = more activity.</p>
-      </div>
-
-      <div class="legend" aria-hidden="true">
-        <span style="font-weight:600;margin-right:8px;">Legend</span>
-        <span><span class="dot" style="background:#fbe9e9"></span>Inactive</span>
-        <span><span class="dot" style="background:#e6f7e9"></span>Low</span>
-        <span><span class="dot" style="background:#9be69f"></span>Moderate</span>
-        <span><span class="dot" style="background:#2f9b3a"></span>High</span>
-      </div>
-    </div>
-
-    <div class="calendar-container" id="calendarContainer" aria-live="polite"></div>
-  </div>
-
-  <div class="recent-activity">
-    <h3>Recent Activity</h3>
-    <div id="recentActivityList"></div>
-
-    <div style="margin-top:12px; border-top:1px dashed #eee; padding-top:12px;">
-      <div style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
-        <div>
-          <div style="font-weight:600;">Weight</div>
-          <div id="weightLine" style="color:#555;">Loading...</div>
-        </div>
-
-        <div>
-          <div style="font-weight:600;">Goal</div>
-          <div id="weightGoal" style="color:#555;">Loading...</div>
-        </div>
-
-        <div style="min-width:160px;">
-          <div style="font-weight:600;">Hydration</div>
-          <div style="color:#555;">Glasses today: <span id="waterCount">0</span></div>
-          <div class="water-tracker" style="margin-top:6px;">
-            <button id="waterAddBtn" title="Add 1 glass">+1</button>
-            <button id="waterResetBtn" title="Reset today">Reset</button>
-          </div>
-        </div>
-      </div>
-      <div style="margin-top:10px; color:#777; font-size:0.9rem;">
-        Tip: click a calendar day to see exercises logged that day.
+  <!-- Profile content (hidden until loaded) -->
+  <div id="profileContent" style="display:none">
+    <!-- Hero card -->
+    <div class="profile-hero">
+      <div class="avatar" id="avatarEl">D</div>
+      <h2 id="nameEl">Loading...</h2>
+      <p class="email" id="emailEl">loading...</p>
+      <div class="stats-row">
+        <div class="stat-pill"><strong id="sWorkouts">0</strong><span>Workouts</span></div>
+        <div class="stat-pill"><strong id="sRoutines">0</strong><span>Routines</span></div>
+        <div class="stat-pill"><strong id="sStreak">0</strong><span>Day Streak 🔥</span></div>
+        <div class="stat-pill"><strong id="sMinutes">0</strong><span>Min Active</span></div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- Day popup (hidden until needed) -->
-<div id="dayPopup" class="day-popup" style="display:none;">
-  <span class="close-popup" id="closePopup"><i class="fas fa-times"></i></span>
-  <h4 id="popupDate">Date</h4>
-  <div id="popupContent">
-    <ul id="popupList"></ul>
+    <!-- Quick links -->
+    <div class="quick-links">
+      <a href="exercises.html" class="quick-link">
+        <div class="ql-icon ql-blue"><i class="fas fa-dumbbell"></i></div>
+        <div><h4>Browse Exercises</h4><p>View all 14+ exercises</p></div>
+      </a>
+      <a href="routines.html" class="quick-link">
+        <div class="ql-icon ql-green"><i class="fas fa-list-check"></i></div>
+        <div><h4>My Routines</h4><p>Build and start workouts</p></div>
+      </a>
+      <a href="progress.html" class="quick-link">
+        <div class="ql-icon ql-orange"><i class="fas fa-chart-bar"></i></div>
+        <div><h4>My Progress</h4><p>View workout history</p></div>
+      </a>
+      <a href="aboutus.html" class="quick-link">
+        <div class="ql-icon ql-purple"><i class="fas fa-info-circle"></i></div>
+        <div><h4>About HomePhysio</h4><p>App info & tech stack</p></div>
+      </a>
+    </div>
+
+    <!-- Account info -->
+    <div class="info-card">
+      <h3><i class="fas fa-user"></i> Account Information</h3>
+      <div class="info-row"><span class="lbl">Full Name</span><span class="val" id="infoName">—</span></div>
+      <div class="info-row"><span class="lbl">Email Address</span><span class="val" id="infoEmail">—</span></div>
+      <div class="info-row"><span class="lbl">Account Type</span><span class="val"><span class="badge badge-blue">Patient</span></span></div>
+      <div class="info-row"><span class="lbl">App Version</span><span class="val">HomePhysio v1.0</span></div>
+    </div>
+
+    <!-- Logout -->
+    <button class="logout-btn" onclick="doLogout()">
+      <i class="fas fa-sign-out-alt"></i> Sign Out of HomePhysio
+    </button>
   </div>
 </div>
 
-<footer>
-  <p style="text-align:center; padding:12px 0; margin:0;">&copy; 2025 HomePhysio | Follow us on social media</p>
+<footer style="margin-top:3rem">
+  <div class="footer-grid">
+    <div class="footer-brand"><img src="assets/images/Logo.png"><div class="footer-brand-name">HomePhysio</div><p>Your home physiotherapy companion.</p></div>
+    <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="exercises.html">Exercises</a></li><li><a href="routines.html">My Routines</a></li><li><a href="progress.html">My Progress</a></li></ul></div>
+    <div class="footer-col"><h4>Account</h4><ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li></ul></div>
+    <div class="footer-col"><h4>Admin</h4><ul><li><a href="adminlogin.html">Admin Login</a></li><li><a href="admin.html">Dashboard</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>&copy; 2025 HomePhysio — Internship Project by Arjan KC</span></div>
 </footer>
 
 <script>
-/* ---------- Utilities ---------- */
+const API='http://localhost:5000';
+if(localStorage.getItem('theme')==='dark'){document.body.classList.add('dark-mode');document.getElementById('ti').className='fas fa-sun';}
+function toggleTheme(){document.body.classList.toggle('dark-mode');const d=document.body.classList.contains('dark-mode');document.getElementById('ti').className=d?'fas fa-sun':'fas fa-moon';localStorage.setItem('theme',d?'dark':'light');}
 
-// Safely parse various possible date fields to a Date object (robust)
-function parseDateSafe(obj) {
-  if (!obj) return new Date();
-  // if already a Date
-  if (obj instanceof Date) return obj;
-  // if a primitive (string/number)
-  if (typeof obj === 'string') {
-    // try ISO or common formats
-    let d = new Date(obj);
-    if (!isNaN(d)) return d;
-    // try numeric string timestamp
-    if (/^\d+$/.test(obj.trim())) {
-      d = new Date(Number(obj));
-      if (!isNaN(d)) return d;
-    }
-  }
-  if (typeof obj === 'number') {
-    const d = new Date(obj);
-    if (!isNaN(d)) return d;
-  }
-  // if object, check common keys
-  const keys = ['date','savedAt','addedAt','timestamp','time','createdAt','saved_at'];
-  if (typeof obj === 'object') {
-    for (const k of keys) {
-      if (obj[k]) {
-        const maybe = obj[k];
-        const d = parseDateSafe(maybe);
-        if (d && !isNaN(d)) return d;
-      }
-    }
-    // fallback: if object has a field that looks like a timestamp
-    for (const k in obj) {
-      if (/date|time|ts|created|added|saved/i.test(k) && obj[k]) {
-        const d = parseDateSafe(obj[k]);
-        if (d && !isNaN(d)) return d;
-      }
-    }
-  }
-  return new Date();
+async function doLogout(){
+  await fetch(`${API}/logout`,{method:'POST',credentials:'include'});
+  window.location.href='login.html';
 }
 
-// Get YYYY-MM-DD string for keying
-function ymd(date) {
-  const d = new Date(date);
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2,'0');
-  const dd = String(d.getDate()).padStart(2,'0');
-  return `${y}-${m}-${dd}`;
-}
-
-/* ---------- Load localStorage data ---------- */
-
-const routines = JSON.parse(localStorage.getItem('routines') || '[]'); // expected [{id,name,exercises:[]},...]
-const savedExercisesRaw = JSON.parse(localStorage.getItem('savedExercises') || '[]'); // expected [{_id,name,date?,...},...]
-
-/* Build normalized exercise list containing: name, dateObj, source, routineName? */
-const normalizedExercises = [];
-
-// include savedExercisesRaw
-savedExercisesRaw.forEach(ex => {
-  const dateObj = parseDateSafe(ex.date || ex.savedAt || ex.createdAt || ex.timestamp || ex.time);
-  normalizedExercises.push({
-    name: ex.name || ex.title || 'Unnamed exercise',
-    dateObj,
-    source: 'saved',
-    raw: ex
-  });
-});
-
-// include exercises inside routines
-routines.forEach(r => {
-  if (Array.isArray(r.exercises)) {
-    r.exercises.forEach(ex => {
-      const dateObj = parseDateSafe(ex.date || ex.savedAt || ex.createdAt || ex.timestamp || ex.time);
-      normalizedExercises.push({
-        name: ex.name || ex.title || 'Unnamed exercise',
-        dateObj,
-        source: 'routine',
-        routineName: r.name || null,
-        raw: ex
-      });
-    });
-  }
-});
-
-/* ---------- Stats counts ---------- */
-
-// total routines
-document.getElementById('totalRoutines').textContent = routines.length;
-
-// total exercises inside routines
-const exercisesInsideRoutines = routines.reduce((acc, r) => acc + (Array.isArray(r.exercises) ? r.exercises.length : 0), 0);
-document.getElementById('totalExercises').textContent = exercisesInsideRoutines;
-
-// saved exercises count
-document.getElementById('savedExercisesCount').textContent = savedExercisesRaw.length;
-
-/* ---------- Active minutes (session-only) ---------- */
-
-let activeMinutes = 0;
-const activeEl = document.getElementById('activeMinutes');
-activeEl.textContent = activeMinutes;
-const activeTimer = setInterval(() => {
-  activeMinutes++;
-  activeEl.textContent = activeMinutes;
-}, 60000);
-
-// clear on unload
-window.addEventListener('beforeunload', () => clearInterval(activeTimer));
-
-/* ---------- Recent activity (last 5) ---------- */
-
-const recentListEl = document.getElementById('recentActivityList');
-const sorted = normalizedExercises
-  .map(e => ({...e, timestamp: e.dateObj.getTime()}))
-  .sort((a,b) => b.timestamp - a.timestamp);
-
-const recentFive = sorted.slice(0,5);
-if (recentFive.length === 0) {
-  recentListEl.innerHTML = '<p>No exercises recorded yet.</p>';
-} else {
-  recentListEl.innerHTML = '';
-  recentFive.forEach(item => {
-    const row = document.createElement('div');
-    row.className = 'activity-item';
-    // show name + routine if present
-    const left = document.createElement('div');
-    left.style.maxWidth = '60%';
-    left.textContent = item.name + (item.routineName ? ` — ${item.routineName}` : '');
-    // Add short extra random-like content (weight, note) from raw if present, otherwise sample placeholders
-    const note = item.raw && (item.raw.note || item.raw.noteText || item.raw.note_text) ? ` - ${item.raw.note || item.raw.noteText || item.raw.note_text}` : '';
-    if (note) left.textContent += note;
-    const right = document.createElement('div');
-    right.textContent = new Date(item.timestamp).toLocaleDateString();
-    row.appendChild(left);
-    row.appendChild(right);
-    recentListEl.appendChild(row);
-  });
-}
-
-/* ---------- Water tracker (per-day, stored by date key) ---------- */
-
-const waterCountEl = document.getElementById('waterCount');
-const waterAddBtn = document.getElementById('waterAddBtn');
-const waterResetBtn = document.getElementById('waterResetBtn');
-
-function getTodayKey() { return 'water_' + ymd(new Date()); }
-function getWaterCount() {
-  return parseInt(localStorage.getItem(getTodayKey()) || '0', 10);
-}
-function setWaterCount(n) {
-  localStorage.setItem(getTodayKey(), String(n));
-  waterCountEl.textContent = n;
-}
-waterCountEl.textContent = getWaterCount();
-
-waterAddBtn.addEventListener('click', () => {
-  const n = getWaterCount() + 1;
-  setWaterCount(n);
-});
-
-waterResetBtn.addEventListener('click', () => {
-  if (!confirm('Reset water count for today?')) return;
-  setWaterCount(0);
-});
-
-/* ---------- Sample health metrics (weight & goal) ---------- */
-// Try to read from localStorage keys, otherwise set defaults
-const healthKey = 'healthMetrics_v1';
-let health = JSON.parse(localStorage.getItem(healthKey) || 'null');
-if (!health) {
-  health = { weightKg: 72, goalKg: 68, note: 'Keep protein high and rest well.' };
-  localStorage.setItem(healthKey, JSON.stringify(health));
-}
-document.getElementById('weightLine').textContent = `${health.weightKg} kg`;
-document.getElementById('weightGoal').textContent = `${health.goalKg} kg`;
-
-/* ---------- Count exercises per day ---------- */
-const countsByDay = {};
-normalizedExercises.forEach(e => {
-  const key = ymd(e.dateObj);  // "YYYY-MM-DD" format
-  countsByDay[key] = (countsByDay[key] || 0) + 1;
-});
-
-// Decide color level based on how many exercises that day
-function intensityClass(count) {
-  if (count === 0) return 'inactive'; // no exercise
-  if (count === 1) return 'level-1';  // light green
-  if (count === 2) return 'level-2';  // medium green
-  return 'level-3';                    // dark green (3+ exercises)
-}
-const calendarContainer = document.getElementById('calendarContainer');
-calendarContainer.innerHTML = '';
-
-const monthsToShow = 12; // Jan → Dec 2025
-const year = 2025; // the year you want
-for (let m = 0; m < monthsToShow; m++) {
-  const mdate = new Date(year, m, 1); // month 0-11
-  const monthName = mdate.toLocaleString(undefined, { month: 'long', year: 'numeric' });
-  
-  const monthCard = document.createElement('div');
-  monthCard.className = 'month-calendar';
-  monthCard.innerHTML = `<h3>${monthName}</h3>`;
-
-  const daysGrid = document.createElement('div');
-  daysGrid.className = 'days-grid';
-
-  const firstWeekday = new Date(year, m, 1).getDay();
-  const daysInMonth = new Date(year, m + 1, 0).getDate();
-
-  // fill blank days
-  for (let b = 0; b < firstWeekday; b++) {
-    const blank = document.createElement('div');
-    blank.className = 'day empty';
-    daysGrid.appendChild(blank);
-  }
-
-  // fill actual days
-  for (let d = 1; d <= daysInMonth; d++) {
-    const cellDate = new Date(year, m, d);
-    const key = ymd(cellDate);
-    const count = countsByDay[key] || 0;
-    const cls = intensityClass(count);
-
-    const dayEl = document.createElement('div');
-    dayEl.className = 'day ' + cls;
-    dayEl.textContent = d;
-
-    // ✅ Highlight today
-    const now = new Date();
-    if (cellDate.toDateString() === now.toDateString()) {
-        dayEl.classList.add('today');
-    }
-
-    dayEl.style.cursor = 'pointer';
-    dayEl.addEventListener('click', () => showDayPopup(cellDate));
-    daysGrid.appendChild(dayEl);
-  }
-
-  monthCard.appendChild(daysGrid);
-  calendarContainer.appendChild(monthCard);
-}
-
-
-/* ---------- Day popup logic ---------- */
-
-const dayPopup = document.getElementById('dayPopup');
-const popupDate = document.getElementById('popupDate');
-const popupList = document.getElementById('popupList');
-const closePopup = document.getElementById('closePopup');
-
-function showDayPopup(dateObj) {
-  // filter exercises on that date
-  const key = ymd(dateObj);
-  const entries = normalizedExercises.filter(e => ymd(e.dateObj) === key);
-  popupDate.textContent = dateObj.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
-  popupList.innerHTML = '';
-  if (entries.length === 0) {
-    const li = document.createElement('li');
-    li.textContent = 'No exercises recorded';
-    popupList.appendChild(li);
-  } else {
-    entries.forEach(e => {
-      const li = document.createElement('li');
-      li.textContent = (e.name || 'Unnamed') + (e.routineName ? ` — ${e.routineName}` : '');
-      popupList.appendChild(li);
-    });
-  }
-  dayPopup.style.display = 'block';
-}
-closePopup.addEventListener('click', () => dayPopup.style.display = 'none');
-// click outside popup to close
-window.addEventListener('click', (ev) => {
-  if (ev.target === dayPopup) dayPopup.style.display = 'none';
-});
-
-/* ---------- Dark mode toggle (preserve behavior) ---------- */
-const themeToggle = document.getElementById('theme-toggle');
-const themeIcon = document.getElementById('theme-icon');
-if (localStorage.getItem('theme') === 'dark') {
-  document.body.classList.add('dark-mode');
-  themeIcon.classList.replace('fa-moon', 'fa-sun');
-}
-themeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-  if (document.body.classList.contains('dark-mode')) {
-    themeIcon.classList.replace('fa-moon','fa-sun');
-    localStorage.setItem('theme','dark');
-  } else {
-    themeIcon.classList.replace('fa-sun','fa-moon');
-    localStorage.setItem('theme','light');
-  }
-});
-
+window.onload=async()=>{
+  try{
+    const s=await(await fetch(`${API}/check-session`,{credentials:'include'})).json();
+    if(!s.loggedIn){window.location.href='login.html';return;}
+    const[progRes,routRes]=await Promise.all([
+      fetch(`${API}/progress`,{credentials:'include'}),
+      fetch(`${API}/routines`,{credentials:'include'})
+    ]);
+    const logs=await progRes.json();
+    const routines=await routRes.json();
+    const today=new Date();today.setHours(0,0,0,0);
+    const daySet=new Set(logs.map(l=>{const d=new Date(l.completedAt);d.setHours(0,0,0,0);return d.getTime();}));
+    let streak=0,chk=today.getTime();
+    while(daySet.has(chk)){streak++;chk-=86400000;}
+    const mins=Math.round(logs.reduce((a,l)=>a+(l.duration||0),0)/60);
+    const name=s.user.name;
+    document.getElementById('avatarEl').textContent=name.charAt(0).toUpperCase();
+    document.getElementById('nameEl').textContent=name;
+    document.getElementById('emailEl').textContent=s.user.email;
+    document.getElementById('infoName').textContent=name;
+    document.getElementById('infoEmail').textContent=s.user.email;
+    document.getElementById('sWorkouts').textContent=logs.length;
+    document.getElementById('sRoutines').textContent=routines.length;
+    document.getElementById('sStreak').textContent=streak;
+    document.getElementById('sMinutes').textContent=mins;
+    document.getElementById('loadingDiv').style.display='none';
+    document.getElementById('profileContent').style.display='block';
+  }catch{window.location.href='login.html';}
+};
 </script>
 </body>
 </html>

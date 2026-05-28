@@ -1,347 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us - HomePhysio</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ----- Page Layout ----- */
-    .about-page {
-      padding: 6rem 2rem 3rem 2rem;
-      background: #f9f9f9;
-      font-family: "Segoe UI", sans-serif;
-      color: #333;
-    }
-
-    .about-container {
-      max-width: 1000px;
-      margin: auto;
-      background: white;
-      padding: 2rem 3rem;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    }
-
-    .about-container h1,
-    .about-container h2 {
-      color: var(--primary-color, #0077cc);
-      margin-bottom: 1rem;
-    }
-
-    .about-container p {
-      line-height: 1.8;
-      margin-bottom: 1.2rem;
-      font-size: 1rem;
-    }
-
-    .about-container ul {
-      list-style: none;
-      padding: 0;
-      margin: 1rem 0 2rem 0;
-    }
-
-    .about-container ul li {
-      margin-bottom: 0.7rem;
-      display: flex;
-      align-items: center;
-      font-size: 1rem;
-    }
-
-    .about-container ul li i {
-      color: var(--primary-color, #0077cc);
-      margin-right: 0.8rem;
-    }
-
-    /* ----- Image Sections ----- */
-    .image-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-
-    .image-grid img {
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-    }
-
-    .image-grid img:hover {
-      transform: scale(1.03);
-    }
-
-    /* ----- Doctor Section ----- */
-    .doctor-section {
-      margin-top: 3rem;
-      background: #f0f8ff;
-      border-radius: 12px;
-      padding: 2rem;
-    }
-
-    .doctor-profile {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .doctor-profile img {
-      width: 200px;
-      border-radius: 100%;
-      border: 4px solid var(--primary-color, #0077cc);
-    }
-
-    .doctor-info h3 {
-      margin-bottom: 0.5rem;
-      color: #0077cc;
-    }
-
-    .doctor-info p {
-      margin-bottom: 0.4rem;
-    }
-
-    .about-cta {
-      text-align: center;
-      margin-top: 2.5rem;
-      background: var(--primary-color, #0077cc);
-      color: white;
-      padding: 1.5rem;
-      border-radius: 12px;
-    }
-
-    .about-cta p {
-      margin: 0;
-      font-size: 1.1rem;
-      font-weight: 500;
-    }
-
-    /* ----- Start Your Journey Section ----- */
-    .journey-section {
-      text-align: center;
-      margin-top: 3rem;
-    }
-
-    .journey-section button {
-      background: var(--primary-color, #0077cc);
-      color: white;
-      border: none;
-      padding: 0.9rem 2rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .journey-section button:hover {
-      background: #005fa3;
-    }
-
-    /* Dark Mode Overrides */
-body.dark-mode {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-body.dark-mode .about-page {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-body.dark-mode .about-container {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-}
-
-body.dark-mode .about-container h1,
-body.dark-mode .about-container h2 {
-  color: #4da6ff; /* a lighter accent for headings */
-}
-
-body.dark-mode .about-container p,
-body.dark-mode .about-container ul li {
-  color: #ccc;
-}
-
-body.dark-mode .about-container ul li i {
-  color: #4da6ff;
-}
-
-body.dark-mode .image-grid img {
-  filter: brightness(0.8);
-}
-
-body.dark-mode .doctor-section {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-}
-
-body.dark-mode .doctor-info h3 {
-  color: #4da6ff;
-}
-
-body.dark-mode .about-cta {
-  background-color: #4da6ff;
-  color: #fff;
-}
-
-body.dark-mode .journey-section button {
-  background-color: #4da6ff;
-  color: #fff;
-}
-
-body.dark-mode .journey-section button:hover {
-  background-color: #337acc;
-}
-
-body.dark-mode footer {
-  background-color: #1e1e1e;
-  color: #ccc;
-}
-
-body.dark-mode footer a {
-  color: #ccc;
-}
-
-body.dark-mode footer a:hover {
-  color: #fff;
-}
-
+    .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin:2rem 0;}
+    .feat-box{background:var(--card);border-radius:16px;padding:2rem;box-shadow:var(--shadow);border:1px solid var(--border);text-align:center;}
+    .feat-box i{font-size:2.5rem;color:var(--blue);margin-bottom:1rem;}
+    .feat-box h3{font-size:1.1rem;margin-bottom:0.5rem;}
+    .feat-box p{font-size:0.88rem;color:var(--text-light);line-height:1.7;}
+    .tech-badges{display:flex;flex-wrap:wrap;gap:0.8rem;justify-content:center;margin-top:1.5rem;}
+    .tech-badge{background:var(--blue-light);color:var(--blue);padding:0.5rem 1.2rem;border-radius:25px;font-weight:700;font-size:0.9rem;}
   </style>
 </head>
 <body>
-  <!-- Header / Navbar -->
-  <header>
-    <a href="../index.html" class="logo">
-      <img src="assets/images/logo.png" alt="HomePhysio Logo" />
-    </a>
-<nav class="nav-links">
-  <a href="index.html">Home</a>
-  <a href="exercises.html">Exercises</a>
-  <a href="routines.html">My Routines</a>
-  <a href="progress.html">My Progress</a>
-  <a href="aboutus.html">About Us</a>
-  <a href="register.html"><i class="fas fa-user-circle"></i></a>
-  <button id="theme-toggle" class="theme-toggle">
-    <i id="theme-icon" class="fas fa-moon"></i>
-  </button>
-  
-</nav>
-  </header>
+<header>
+  <a href="index.html" class="logo"><img src="assets/images/Logo.png" alt="HomePhysio"><span class="logo-text">HomePhysio</span></a>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="exercises.html">Exercises</a>
+    <a href="routines.html">My Routines</a>
+    <a href="progress.html">My Progress</a>
+    <a href="aboutus.html" class="active">About Us</a>
+    <a href="profile.html"><i class="fas fa-user-circle"></i></a>
+    <button class="theme-toggle" onclick="toggleTheme()"><i id="ti" class="fas fa-moon"></i></button>
+  </nav>
+</header>
 
-  <!-- About Section -->
-  <section class="about-page">
-    <div class="about-container">
-      <h1>About HomePhysio</h1>
-      <p>
-        <strong>HomePhysio</strong> is designed to make physiotherapy simple,
-        accessible, and effective — all from the comfort of your home. Our
-        mission is to help patients, seniors, and fitness enthusiasts recover,
-        strengthen, and move freely with professional guidance and easy-to-follow
-        exercises.
-      </p>
+<div class="about-hero">
+  <h1><i class="fas fa-heartbeat"></i> About HomePhysio</h1>
+  <p>Making physiotherapy accessible, guided and trackable for everyone — right from the comfort of home.</p>
+</div>
 
-      <!-- Image Grid -->
-      <div class="image-grid">
-        <img src="assets\images\home workout.png" alt="Home Workout" />
-        <img src="assets\images\yoga.png" alt="Yoga Stretch" />
-        <img src="assets\images\rehab.png" alt="Rehabilitation Exercise" />
-      </div>
+<div class="page">
+  <!-- Mission -->
+  <div class="card" style="text-align:center;margin-bottom:2rem;padding:3rem">
+    <img src="assets/images/home workout.png" alt="Home Workout" style="width:100%;max-height:300px;object-fit:cover;border-radius:14px;margin-bottom:2rem" onerror="this.style.display='none'">
+    <h2 style="color:var(--blue);font-size:1.8rem;margin-bottom:1rem">Our Mission</h2>
+    <p style="max-width:700px;margin:auto;font-size:1rem;line-height:1.9;color:var(--text-light)">
+      HomePhysio was built as an internship project to help physiotherapy patients follow their prescribed exercise routines at home — without needing printed papers, expensive apps, or visiting a clinic.
+      <br><br>
+      We believe recovery should be simple, guided and consistent. HomePhysio gives every patient a personal exercise plan, clear step-by-step instructions, countdown timers for each exercise, and automatic progress tracking — all stored in a real MongoDB database.
+    </p>
+  </div>
 
-      <h2>What We Provide</h2>
-      <ul>
-        <li><i class="fa-solid fa-dumbbell"></i> Personalized exercise routines with visuals and step-by-step guidance.</li>
-        <li><i class="fa-solid fa-heart-pulse"></i> Safe recovery programs for mobility and strength improvement.</li>
-        <li><i class="fa-solid fa-video"></i> Video-based routines led by professionals.</li>
-        <li><i class="fa-solid fa-mobile-screen"></i> Easy, mobile-friendly interface for all age groups.</li>
-      </ul>
-
-      <h2>Why Choose HomePhysio?</h2>
-      <p>
-        We understand not everyone can visit a physiotherapy clinic regularly.
-        That’s why HomePhysio brings the clinic to you. Whether you’re healing
-        from an injury or maintaining joint health, our platform offers a safe,
-        convenient, and affordable way to stay active.
-      </p>
-
-      <ul>
-        <li><i class="fa-solid fa-clock"></i> Available 24/7 — exercise anytime</li>
-        <li><i class="fa-solid fa-wallet"></i> Cost-effective & time-saving</li>
-        <li><i class="fa-solid fa-user-md"></i> Built with input from medical experts</li>
-        <li><i class="fa-solid fa-check-circle"></i> Encourages consistency & safe progress</li>
-      </ul>
-
-      <!-- Doctor Section -->
-      <div class="doctor-section">
-        <h2>Meet Our Physiotherapy Experts</h2>
-        <div class="doctor-profile">
-          <img src="assets\images\doctor aditi sharma.jpg" alt="Dr. Aditi Sharma" />
-          <div class="doctor-info">
-            <h3>Dr. Aditi Sharma (PT)</h3>
-            <p><strong>Experience:</strong> 12+ years in Physical Rehabilitation & Sports Therapy</p>
-            <p><strong>Specialization:</strong> Musculoskeletal & Post-surgery Recovery</p>
-            <p>
-              Dr. Sharma has guided hundreds of patients toward pain-free movement through personalized routines.
-              She ensures every HomePhysio program is medically safe and results-driven.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="about-cta">
-        <p>
-          Start your healing journey today with <strong>HomePhysio</strong> —
-          because your recovery deserves comfort and care ❤️
-        </p>
-      </div>
-
-      <!-- ✅ Start Your Journey Button Section -->
-      <div class="journey-section">
-        <button onclick="window.location.href='register.html'">Start Your Journey</button>
-      </div>
+  <!-- Features grid -->
+  <h2 style="text-align:center;color:var(--blue);margin-bottom:0.5rem">What HomePhysio Offers</h2>
+  <p style="text-align:center;color:var(--text-light);margin-bottom:1.5rem">Everything patients need in one place</p>
+  <div class="feat-grid">
+    <div class="feat-box">
+      <i class="fas fa-dumbbell"></i>
+      <h3>14+ Exercises</h3>
+      <p>A complete library of physiotherapy exercises covering neck, shoulder, back, knee, ankle, leg and hand — each with real images and detailed instructions.</p>
     </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 HomePhysio | Follow us on social media</p>
-    <div class="socials">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
+    <div class="feat-box">
+      <i class="fas fa-list-check"></i>
+      <h3>Custom Routines</h3>
+      <p>Patients can build their own personalized routines by selecting exercises, setting repetitions and cycles, and saving them to the MongoDB database.</p>
     </div>
-  </footer>
+    <div class="feat-box">
+      <i class="fas fa-stopwatch"></i>
+      <h3>Guided Workout Timer</h3>
+      <p>A built-in countdown timer guides patients through each set, with automatic rest periods between sets and clear visual indicators.</p>
+    </div>
+    <div class="feat-box">
+      <i class="fas fa-chart-line"></i>
+      <h3>Progress Tracking</h3>
+      <p>Every completed workout is automatically saved. Patients can view their history, day streak, total workouts and an activity calendar.</p>
+    </div>
+    <div class="feat-box">
+      <i class="fas fa-user-shield"></i>
+      <h3>Admin Dashboard</h3>
+      <p>Administrators can add, edit and delete exercises, view all registered patients, and monitor workout logs from a dedicated dashboard.</p>
+    </div>
+    <div class="feat-box">
+      <i class="fas fa-mobile-alt"></i>
+      <h3>Works Everywhere</h3>
+      <p>Fully responsive design works on desktop, laptop, tablet and mobile — patients can use it on any device without installing anything.</p>
+    </div>
+  </div>
+
+  <!-- Images section -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:2rem 0">
+    <img src="assets/images/rehab.png" alt="Rehabilitation" style="width:100%;height:220px;object-fit:cover;border-radius:16px;box-shadow:var(--shadow)" onerror="this.style.display='none'">
+    <img src="assets/images/yoga.png" alt="Yoga" style="width:100%;height:220px;object-fit:cover;border-radius:16px;box-shadow:var(--shadow)" onerror="this.style.display='none'">
+    <img src="assets/images/home workout.png" alt="Home Workout" style="width:100%;height:220px;object-fit:cover;border-radius:16px;box-shadow:var(--shadow)" onerror="this.style.display='none'">
+  </div>
+
+  <!-- Tech stack -->
+  <div class="card" style="text-align:center;padding:2.5rem">
+    <h2 style="color:var(--blue);margin-bottom:0.5rem">Technology Used</h2>
+    <p style="color:var(--text-light);margin-bottom:1rem">Built as a full-stack web application for the internship project</p>
+    <div class="tech-badges">
+      <span class="tech-badge"><i class="fab fa-node-js"></i> Node.js</span>
+      <span class="tech-badge">Express.js</span>
+      <span class="tech-badge"><i class="fas fa-database"></i> MongoDB</span>
+      <span class="tech-badge">Mongoose</span>
+      <span class="tech-badge"><i class="fab fa-html5"></i> HTML5</span>
+      <span class="tech-badge"><i class="fab fa-css3"></i> CSS3</span>
+      <span class="tech-badge"><i class="fab fa-js"></i> JavaScript</span>
+      <span class="tech-badge">bcrypt Auth</span>
+      <span class="tech-badge">Session Management</span>
+    </div>
+    <div style="margin-top:2.5rem">
+      <a href="register.html" class="btn btn-primary btn-lg"><i class="fas fa-rocket"></i> Get Started Free</a>
+      <a href="exercises.html" class="btn btn-outline btn-lg" style="margin-left:1rem"><i class="fas fa-dumbbell"></i> Browse Exercises</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><img src="assets/images/Logo.png"><div class="footer-brand-name">HomePhysio</div><p>Your home physiotherapy companion. Built with Node.js and MongoDB.</p><div class="footer-social"><a href="#"><i class="fab fa-facebook"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
+    <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="exercises.html">Exercises</a></li><li><a href="routines.html">My Routines</a></li><li><a href="progress.html">My Progress</a></li></ul></div>
+    <div class="footer-col"><h4>Account</h4><ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="profile.html">Profile</a></li></ul></div>
+    <div class="footer-col"><h4>Tech Stack</h4><ul><li><a href="#">Node.js + Express</a></li><li><a href="#">MongoDB + Mongoose</a></li><li><a href="#">HTML5 + CSS3</a></li><li><a href="#">Vanilla JavaScript</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>&copy; 2025 HomePhysio — Internship Project by Arjan KC</span></div>
+</footer>
+
 <script>
-  // Get the toggle button and icon
-  const themeToggle = document.getElementById('theme-toggle');
-  const themeIcon = document.getElementById('theme-icon');
-
-  // Apply saved theme on load
-  if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-mode');
-    themeIcon.classList.replace('fa-moon', 'fa-sun');
-  }
-
-  // Toggle theme on click
-  themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-
-    if (document.body.classList.contains('dark-mode')) {
-      themeIcon.classList.replace('fa-moon', 'fa-sun');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      themeIcon.classList.replace('fa-sun', 'fa-moon');
-      localStorage.setItem('theme', 'light');
-    }
-  });
+if(localStorage.getItem('theme')==='dark'){document.body.classList.add('dark-mode');document.getElementById('ti').className='fas fa-sun';}
+function toggleTheme(){document.body.classList.toggle('dark-mode');const d=document.body.classList.contains('dark-mode');document.getElementById('ti').className=d?'fas fa-sun':'fas fa-moon';localStorage.setItem('theme',d?'dark':'light');}
 </script>
-
 </body>
 </html>

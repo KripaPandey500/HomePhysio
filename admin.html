@@ -1,203 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - HomePhysio</title>
-
-    <!-- Font Awesome for icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="css/admin.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - HomePhysio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+  <div class="admin-layout">
     <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <img id="sidebarPic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-            <h3 id="sidebarGreeting">Hello, Admin 👋</h3>
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img src="assets/images/Logo.png" alt="">
+        <span>HomePhysio</span>
+      </div>
+      <ul>
+        <li class="active" onclick="showSection('dashboard',this)"><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+        <li onclick="showSection('exercises',this)"><a href="#"><i class="fas fa-dumbbell"></i> Exercises</a></li>
+        <li onclick="showSection('users',this)"><a href="#"><i class="fas fa-users"></i> Users</a></li>
+        <li onclick="showSection('progress',this)"><a href="#"><i class="fas fa-chart-bar"></i> Progress</a></li>
+        <li style="margin-top:auto"><a href="#" onclick="doLogout()" style="color:#e74c3c"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main -->
+    <main class="admin-main">
+      <div class="admin-header">
+        <h1 id="sectionTitle">Dashboard</h1>
+        <span id="adminName" style="color:#888;font-size:0.9rem"></span>
+      </div>
+
+      <!-- Dashboard -->
+      <div id="sec-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card"><div class="num" id="dExercises">0</div><div class="label">Total Exercises</div></div>
+          <div class="stat-card"><div class="num" id="dUsers">0</div><div class="label">Registered Users</div></div>
+          <div class="stat-card"><div class="num" id="dWorkouts">0</div><div class="label">Total Workouts</div></div>
+          <div class="stat-card"><div class="num" id="dRoutines">0</div><div class="label">Routines Created</div></div>
         </div>
-        <ul>
-            <li class="active" onclick="showSection('dashboard', this)">
-                <i class="fas fa-chart-line"></i><span>Dashboard</span>
-            </li>
-            <li onclick="showSection('users', this)">
-                <i class="fas fa-users"></i><span>Users</span>
-            </li>
-            <li onclick="showSection('exercises', this)">
-                <i class="fas fa-dumbbell"></i><span>Exercises</span>
-            </li>
-            <li onclick="showSection('routines', this)">
-                <i class="fas fa-calendar-check"></i><span>Routines</span>
-            </li>
-            <li onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i><span>Logout</span>
-            </li>
-        </ul>
-        <i class="fas fa-bars sidebar-toggle" onclick="toggleSidebar()"></i>
+        <div class="card" style="padding:1.5rem">
+          <h3 style="margin-bottom:1rem">Quick Links</h3>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="showSection('exercises',document.querySelector('.sidebar li:nth-child(2)'))"><i class="fas fa-plus"></i> Add Exercise</button>
+            <a href="index.html" target="_blank" class="btn btn-blue-outline"><i class="fas fa-eye"></i> View Site</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exercises -->
+      <div id="sec-exercises" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
+          <h2 style="color:var(--primary)">Manage Exercises</h2>
+          <button class="btn btn-primary" onclick="openExModal()"><i class="fas fa-plus"></i> Add Exercise</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>Image</th><th>Name</th><th>Category</th><th>Difficulty</th><th>Sets × Reps</th><th>Actions</th></tr></thead>
+            <tbody id="exTable"><tr><td colspan="6" style="text-align:center;padding:2rem;color:#888">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Users -->
+      <div id="sec-users" style="display:none">
+        <h2 style="color:var(--primary);margin-bottom:1rem">Registered Users</h2>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Registered</th></tr></thead>
+            <tbody id="userTable"><tr><td colspan="3" style="text-align:center;padding:2rem;color:#888">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div id="sec-progress" style="display:none">
+        <h2 style="color:var(--primary);margin-bottom:1rem">All Workout Logs</h2>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>User</th><th>Routine</th><th>Exercises</th><th>Duration</th><th>Date</th></tr></thead>
+            <tbody id="progTable"><tr><td colspan="5" style="text-align:center;padding:2rem;color:#888">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Exercise Modal -->
+  <div class="modal-overlay" id="exModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="exModalTitle">Add Exercise</h3>
+        <button class="modal-close" onclick="closeExModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="form-group"><label>Name</label><input type="text" id="exName" placeholder="e.g. Knee Flexion"></div>
+      <div class="form-group"><label>Category / Body Part</label>
+        <select id="exCategory">
+          <option>Neck</option><option>Shoulder</option><option>Back</option>
+          <option>Hand</option><option>Knee</option><option>Leg</option><option>Ankle</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Difficulty</label>
+        <select id="exDiff"><option>Easy</option><option>Medium</option><option>Hard</option></select>
+      </div>
+      <div style="display:flex;gap:1rem">
+        <div class="form-group" style="flex:1"><label>Sets</label><input type="number" id="exSets" value="3" min="1"></div>
+        <div class="form-group" style="flex:1"><label>Reps</label><input type="number" id="exReps" value="10" min="1"></div>
+      </div>
+      <div class="form-group"><label>Image Path (e.g. assets/images/knee flexion.png)</label><input type="text" id="exImage" placeholder="assets/images/..."></div>
+      <div class="form-group"><label>Description</label><textarea id="exDesc" rows="4" placeholder="Step by step instructions..." style="width:100%;padding:0.7rem;border:2px solid var(--border);border-radius:8px;font-family:inherit;font-size:0.9rem;resize:vertical"></textarea></div>
+      <p id="exErr" style="color:red;font-size:0.85rem;display:none"></p>
+      <div style="display:flex;gap:0.8rem;margin-top:1rem">
+        <button class="btn btn-primary" onclick="saveExercise()"><i class="fas fa-save"></i> Save</button>
+        <button class="btn btn-blue-outline" onclick="closeExModal()">Cancel</button>
+      </div>
     </div>
+  </div>
 
-    <!-- Main Content -->
-    <div class="main">
-        <div class="header">
-            <h1 id="section-title" class="section-title">Dashboard</h1>
-            <div class="right">
-                <i id="themeToggle" class="fas fa-sun theme-toggle" onclick="toggleTheme()"></i>
-                <img id="headerPic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-            </div>
-        </div>
+  <div id="toast" class="toast"></div>
 
-        <!-- Dashboard Section -->
-        <div id="dashboard" class="section active-section">
-            <div class="cards">
-                <div class="card"><h3>Users</h3><p id="userCount">0</p></div>
-                <div class="card"><h3>Exercises</h3><p id="exerciseCount">0</p></div>
-                <div class="card"><h3>Routines</h3><p id="routineCount">0</p></div>
-            </div>
-        </div>
+  <script>
+    const API = 'http://localhost:5000';
+    let editingExId = null;
 
-<!-- Users Section -->
-<div id="users" class="section">
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="users-table"></tbody>
-    </table>
-</div>
+    function toast(msg, type='success') { const t=document.getElementById('toast'); t.textContent=msg; t.className=`toast show ${type}`; setTimeout(()=>t.className='toast',3000); }
 
+    async function init() {
+      const s = await (await fetch(`${API}/admin/check-session`,{credentials:'include'})).json();
+      if (!s.loggedIn) { window.location.href='adminlogin.html'; return; }
+      const p = await (await fetch(`${API}/admin/profile`,{credentials:'include'})).json();
+      document.getElementById('adminName').textContent = `👤 ${p.name}`;
+      loadDashboard();
+    }
 
-        <!-- Exercises Section -->
-        <div id="exercises" class="section">
-            <button class="btn add" onclick="openModal('exerciseModal')">Add Exercise</button>
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Reps</th>
-      <th>Sets</th>
-      <th>Description</th>
-      <th>Image</th>
-      <th>Difficulty</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody id="exercises-table"></tbody>
-</table>
-        </div>
+    function showSection(name, li) {
+      document.querySelectorAll('.admin-main > div').forEach(d => d.style.display='none');
+      document.getElementById(`sec-${name}`).style.display = 'block';
+      document.getElementById('sectionTitle').textContent = name.charAt(0).toUpperCase()+name.slice(1);
+      document.querySelectorAll('.sidebar li').forEach(l => l.classList.remove('active'));
+      if (li) li.classList.add('active');
+      if (name==='exercises') loadExercises();
+      if (name==='users')     loadUsers();
+      if (name==='progress')  loadProgress();
+    }
 
-<!-- Routines Section -->
-<div id="routines" class="section">
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Routine Name</th>
-                <th>Email</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="routines-table"></tbody>
-    </table>
-</div>
+    async function loadDashboard() {
+      try {
+        const [exRes, uRes, pRes] = await Promise.all([
+          fetch(`${API}/api/exercises`),
+          fetch(`${API}/admin/users`,{credentials:'include'}),
+          fetch(`${API}/admin/progress`,{credentials:'include'})
+        ]);
+        const exs   = await exRes.json();
+        const users = await uRes.json();
+        const progs = await pRes.json();
+        document.getElementById('dExercises').textContent = exs.length;
+        document.getElementById('dUsers').textContent     = users.length;
+        document.getElementById('dWorkouts').textContent  = progs.length;
+      } catch {}
+    }
 
+    async function loadExercises() {
+      const exs = await (await fetch(`${API}/api/exercises`)).json();
+      document.getElementById('exTable').innerHTML = exs.length ? exs.map(ex => `
+        <tr>
+          <td><img src="${ex.image||'assets/images/rehab.png'}" onerror="this.src='assets/images/rehab.png'"></td>
+          <td><strong>${ex.name}</strong></td>
+          <td><span class="badge badge-blue">${ex.category||'General'}</span></td>
+          <td><span class="badge badge-${(ex.difficulty||'easy').toLowerCase()}">${ex.difficulty||'Easy'}</span></td>
+          <td>${ex.sets} × ${ex.reps}</td>
+          <td style="display:flex;gap:0.4rem;flex-wrap:wrap">
+            <button class="btn btn-blue-outline btn-sm" onclick='editEx(${JSON.stringify(ex).replace(/'/g,"&#39;")})'>Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="delEx('${ex._id}')">Delete</button>
+          </td>
+        </tr>`).join('') : '<tr><td colspan="6" style="text-align:center;color:#888;padding:2rem">No exercises. Click "Add Exercise" to add some.</td></tr>';
+    }
 
-        <!-- Profile Section -->
-        <div id="profile" class="section">
-            <div class="profile-container" id="profileView">
-                <img id="viewPic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
-                <h3 id="viewName">Admin</h3>
-                <p><strong>Email:</strong> <span id="viewEmail">admin@homephysio.com</span></p>
-                <p><strong>Description:</strong> <span id="viewDesc">Managing the physiotherapy app efficiently.</span></p>
-                <button class="btn add" onclick="toggleEditProfile(true)">Edit Profile</button>
-            </div>
-            <div class="profile-edit" id="profileEdit">
-                <span class="close" onclick="toggleEditProfile(false)">&times;</span>
-                <h2>Edit Profile</h2>
-                <label>Profile Picture</label>
-                <input type="file" accept="image/*" onchange="updateProfilePic(event)">
-                <label>Name</label>
-                <input type="text" id="adminName" value="Admin">
-                <label>Email</label>
-                <input type="email" id="adminEmail" value="admin@homephysio.com">
-                <label>Description</label>
-                <textarea id="adminDesc">Managing the physiotherapy app efficiently.</textarea>
-                <div class="button-group">
-                    <button class="btn add" onclick="saveProfile()">Save</button>
-                    <button class="btn delete" onclick="toggleEditProfile(false)">Cancel</button>
-                </div>
-            </div>
-        </div>
+    async function loadUsers() {
+      const users = await (await fetch(`${API}/admin/users`,{credentials:'include'})).json();
+      document.getElementById('userTable').innerHTML = users.length ? users.map(u => `
+        <tr>
+          <td>${u.name}</td>
+          <td>${u.email}</td>
+          <td>${new Date(u.createdAt).toLocaleDateString()}</td>
+        </tr>`).join('') : '<tr><td colspan="3" style="text-align:center;color:#888;padding:2rem">No users yet.</td></tr>';
+    }
 
-        <!-- Modals -->
-        <div id="userModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal('userModal')">&times;</span>
-                <h3>Add User</h3>
-                <input id="userName" placeholder="Name">
-                <input id="userEmail" placeholder="Email">
-                <input type="file" id="userImage" accept="image/*">
-                <button class="btn add" onclick="addUser()">Add</button>
-            </div>
-        </div>
+    async function loadProgress() {
+      const logs = await (await fetch(`${API}/admin/progress`,{credentials:'include'})).json();
+      document.getElementById('progTable').innerHTML = logs.length ? logs.map(l => {
+        const mins=Math.floor((l.duration||0)/60), secs=(l.duration||0)%60;
+        return `<tr>
+          <td>${l.userEmail}</td>
+          <td>${l.routineName||'—'}</td>
+          <td>${l.exercises||0}</td>
+          <td>${mins}m ${String(secs).padStart(2,'0')}s</td>
+          <td>${new Date(l.completedAt).toLocaleDateString()}</td>
+        </tr>`;
+      }).join('') : '<tr><td colspan="5" style="text-align:center;color:#888;padding:2rem">No workout logs yet.</td></tr>';
+    }
 
-        <div id="exerciseModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal('exerciseModal')">&times;</span>
-                <h3>Add Exercise</h3>
-                <input id="exerciseName" placeholder="Name">
-                <textarea id="exerciseDesc" placeholder="Description"></textarea>
-                <select id="exerciseCategory">
-                    <option value="">Select Category</option>
-                    <option value="Neck">Neck</option>
-                    <option value="Shoulder">Shoulder</option>
-                    <option value="Back">Back</option>
-                    <option value="Hand">Hand</option>
-                    <option value="Knee">Knee</option>
-                    <option value="Leg">Leg</option>
-                    <option value="Ankle">Ankle</option>
-                </select>
-                <input type="number" id="exerciseReps" placeholder="Reps" min="1">
-                <input type="number" id="exerciseSets" placeholder="Sets" min="1">
-                <select id="exerciseDiff">
-                    <option value="Easy">Easy</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Hard">Hard</option>
-                </select>
-                <input type="file" id="exerciseImage" accept="image/*,video/*">
-                <button class="btn add" onclick="addExercise()">Add</button>
-            </div>
-        </div>
+    function openExModal() {
+      editingExId = null;
+      document.getElementById('exModalTitle').textContent = 'Add Exercise';
+      ['exName','exImage','exDesc'].forEach(id => document.getElementById(id).value='');
+      document.getElementById('exSets').value=3; document.getElementById('exReps').value=10;
+      document.getElementById('exErr').style.display='none';
+      document.getElementById('exModal').classList.add('show');
+    }
+    function editEx(ex) {
+      editingExId = ex._id;
+      document.getElementById('exModalTitle').textContent = 'Edit Exercise';
+      document.getElementById('exName').value     = ex.name||'';
+      document.getElementById('exCategory').value = ex.category||'Neck';
+      document.getElementById('exDiff').value     = ex.difficulty||'Easy';
+      document.getElementById('exSets').value     = ex.sets||3;
+      document.getElementById('exReps').value     = ex.reps||10;
+      document.getElementById('exImage').value    = ex.image||'';
+      document.getElementById('exDesc').value     = ex.description||'';
+      document.getElementById('exErr').style.display='none';
+      document.getElementById('exModal').classList.add('show');
+    }
+    function closeExModal() { document.getElementById('exModal').classList.remove('show'); }
 
-        <div id="routineModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal('routineModal')">&times;</span>
-                <h3>Add Routine</h3>
-                <input id="routineName" placeholder="Routine Name">
-                <input type="file" id="routineExercises" multiple accept="image/*">
-                <select id="routineProgress">
-                    <option value="Beginner">Beginner</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Perfect">Perfect</option>
-                </select>
-                <button class="btn add" onclick="addRoutine()">Add</button>
-            </div>
-        </div>
+    async function saveExercise() {
+      const name = document.getElementById('exName').value.trim();
+      const err  = document.getElementById('exErr');
+      if (!name) { err.textContent='Name is required'; err.style.display='block'; return; }
+      const body = {
+        name, category:document.getElementById('exCategory').value,
+        difficulty:document.getElementById('exDiff').value,
+        sets:parseInt(document.getElementById('exSets').value)||3,
+        reps:parseInt(document.getElementById('exReps').value)||10,
+        image:document.getElementById('exImage').value.trim(),
+        description:document.getElementById('exDesc').value.trim(),
+        bodyPart:document.getElementById('exCategory').value.toLowerCase()
+      };
+      const url    = editingExId ? `${API}/api/exercises/${editingExId}` : `${API}/api/exercises`;
+      const method = editingExId ? 'PUT' : 'POST';
+      const res    = await fetch(url,{method,headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify(body)});
+      const data   = await res.json();
+      if (!res.ok) { err.textContent=data.msg; err.style.display='block'; return; }
+      toast(editingExId ? 'Exercise updated!' : 'Exercise added!');
+      closeExModal(); loadExercises(); loadDashboard();
+    }
 
-        <!-- Toast Notification -->
-        <div id="toast" class="toast"></div>
-    </div>
+    async function delEx(id) {
+      if (!confirm('Delete this exercise?')) return;
+      await fetch(`${API}/api/exercises/${id}`,{method:'DELETE',credentials:'include'});
+      toast('Exercise deleted.','error'); loadExercises(); loadDashboard();
+    }
 
-    <!-- Main JS -->
-    <script src="js/admin.js"></script>
+    async function doLogout() {
+      await fetch(`${API}/admin/logout`,{method:'POST',credentials:'include'});
+      window.location.href='adminlogin.html';
+    }
+
+    init();
+  </script>
 </body>
 </html>

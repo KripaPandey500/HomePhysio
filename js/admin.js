@@ -3,6 +3,7 @@ document.getElementById('headerPic').onclick = () => showSection('profile');
 
 /* ==================== DATABASE ==================== */
 let db = JSON.parse(localStorage.getItem("db") || '{"users":[],"exercises":[],"routines":[],"profile":{}}');
+let currentAdminId = null; // MongoDB admin _id when loaded from server
 let currentExerciseId = null; // ✅ Track edit mode
 
 /* ==================== TOAST & UI ==================== */
@@ -59,59 +60,87 @@ function updateProfilePic(e) {
     if (!f) return;
     const r = new FileReader();
     r.onload = () => {
-        adminPic.src = headerPic.src = sidebarPic.src = viewPic.src = r.result;
+        // Use DOM elements explicitly
+        const viewPic = document.getElementById('viewPic');
+        const headerPic = document.getElementById('headerPic');
+        const sidebarPic = document.getElementById('sidebarPic');
+        viewPic.src = headerPic.src = sidebarPic.src = r.result;
     };
     r.readAsDataURL(f);
 }
 
 function saveProfile() {
-    const name = document.getElementById('adminName').value;
-    const email = document.getElementById('adminEmail').value;
-    const desc = document.getElementById('adminDesc').value;
+    const name = document.getElementById('adminName').value.trim();
+    const email = document.getElementById('adminEmail').value.trim();
+    const desc = document.getElementById('adminDesc').value.trim();
     const pic = document.getElementById('viewPic').src;
+    const newPassword = document.getElementById('adminPassword') ? document.getElementById('adminPassword').value : null;
 
-    const transaction = db.transaction(["admin"], "readwrite");
-    const store = transaction.objectStore("admin");
+    if (!currentAdminId) {
+        showToast('Admin ID not loaded; ensure you are logged in as admin (open via http://localhost:5000/).');
+        return;
+    }
 
-    store.put({ email, name, desc, pic }); // update or insert
+    const body = { name, email, pic, desc };
+    if (newPassword && newPassword.length >= 6) body.password = newPassword; // optional password update
 
-    transaction.oncomplete = () => {
-        console.log("Admin profile updated in IndexedDB");
+    fetch(`http://localhost:5000/admin/update/${currentAdminId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(body)
+    }).then(async res => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.msg || 'Failed to update admin');
 
-        document.getElementById('viewName').innerText = name;
-        document.getElementById('viewEmail').innerText = email;
-        document.getElementById('viewDesc').innerText = desc;
+        // Update UI from server response for truth
+        const admin = data.admin || {};
+        document.getElementById('viewName').innerText = admin.name || name;
+        document.getElementById('viewEmail').innerText = admin.email || email;
+        document.getElementById('viewDesc').innerText = admin.desc || desc;
         document.getElementById('viewPic').src =
-        document.getElementById('headerPic').src =
-        document.getElementById('sidebarPic').src = pic;
+            document.getElementById('headerPic').src =
+            document.getElementById('sidebarPic').src = admin.pic || pic;
 
-        showToast("Profile saved!");
+        showToast('Profile saved!');
         toggleEditProfile(false);
-    };
-
-    transaction.onerror = () => showToast("Error saving profile!");
+    }).catch(err => {
+        console.error(err);
+        showToast(err.message || 'Error saving profile!');
+    });
 }
 
-
 function loadProfile() {
-    const transaction = db.transaction(["admin"], "readonly");
-    const store = transaction.objectStore("admin");
+    // Try loading admin profile from backend (requires admin session)
+   fetch('http://localhost:5000/admin/profile', { credentials: 'include' })
+    .then(async res => {
+        if (!res.ok) {
+            throw new Error("No admin session");
+        }
+const admin = await res.json();
 
-    const request = store.getAll();
 
-    request.onsuccess = () => {
-        const admins = request.result;
-        const admin = admins[0] || { name: "Admin", email: "admin@homephysio.com", desc: "Managing the physiotherapy app efficiently.", pic: "https://cdn-icons-png.flaticon.com/512/149/149071.png" };
+            currentAdminId = admin._id || admin.id || null;
 
-        document.getElementById('viewName').innerText = document.getElementById('adminName').value = admin.name;
-        document.getElementById('viewEmail').innerText = document.getElementById('adminEmail').value = admin.email;
-        document.getElementById('viewDesc').innerText = document.getElementById('adminDesc').value = admin.desc;
-        document.getElementById('viewPic').src =
-        document.getElementById('headerPic').src =
-        document.getElementById('sidebarPic').src = admin.pic;
+            document.getElementById('viewName').innerText = document.getElementById('adminName').value = admin.name || 'Admin';
+            document.getElementById('viewEmail').innerText = document.getElementById('adminEmail').value = admin.email || 'admin@homephysio.com';
+            document.getElementById('viewDesc').innerText = document.getElementById('adminDesc').value = admin.desc || 'Managing the physiotherapy app efficiently.';
+            document.getElementById('viewPic').src =
+                document.getElementById('headerPic').src =
+                document.getElementById('sidebarPic').src = admin.pic || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
 
-        document.getElementById('sidebarGreeting').innerText = `Hello, ${admin.name} 👋`;
-    };
+            document.getElementById('sidebarGreeting').innerText = `Hello, ${admin.name || 'Admin'} 👋`;
+        })
+        .catch(() => {
+            // Fallback to IndexedDB/local defaults if backend not available
+            const transaction = db.transaction ? db.transaction : null; // keep original logic if indexedDB used
+            // set defaults
+            document.getElementById('viewName').innerText = document.getElementById('adminName').value = 'Admin';
+            document.getElementById('viewEmail').innerText = document.getElementById('adminEmail').value = 'admin@homephysio.com';
+            document.getElementById('viewDesc').innerText = document.getElementById('adminDesc').value = 'Managing the physiotherapy app efficiently.';
+            document.getElementById('viewPic').src = document.getElementById('headerPic').src = document.getElementById('sidebarPic').src = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+            document.getElementById('sidebarGreeting').innerText = `Hello, Admin 👋`;
+        });
 }
 
 /* ==================== TABLE FUNCTIONS ==================== */

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workout - HomePhysio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background:#0f1117; color:white; }
+    .pb-wrap { max-width:600px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; padding:1rem; }
+
+    /* Overview */
+    .pb-overview { padding:2rem 0; }
+    .pb-overview h1 { font-size:1.8rem; color:#4db8ff; margin-bottom:0.3rem; }
+    .pb-overview .meta { color:#aab; margin-bottom:1.5rem; }
+    .pb-ex-list { list-style:none; padding:0; margin-bottom:2rem; }
+    .pb-ex-list li { display:flex; align-items:center; gap:1rem; background:#1a1d27; border-radius:10px; padding:0.8rem 1rem; margin-bottom:0.5rem; }
+    .pb-ex-list img { width:52px; height:52px; object-fit:cover; border-radius:8px; }
+    .pb-ex-num { width:28px; height:28px; border-radius:50%; background:#0077cc; color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; flex-shrink:0; }
+    .pb-ex-list strong { display:block; font-size:0.9rem; }
+    .pb-ex-list span   { font-size:0.78rem; color:#aab; }
+
+    /* Active exercise */
+    .pb-active { display:flex; flex-direction:column; gap:1rem; padding:0.5rem 0; }
+    .pb-topbar { display:flex; justify-content:space-between; align-items:center; }
+    .pb-close  { color:#aab; background:none; border:none; font-size:1.3rem; cursor:pointer; text-decoration:none; }
+    .pb-prog-text { font-size:0.82rem; color:#aab; }
+    .pb-bar { height:5px; background:#2a2d3a; border-radius:3px; overflow:hidden; }
+    .pb-bar-fill { height:100%; background:#0077cc; border-radius:3px; transition:width 0.4s; }
+    .pb-img { border-radius:14px; overflow:hidden; max-height:240px; display:flex; align-items:center; justify-content:center; background:#1a1d27; }
+    .pb-img img { width:100%; height:240px; object-fit:cover; }
+    .pb-info h2 { font-size:1.6rem; margin-bottom:0.4rem; }
+    .pb-meta-row { display:flex; gap:0.8rem; flex-wrap:wrap; align-items:center; margin-bottom:0.5rem; }
+    .pb-meta-row span { font-size:0.82rem; color:#aab; }
+    .pb-desc { color:#aab; font-size:0.88rem; line-height:1.6; }
+
+    /* Timer */
+    .timer-wrap { display:flex; flex-direction:column; align-items:center; gap:0.5rem; padding:0.5rem 0; }
+    .timer-circle {
+      width:120px; height:120px; border-radius:50%;
+      border:6px solid #0077cc; background:#1a1d27;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      transition:border-color 0.3s;
+    }
+    .timer-circle.urgent { border-color:#e74c3c; animation:pulse 0.8s infinite alternate; }
+    @keyframes pulse { from { box-shadow:0 0 0 0 rgba(231,76,60,0.4); } to { box-shadow:0 0 0 12px rgba(231,76,60,0); } }
+    .timer-circle span { font-size:2.2rem; font-weight:700; color:white; line-height:1; }
+    .timer-circle small { font-size:0.7rem; color:#aab; }
+    .timer-label { font-size:0.85rem; color:#aab; }
+
+    /* Controls */
+    .pb-controls { display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center; padding-bottom:1rem; }
+
+    /* Rest */
+    .pb-rest { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.5rem; min-height:70vh; text-align:center; }
+    .pb-rest h2 { font-size:1.8rem; color:#27ae60; }
+    .pb-rest p  { color:#aab; }
+
+    /* Complete */
+    .pb-complete { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.2rem; min-height:85vh; text-align:center; }
+    .pb-complete .trophy { font-size:5rem; }
+    .pb-complete h1 { font-size:2rem; }
+    .complete-stats { display:flex; gap:1.2rem; flex-wrap:wrap; justify-content:center; }
+    .cstat { background:#1a1d27; border-radius:12px; padding:1rem 1.5rem; min-width:90px; }
+    .cstat span  { display:block; font-size:1.8rem; font-weight:700; color:#4db8ff; }
+    .cstat small { color:#aab; font-size:0.78rem; }
+
+    /* Error */
+    .pb-error { text-align:center; padding:4rem 1rem; }
+
+    /* Dark buttons inside playback */
+    .btn-pb-primary { background:#0077cc; color:white; border:none; padding:0.65rem 1.3rem; border-radius:30px; cursor:pointer; font-size:0.88rem; font-weight:700; display:inline-flex; align-items:center; gap:0.4rem; transition:0.2s; }
+    .btn-pb-primary:hover { background:#005fa3; }
+    .btn-pb-outline { background:transparent; color:#4db8ff; border:2px solid #4db8ff; padding:0.63rem 1.3rem; border-radius:30px; cursor:pointer; font-size:0.88rem; font-weight:700; display:inline-flex; align-items:center; gap:0.4rem; transition:0.2s; text-decoration:none; }
+    .btn-pb-outline:hover { background:rgba(77,184,255,0.1); }
+    .btn-pb-success { background:#27ae60; color:white; border:none; padding:0.65rem 1.3rem; border-radius:30px; cursor:pointer; font-size:0.88rem; font-weight:700; display:inline-flex; align-items:center; gap:0.4rem; }
+  </style>
+</head>
+<body>
+  <div class="pb-wrap">
+    <div id="pbContainer">
+      <div style="text-align:center;padding:4rem;color:#aab">
+        <i class="fas fa-spinner fa-spin" style="font-size:2rem;color:#0077cc"></i>
+        <p style="margin-top:1rem">Loading routine...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = 'http://localhost:5000';
+    let routine = null, exIdx = 0, setNum = 1, cycleNum = 1;
+    let timerInterval = null, secondsLeft = 0, paused = false, startTime = null;
+    const WORK_TIME = 30, REST_TIME = 15;
+
+    async function init() {
+      const s = await (await fetch(`${API}/check-session`,{credentials:'include'})).json();
+      if (!s.loggedIn) { window.location.href='login.html'; return; }
+      const id = new URLSearchParams(location.search).get('routineId');
+      if (!id) { showError('No routine selected. Please go back and choose one.'); return; }
+      try {
+        const res = await fetch(`${API}/routines/${id}`,{credentials:'include'});
+        if (!res.ok) { showError('Routine not found.'); return; }
+        routine   = await res.json();
+        startTime = Date.now();
+        showOverview();
+      } catch { showError('Could not load routine. Is the server running?'); }
+    }
+
+    function showOverview() {
+      document.getElementById('pbContainer').innerHTML = `
+        <div class="pb-overview">
+          <h1><i class="fas fa-dumbbell"></i> ${routine.name}</h1>
+          <p class="meta">${routine.exercises.length} exercises · ${routine.cycles||1} cycle(s)</p>
+          <ul class="pb-ex-list">
+            ${routine.exercises.map((ex,i)=>`
+              <li>
+                <span class="pb-ex-num">${i+1}</span>
+                <img src="${ex.image||'assets/images/rehab.png'}" onerror="this.src='assets/images/rehab.png'">
+                <div>
+                  <strong>${ex.name}</strong>
+                  <span>${ex.sets} sets × ${ex.reps} reps · ${ex.difficulty||'Easy'}</span>
+                </div>
+              </li>`).join('')}
+          </ul>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap">
+            <button class="btn-pb-primary btn-lg" onclick="startWorkout()" style="padding:1rem 2rem;font-size:1rem">
+              <i class="fas fa-play"></i> Begin Workout
+            </button>
+            <a href="routines.html" class="btn-pb-outline">
+              <i class="fas fa-arrow-left"></i> Back
+            </a>
+          </div>
+        </div>`;
+    }
+
+    function startWorkout() {
+      exIdx = 0; setNum = 1; cycleNum = 1;
+      startTime = Date.now();
+      showExercise();
+    }
+
+    function showExercise() {
+      clearInterval(timerInterval);
+      const ex         = routine.exercises[exIdx];
+      const totalEx    = routine.exercises.length;
+      const totalCyc   = routine.cycles || 1;
+      const pct        = Math.round(((exIdx * totalCyc + cycleNum - 1) / (totalEx * totalCyc)) * 100);
+
+      document.getElementById('pbContainer').innerHTML = `
+        <div class="pb-active">
+          <div class="pb-topbar">
+            <a href="routines.html" class="pb-close"><i class="fas fa-times"></i></a>
+            <span class="pb-prog-text">Exercise ${exIdx+1}/${totalEx} · Cycle ${cycleNum}/${totalCyc} · Set ${setNum}/${ex.sets}</span>
+          </div>
+          <div class="pb-bar"><div class="pb-bar-fill" style="width:${pct}%"></div></div>
+          <div class="pb-img"><img src="${ex.image||'assets/images/rehab.png'}" onerror="this.src='assets/images/rehab.png'" id="pbImg"></div>
+          <div class="pb-info">
+            <h2>${ex.name}</h2>
+            <div class="pb-meta-row">
+              <span><i class="fas fa-redo"></i> Set ${setNum} of ${ex.sets}</span>
+              <span><i class="fas fa-hashtag"></i> ${ex.reps} reps</span>
+              <span class="badge badge-${(ex.difficulty||'easy').toLowerCase()}">${ex.difficulty||'Easy'}</span>
+            </div>
+            <p class="pb-desc">${(ex.description||'').split('\n')[0]}</p>
+          </div>
+          <div class="timer-wrap">
+            <div class="timer-circle" id="timerCircle">
+              <span id="timerNum">${WORK_TIME}</span>
+              <small>seconds</small>
+            </div>
+            <span class="timer-label" id="timerLbl">Work Time — do your reps!</span>
+          </div>
+          <div class="pb-controls">
+            <button class="btn-pb-outline" onclick="prevEx()"><i class="fas fa-step-backward"></i> Prev</button>
+            <button class="btn-pb-primary" id="pauseBtn" onclick="togglePause()"><i class="fas fa-pause"></i> Pause</button>
+            <button class="btn-pb-outline" onclick="finishSet()">Next Set <i class="fas fa-forward"></i></button>
+            <button class="btn-pb-success" onclick="skipEx()">Skip <i class="fas fa-step-forward"></i></button>
+          </div>
+        </div>`;
+      startTimer(WORK_TIME, onWorkEnd);
+    }
+
+    function startTimer(secs, onEnd) {
+      clearInterval(timerInterval);
+      secondsLeft = secs; paused = false;
+      updateTimer();
+      timerInterval = setInterval(() => {
+        if (paused) return;
+        secondsLeft--;
+        updateTimer();
+        if (secondsLeft <= 0) { clearInterval(timerInterval); onEnd(); }
+      }, 1000);
+    }
+    function updateTimer() {
+      const n = document.getElementById('timerNum');
+      const c = document.getElementById('timerCircle');
+      if (n) n.textContent = secondsLeft;
+      if (c) c.classList.toggle('urgent', secondsLeft <= 5);
+    }
+    function togglePause() {
+      paused = !paused;
+      const btn = document.getElementById('pauseBtn');
+      if (btn) btn.innerHTML = paused ? '<i class="fas fa-play"></i> Resume' : '<i class="fas fa-pause"></i> Pause';
+    }
+
+    function onWorkEnd() {
+      const ex = routine.exercises[exIdx];
+      if (setNum < ex.sets) { showRest(() => { setNum++; showExercise(); }); }
+      else                   { showRest(() => skipEx()); }
+    }
+    function finishSet() {
+      clearInterval(timerInterval);
+      const ex = routine.exercises[exIdx];
+      if (setNum < ex.sets) { showRest(() => { setNum++; showExercise(); }); }
+      else                   { showRest(() => skipEx()); }
+    }
+    function skipEx() {
+      clearInterval(timerInterval); setNum = 1;
+      if (exIdx + 1 < routine.exercises.length) { exIdx++; showExercise(); }
+      else if (cycleNum < (routine.cycles||1))  { cycleNum++; exIdx = 0; showExercise(); }
+      else                                        { finishWorkout(); }
+    }
+    function prevEx() {
+      clearInterval(timerInterval); setNum = 1;
+      if (exIdx > 0) { exIdx--; showExercise(); }
+    }
+
+    function showRest(onDone) {
+      clearInterval(timerInterval);
+      const next = routine.exercises[exIdx + 1]?.name || 'Next set';
+      document.getElementById('pbContainer').innerHTML = `
+        <div class="pb-rest">
+          <h2><i class="fas fa-mug-hot"></i> Rest</h2>
+          <div class="timer-circle" id="timerCircle" style="width:140px;height:140px;border-width:8px">
+            <span id="timerNum">${REST_TIME}</span><small>seconds</small>
+          </div>
+          <p>Coming up: <strong style="color:white">${next}</strong></p>
+          <button class="btn-pb-primary" onclick="skipRest()">Skip Rest <i class="fas fa-forward"></i></button>
+        </div>`;
+      window._restDone = onDone;
+      startTimer(REST_TIME, onDone);
+    }
+    function skipRest() { clearInterval(timerInterval); if (window._restDone) window._restDone(); }
+
+    async function finishWorkout() {
+      clearInterval(timerInterval);
+      const dur = Math.round((Date.now() - startTime) / 1000);
+      try {
+        await fetch(`${API}/progress`, {
+          method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include',
+          body: JSON.stringify({ routineId:routine._id, routineName:routine.name, duration:dur, exercises:routine.exercises.length })
+        });
+      } catch {}
+      const m = Math.floor(dur/60), s = dur%60;
+      document.getElementById('pbContainer').innerHTML = `
+        <div class="pb-complete">
+          <div class="trophy">🏆</div>
+          <h1>Workout Complete!</h1>
+          <p style="color:#aab">Amazing work finishing <strong style="color:white">${routine.name}</strong></p>
+          <div class="complete-stats">
+            <div class="cstat"><span>${routine.exercises.length}</span><small>Exercises</small></div>
+            <div class="cstat"><span>${routine.cycles||1}</span><small>Cycles</small></div>
+            <div class="cstat"><span>${m}:${String(s).padStart(2,'0')}</span><small>Duration</small></div>
+          </div>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:1rem">
+            <a href="routines.html" class="btn-pb-primary"><i class="fas fa-redo"></i> Do Another</a>
+            <a href="progress.html" class="btn-pb-outline"><i class="fas fa-chart-bar"></i> View Progress</a>
+          </div>
+        </div>`;
+    }
+
+    function showError(msg) {
+      document.getElementById('pbContainer').innerHTML = `
+        <div class="pb-error">
+          <i class="fas fa-exclamation-triangle" style="font-size:3rem;color:#e74c3c;display:block;margin-bottom:1rem"></i>
+          <p style="color:#aab;margin-bottom:1.5rem">${msg}</p>
+          <a href="routines.html" class="btn-pb-primary">Back to Routines</a>
+        </div>`;
+    }
+
+    init();
+  </script>
+</body>
+</html>
