@@ -4,278 +4,573 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Workout - HomePhysio</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { background:#0f1117; color:white; }
-    .pb-wrap { max-width:600px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column; padding:1rem; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* Overview */
-    .pb-overview { padding:2rem 0; }
-    .pb-overview h1 { font-size:1.8rem; color:#4db8ff; margin-bottom:0.3rem; }
-    .pb-overview .meta { color:#aab; margin-bottom:1.5rem; }
-    .pb-ex-list { list-style:none; padding:0; margin-bottom:2rem; }
-    .pb-ex-list li { display:flex; align-items:center; gap:1rem; background:#1a1d27; border-radius:10px; padding:0.8rem 1rem; margin-bottom:0.5rem; }
-    .pb-ex-list img { width:52px; height:52px; object-fit:cover; border-radius:8px; }
-    .pb-ex-num { width:28px; height:28px; border-radius:50%; background:#0077cc; color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; flex-shrink:0; }
-    .pb-ex-list strong { display:block; font-size:0.9rem; }
-    .pb-ex-list span   { font-size:0.78rem; color:#aab; }
-
-    /* Active exercise */
-    .pb-active { display:flex; flex-direction:column; gap:1rem; padding:0.5rem 0; }
-    .pb-topbar { display:flex; justify-content:space-between; align-items:center; }
-    .pb-close  { color:#aab; background:none; border:none; font-size:1.3rem; cursor:pointer; text-decoration:none; }
-    .pb-prog-text { font-size:0.82rem; color:#aab; }
-    .pb-bar { height:5px; background:#2a2d3a; border-radius:3px; overflow:hidden; }
-    .pb-bar-fill { height:100%; background:#0077cc; border-radius:3px; transition:width 0.4s; }
-    .pb-img { border-radius:14px; overflow:hidden; max-height:240px; display:flex; align-items:center; justify-content:center; background:#1a1d27; }
-    .pb-img img { width:100%; height:240px; object-fit:cover; }
-    .pb-info h2 { font-size:1.6rem; margin-bottom:0.4rem; }
-    .pb-meta-row { display:flex; gap:0.8rem; flex-wrap:wrap; align-items:center; margin-bottom:0.5rem; }
-    .pb-meta-row span { font-size:0.82rem; color:#aab; }
-    .pb-desc { color:#aab; font-size:0.88rem; line-height:1.6; }
-
-    /* Timer */
-    .timer-wrap { display:flex; flex-direction:column; align-items:center; gap:0.5rem; padding:0.5rem 0; }
-    .timer-circle {
-      width:120px; height:120px; border-radius:50%;
-      border:6px solid #0077cc; background:#1a1d27;
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      transition:border-color 0.3s;
+    :root {
+      --blue: #0077cc;
+      --dark-blue: #003d7a;
+      --text: #1a1a2e;
+      --text-light: #64748b;
+      --border: #dde8f5;
+      --card: #ffffff;
+      --bg: #f0f6ff;
+      --green: #27ae60;
+      --red: #e74c3c;
     }
-    .timer-circle.urgent { border-color:#e74c3c; animation:pulse 0.8s infinite alternate; }
-    @keyframes pulse { from { box-shadow:0 0 0 0 rgba(231,76,60,0.4); } to { box-shadow:0 0 0 12px rgba(231,76,60,0); } }
-    .timer-circle span { font-size:2.2rem; font-weight:700; color:white; line-height:1; }
-    .timer-circle small { font-size:0.7rem; color:#aab; }
-    .timer-label { font-size:0.85rem; color:#aab; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Dark mode */
+    body.dark-mode {
+      --bg: #0f1117;
+      --card: #1a1d27;
+      --text: #e0e6f0;
+      --text-light: #8892a4;
+      --border: #2a2d3a;
+    }
+
+    /* ── Navbar ── */
+    .pb-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .pb-nav-logo {
+      display: flex; align-items: center; gap: 0.5rem;
+      text-decoration: none;
+      font-weight: 800; font-size: 1rem; color: var(--blue);
+    }
+    .pb-nav-logo img { width: 32px; }
+    .pb-nav-right { display: flex; align-items: center; gap: 0.8rem; }
+    .pb-nav-title {
+      font-size: 0.85rem; font-weight: 700; color: var(--text-light);
+      max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .theme-btn-pb {
+      background: none; border: none; cursor: pointer;
+      font-size: 1rem; color: var(--text-light); padding: 0.3rem;
+    }
+
+    /* ── Wrapper ── */
+    .pb-wrap {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    /* ── Overview ── */
+    .pb-overview-header {
+      margin-bottom: 1.5rem;
+    }
+    .pb-overview-header h1 {
+      font-size: 1.6rem; font-weight: 900; color: var(--text);
+      margin-bottom: 0.3rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .pb-overview-header h1 i { color: var(--blue); }
+    .pb-overview-header p { color: var(--text-light); font-size: 0.88rem; }
+
+    .pb-ex-list { list-style: none; margin-bottom: 1.5rem; }
+    .pb-ex-item {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.6rem;
+      transition: 0.2s;
+    }
+    .pb-ex-item:hover { border-color: var(--blue); }
+    .pb-ex-num {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), #00aaff);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 800; flex-shrink: 0;
+    }
+    .pb-ex-img {
+      width: 50px; height: 50px; object-fit: contain;
+      border-radius: 10px; background: var(--bg); flex-shrink: 0;
+    }
+    .pb-ex-info strong { display: block; font-size: 0.9rem; font-weight: 700; color: var(--text); }
+    .pb-ex-info span   { font-size: 0.76rem; color: var(--text-light); }
+
+    .pb-start-btn {
+      width: 100%; padding: 1rem;
+      background: linear-gradient(135deg, var(--blue), #00aaff);
+      color: white; border: none; border-radius: 14px;
+      font-size: 1rem; font-weight: 800;
+      cursor: pointer; font-family: inherit;
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      transition: 0.2s; box-shadow: 0 4px 20px rgba(0,119,204,0.3);
+    }
+    .pb-start-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,119,204,0.4); }
+
+    .pb-back-link {
+      display: block; text-align: center; margin-top: 1rem;
+      color: var(--text-light); font-size: 0.85rem; text-decoration: none;
+      font-weight: 600;
+    }
+    .pb-back-link:hover { color: var(--blue); }
+
+    /* ── Active Exercise ── */
+    .pb-prog-bar {
+      height: 6px; background: var(--border);
+      border-radius: 3px; overflow: hidden; margin-bottom: 1.2rem;
+    }
+    .pb-prog-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), #00aaff);
+      border-radius: 3px; transition: width 0.4s;
+    }
+    .pb-prog-label {
+      text-align: center; font-size: 0.8rem;
+      color: var(--text-light); font-weight: 600; margin-bottom: 1rem;
+    }
+
+    /* Exercise image card */
+    .pb-img-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      height: 240px;
+    }
+    .pb-img-card img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      object-position: center;
+      padding: 0.8rem;
+    }
+
+    /* Exercise info card */
+    .pb-info-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .pb-info-card h2 {
+      font-size: 1.3rem; font-weight: 900; color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+    .pb-meta-row {
+      display: flex; gap: 0.6rem; flex-wrap: wrap;
+      align-items: center; margin-bottom: 0.6rem;
+    }
+    .pb-meta-pill {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 20px; padding: 0.25rem 0.7rem;
+      font-size: 0.78rem; font-weight: 600; color: var(--text-light);
+    }
+    .pb-meta-pill i { color: var(--blue); font-size: 0.72rem; }
+    .pb-desc {
+      font-size: 0.84rem; color: var(--text-light); line-height: 1.6;
+    }
+
+    /* Badge */
+    .badge { padding: 0.2rem 0.65rem; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
+    .badge-easy   { background: #d4edda; color: #155724; }
+    .badge-medium { background: #fff3cd; color: #856404; }
+    .badge-hard   { background: #f8d7da; color: #842029; }
+
+    /* Timer card */
+    .pb-timer-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin-bottom: 1.2rem;
+      display: flex; flex-direction: column; align-items: center; gap: 0.8rem;
+    }
+    .timer-ring-wrap {
+      position: relative; width: 130px; height: 130px;
+    }
+    .timer-ring-wrap svg {
+      transform: rotate(-90deg);
+      position: absolute; top: 0; left: 0;
+    }
+    .timer-ring-bg { fill: none; stroke: var(--border); stroke-width: 8; }
+    .timer-ring-fill {
+      fill: none; stroke: var(--blue); stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.9s linear, stroke 0.3s;
+    }
+    .timer-ring-fill.urgent { stroke: var(--red); }
+    .timer-inner {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .timer-num { font-size: 2rem; font-weight: 900; color: var(--text); line-height: 1; }
+    .timer-sub { font-size: 0.7rem; color: var(--text-light); font-weight: 600; }
+    .timer-label { font-size: 0.85rem; font-weight: 700; color: var(--text-light); }
 
     /* Controls */
-    .pb-controls { display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center; padding-bottom:1rem; }
+    .pb-controls {
+      display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0.6rem; margin-bottom: 1rem;
+    }
+    .pb-btn {
+      padding: 0.75rem 0.5rem;
+      border-radius: 12px; border: 2px solid var(--border);
+      background: var(--card); color: var(--text);
+      font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+      transition: 0.2s;
+    }
+    .pb-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .pb-btn.primary { background: var(--blue); color: white; border-color: var(--blue); }
+    .pb-btn.primary:hover { background: #005fa3; }
+    .pb-btn.success { background: var(--green); color: white; border-color: var(--green); }
+    .pb-btn.success:hover { background: #219a52; }
 
-    /* Rest */
-    .pb-rest { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.5rem; min-height:70vh; text-align:center; }
-    .pb-rest h2 { font-size:1.8rem; color:#27ae60; }
-    .pb-rest p  { color:#aab; }
+    /* ── Rest screen ── */
+    .pb-rest {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .pb-rest-icon { font-size: 3rem; margin-bottom: 0.8rem; }
+    .pb-rest h2 { font-size: 1.4rem; font-weight: 900; color: var(--green); margin-bottom: 0.5rem; }
+    .pb-rest p { color: var(--text-light); font-size: 0.88rem; margin-bottom: 1.5rem; }
+    .pb-rest-next { color: var(--text); font-weight: 700; }
 
-    /* Complete */
-    .pb-complete { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.2rem; min-height:85vh; text-align:center; }
-    .pb-complete .trophy { font-size:5rem; }
-    .pb-complete h1 { font-size:2rem; }
-    .complete-stats { display:flex; gap:1.2rem; flex-wrap:wrap; justify-content:center; }
-    .cstat { background:#1a1d27; border-radius:12px; padding:1rem 1.5rem; min-width:90px; }
-    .cstat span  { display:block; font-size:1.8rem; font-weight:700; color:#4db8ff; }
-    .cstat small { color:#aab; font-size:0.78rem; }
+    .skip-rest-btn {
+      background: var(--bg); color: var(--blue);
+      border: 2px solid var(--blue); border-radius: 30px;
+      padding: 0.65rem 1.5rem; font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: 0.2s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .skip-rest-btn:hover { background: var(--blue); color: white; }
 
-    /* Error */
-    .pb-error { text-align:center; padding:4rem 1rem; }
+    /* ── Complete screen ── */
+    .pb-complete {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .pb-complete .trophy { font-size: 4rem; margin-bottom: 1rem; }
+    .pb-complete h1 { font-size: 1.7rem; font-weight: 900; color: var(--text); margin-bottom: 0.5rem; }
+    .pb-complete p { color: var(--text-light); margin-bottom: 1.5rem; }
+    .complete-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem; margin-bottom: 1.5rem;
+    }
+    .cstat {
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 1rem 0.5rem;
+    }
+    .cstat-num { display: block; font-size: 1.6rem; font-weight: 900; color: var(--blue); }
+    .cstat-lbl { font-size: 0.72rem; color: var(--text-light); font-weight: 600; }
+    .complete-btns {
+      display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center;
+    }
+    .complete-btn {
+      padding: 0.8rem 1.5rem; border-radius: 12px;
+      font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      font-family: inherit; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.5rem; transition: 0.2s;
+    }
+    .complete-btn.primary { background: var(--blue); color: white; border: 2px solid var(--blue); }
+    .complete-btn.primary:hover { background: #005fa3; }
+    .complete-btn.outline { background: transparent; color: var(--blue); border: 2px solid var(--blue); }
+    .complete-btn.outline:hover { background: #e8f4fd; }
 
-    /* Dark buttons inside playback */
-    .btn-pb-primary { background:#0077cc; color:white; border:none; padding:0.65rem 1.3rem; border-radius:30px; cursor:pointer; font-size:0.88rem; font-weight:700; display:inline-flex; align-items:center; gap:0.4rem; transition:0.2s; }
-    .btn-pb-primary:hover { background:#005fa3; }
-    .btn-pb-outline { background:transparent; color:#4db8ff; border:2px solid #4db8ff; padding:0.63rem 1.3rem; border-radius:30px; cursor:pointer; font-size:0.88rem; font-weight:700; display:inline-flex; align-items:center; gap:0.4rem; transition:0.2s; text-decoration:none; }
-    .btn-pb-outline:hover { background:rgba(77,184,255,0.1); }
-    .btn-pb-success { background:#27ae60; color:white; border:none; padding:0.65rem 1.3rem; border-radius:30px; cursor:pointer; font-size:0.88rem; font-weight:700; display:inline-flex; align-items:center; gap:0.4rem; }
+    /* ── Error ── */
+    .pb-error {
+      text-align: center; padding: 4rem 1rem;
+      background: var(--card); border-radius: 18px;
+      border: 1.5px solid var(--border); margin-top: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .pb-controls { grid-template-columns: 1fr 1fr; }
+      .complete-stats { grid-template-columns: repeat(3, 1fr); }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Navbar -->
+  <div class="pb-nav">
+    <a href="index.html" class="pb-nav-logo">
+      <img src="assets/images/Logo.png" alt="HomePhysio">
+      HomePhysio
+    </a>
+    <div class="pb-nav-right">
+      <span class="pb-nav-title" id="navTitle">Workout</span>
+      <button class="theme-btn-pb" onclick="toggleTheme()"><i id="themeIcon" class="fas fa-moon"></i></button>
+    </div>
+  </div>
+
   <div class="pb-wrap">
     <div id="pbContainer">
-      <div style="text-align:center;padding:4rem;color:#aab">
-        <i class="fas fa-spinner fa-spin" style="font-size:2rem;color:#0077cc"></i>
-        <p style="margin-top:1rem">Loading routine...</p>
+      <div style="text-align:center;padding:4rem;color:var(--text-light)">
+        <i class="fas fa-spinner fa-spin" style="font-size:2rem;color:var(--blue)"></i>
+        <p style="margin-top:1rem;font-weight:600">Loading routine...</p>
       </div>
     </div>
   </div>
 
   <script>
-   const API = 'http://localhost:5000'
+    const API = 'http://localhost:5000';
     let routine = null, exIdx = 0, setNum = 1, cycleNum = 1;
     let timerInterval = null, secondsLeft = 0, paused = false, startTime = null;
     const WORK_TIME = 30, REST_TIME = 15;
 
+    // Theme
+    if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('themeIcon').className = 'fas fa-sun'; }
+    function toggleTheme() { document.body.classList.toggle('dark-mode'); const d = document.body.classList.contains('dark-mode'); document.getElementById('themeIcon').className = d ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', d ? 'dark' : 'light'); }
+
     async function init() {
-      const s = await (await fetch(`${API}/check-session`,{credentials:'include'})).json();
-      if (!s.loggedIn) { window.location.href='login.html'; return; }
-      const id = new URLSearchParams(location.search).get('routineId');
-      if (!id) { showError('No routine selected. Please go back and choose one.'); return; }
       try {
-        const res = await fetch(`${API}/routines/${id}`,{credentials:'include'});
+        const s = await (await fetch(`${API}/check-session`, { credentials: 'include' })).json();
+        if (!s.loggedIn) { window.location.href = 'http://localhost:5000/login.html'; return; }
+        const id = new URLSearchParams(location.search).get('routineId');
+        if (!id) { showError('No routine selected. Please go back and choose one.'); return; }
+        const res = await fetch(`${API}/routines/${id}`, { credentials: 'include' });
         if (!res.ok) { showError('Routine not found.'); return; }
-        routine   = await res.json();
+        routine = await res.json();
+        document.getElementById('navTitle').textContent = routine.name;
         startTime = Date.now();
         showOverview();
       } catch { showError('Could not load routine. Is the server running?'); }
     }
 
+    /* ── Overview ── */
     function showOverview() {
       document.getElementById('pbContainer').innerHTML = `
-        <div class="pb-overview">
+        <div class="pb-overview-header">
           <h1><i class="fas fa-dumbbell"></i> ${routine.name}</h1>
-          <p class="meta">${routine.exercises.length} exercises · ${routine.cycles||1} cycle(s)</p>
-          <ul class="pb-ex-list">
-            ${routine.exercises.map((ex,i)=>`
-              <li>
-                <span class="pb-ex-num">${i+1}</span>
-                <img src="${ex.image||'assets/images/rehab.png'}" onerror="this.src='assets/images/rehab.png'">
-                <div>
-                  <strong>${ex.name}</strong>
-                  <span>${ex.sets} sets × ${ex.reps} reps · ${ex.difficulty||'Easy'}</span>
-                </div>
-              </li>`).join('')}
-          </ul>
-          <div style="display:flex;gap:1rem;flex-wrap:wrap">
-            <button class="btn-pb-primary btn-lg" onclick="startWorkout()" style="padding:1rem 2rem;font-size:1rem">
-              <i class="fas fa-play"></i> Begin Workout
-            </button>
-            <a href="routines.html" class="btn-pb-outline">
-              <i class="fas fa-arrow-left"></i> Back
-            </a>
-          </div>
-        </div>`;
+          <p>${routine.exercises.length} exercises &nbsp;·&nbsp; ${routine.cycles || 1} cycle(s)</p>
+        </div>
+        <ul class="pb-ex-list">
+          ${routine.exercises.map((ex, i) => `
+            <li class="pb-ex-item">
+              <span class="pb-ex-num">${i + 1}</span>
+              <img class="pb-ex-img" src="${ex.image || 'assets/images/rehab.png'}" onerror="this.src='assets/images/rehab.png'" alt="${ex.name}">
+              <div class="pb-ex-info">
+                <strong>${ex.name}</strong>
+                <span>${ex.sets} sets &times; ${ex.reps} reps &nbsp;&middot;&nbsp; ${ex.difficulty || 'Easy'}</span>
+              </div>
+            </li>`).join('')}
+        </ul>
+        <button class="pb-start-btn" onclick="startWorkout()">
+          <i class="fas fa-play"></i> Begin Workout
+        </button>
+        <a href="routines.html" class="pb-back-link"><i class="fas fa-arrow-left"></i> Back to Routines</a>`;
     }
 
+    /* ── Start ── */
     function startWorkout() {
       exIdx = 0; setNum = 1; cycleNum = 1;
       startTime = Date.now();
       showExercise();
     }
 
+    /* ── Exercise screen ── */
     function showExercise() {
       clearInterval(timerInterval);
-      const ex         = routine.exercises[exIdx];
-      const totalEx    = routine.exercises.length;
-      const totalCyc   = routine.cycles || 1;
-      const pct        = Math.round(((exIdx * totalCyc + cycleNum - 1) / (totalEx * totalCyc)) * 100);
+      const ex = routine.exercises[exIdx];
+      const totalEx = routine.exercises.length;
+      const totalCyc = routine.cycles || 1;
+      const pct = Math.round(((exIdx * totalCyc + cycleNum - 1) / (totalEx * totalCyc)) * 100);
+      const circumference = 2 * Math.PI * 54; // r=54
 
       document.getElementById('pbContainer').innerHTML = `
-        <div class="pb-active">
-          <div class="pb-topbar">
-            <a href="routines.html" class="pb-close"><i class="fas fa-times"></i></a>
-            <span class="pb-prog-text">Exercise ${exIdx+1}/${totalEx} · Cycle ${cycleNum}/${totalCyc} · Set ${setNum}/${ex.sets}</span>
+        <!-- Progress -->
+        <div class="pb-prog-bar"><div class="pb-prog-fill" style="width:${pct}%"></div></div>
+        <p class="pb-prog-label">Exercise ${exIdx + 1}/${totalEx} &nbsp;·&nbsp; Cycle ${cycleNum}/${totalCyc} &nbsp;·&nbsp; Set ${setNum}/${ex.sets}</p>
+
+        <!-- Image -->
+        <div class="pb-img-card">
+          <img src="${ex.image || 'assets/images/rehab.png'}" onerror="this.src='assets/images/rehab.png'" alt="${ex.name}">
+        </div>
+
+        <!-- Info -->
+        <div class="pb-info-card">
+          <h2>${ex.name}</h2>
+          <div class="pb-meta-row">
+            <span class="pb-meta-pill"><i class="fas fa-redo"></i> Set ${setNum} of ${ex.sets}</span>
+            <span class="pb-meta-pill"><i class="fas fa-hashtag"></i> ${ex.reps} reps</span>
+            <span class="badge badge-${(ex.difficulty || 'easy').toLowerCase()}">${ex.difficulty || 'Easy'}</span>
           </div>
-          <div class="pb-bar"><div class="pb-bar-fill" style="width:${pct}%"></div></div>
-          <div class="pb-img"><img src="${ex.image||'assets/images/rehab.png'}" onerror="this.src='assets/images/rehab.png'" id="pbImg"></div>
-          <div class="pb-info">
-            <h2>${ex.name}</h2>
-            <div class="pb-meta-row">
-              <span><i class="fas fa-redo"></i> Set ${setNum} of ${ex.sets}</span>
-              <span><i class="fas fa-hashtag"></i> ${ex.reps} reps</span>
-              <span class="badge badge-${(ex.difficulty||'easy').toLowerCase()}">${ex.difficulty||'Easy'}</span>
+          <p class="pb-desc">${(ex.description || '').split('\n')[0]}</p>
+        </div>
+
+        <!-- Timer -->
+        <div class="pb-timer-card">
+          <div class="timer-ring-wrap">
+            <svg width="130" height="130" viewBox="0 0 130 130">
+              <circle class="timer-ring-bg" cx="65" cy="65" r="54"/>
+              <circle class="timer-ring-fill" id="timerRing" cx="65" cy="65" r="54"
+                stroke-dasharray="${circumference}"
+                stroke-dashoffset="0"/>
+            </svg>
+            <div class="timer-inner">
+              <span class="timer-num" id="timerNum">${WORK_TIME}</span>
+              <span class="timer-sub">seconds</span>
             </div>
-            <p class="pb-desc">${(ex.description||'').split('\n')[0]}</p>
           </div>
-          <div class="timer-wrap">
-            <div class="timer-circle" id="timerCircle">
-              <span id="timerNum">${WORK_TIME}</span>
-              <small>seconds</small>
-            </div>
-            <span class="timer-label" id="timerLbl">Work Time — do your reps!</span>
-          </div>
-          <div class="pb-controls">
-            <button class="btn-pb-outline" onclick="prevEx()"><i class="fas fa-step-backward"></i> Prev</button>
-            <button class="btn-pb-primary" id="pauseBtn" onclick="togglePause()"><i class="fas fa-pause"></i> Pause</button>
-            <button class="btn-pb-outline" onclick="finishSet()">Next Set <i class="fas fa-forward"></i></button>
-            <button class="btn-pb-success" onclick="skipEx()">Skip <i class="fas fa-step-forward"></i></button>
-          </div>
+          <span class="timer-label" id="timerLbl"><i class="fas fa-fire" style="color:#e74c3c"></i> Work Time — do your reps!</span>
+        </div>
+
+        <!-- Controls -->
+        <div class="pb-controls">
+          <button class="pb-btn" onclick="prevEx()"><i class="fas fa-step-backward"></i> Prev</button>
+          <button class="pb-btn primary" id="pauseBtn" onclick="togglePause()"><i class="fas fa-pause"></i> Pause</button>
+          <button class="pb-btn" onclick="finishSet()">Next Set <i class="fas fa-forward"></i></button>
+          <button class="pb-btn success" onclick="skipEx()">Skip <i class="fas fa-step-forward"></i></button>
         </div>`;
+
       startTimer(WORK_TIME, onWorkEnd);
     }
 
+    /* ── Timer ── */
+    const CIRC = 2 * Math.PI * 54;
     function startTimer(secs, onEnd) {
       clearInterval(timerInterval);
       secondsLeft = secs; paused = false;
-      updateTimer();
+      updateTimer(secs);
       timerInterval = setInterval(() => {
         if (paused) return;
         secondsLeft--;
-        updateTimer();
+        updateTimer(secs);
         if (secondsLeft <= 0) { clearInterval(timerInterval); onEnd(); }
       }, 1000);
     }
-    function updateTimer() {
-      const n = document.getElementById('timerNum');
-      const c = document.getElementById('timerCircle');
-      if (n) n.textContent = secondsLeft;
-      if (c) c.classList.toggle('urgent', secondsLeft <= 5);
+    function updateTimer(total) {
+      const numEl  = document.getElementById('timerNum');
+      const ring   = document.getElementById('timerRing');
+      if (numEl) numEl.textContent = secondsLeft;
+      if (ring) {
+        const progress = secondsLeft / (total || WORK_TIME);
+        ring.style.strokeDashoffset = CIRC * (1 - progress);
+        ring.classList.toggle('urgent', secondsLeft <= 5);
+      }
     }
     function togglePause() {
       paused = !paused;
       const btn = document.getElementById('pauseBtn');
-      if (btn) btn.innerHTML = paused ? '<i class="fas fa-play"></i> Resume' : '<i class="fas fa-pause"></i> Pause';
+      if (btn) btn.innerHTML = paused
+        ? '<i class="fas fa-play"></i> Resume'
+        : '<i class="fas fa-pause"></i> Pause';
     }
 
+    /* ── Set/Exercise navigation ── */
     function onWorkEnd() {
       const ex = routine.exercises[exIdx];
       if (setNum < ex.sets) { showRest(() => { setNum++; showExercise(); }); }
-      else                   { showRest(() => skipEx()); }
+      else { showRest(() => skipEx()); }
     }
     function finishSet() {
       clearInterval(timerInterval);
       const ex = routine.exercises[exIdx];
       if (setNum < ex.sets) { showRest(() => { setNum++; showExercise(); }); }
-      else                   { showRest(() => skipEx()); }
+      else { showRest(() => skipEx()); }
     }
     function skipEx() {
       clearInterval(timerInterval); setNum = 1;
       if (exIdx + 1 < routine.exercises.length) { exIdx++; showExercise(); }
-      else if (cycleNum < (routine.cycles||1))  { cycleNum++; exIdx = 0; showExercise(); }
-      else                                        { finishWorkout(); }
+      else if (cycleNum < (routine.cycles || 1)) { cycleNum++; exIdx = 0; showExercise(); }
+      else { finishWorkout(); }
     }
     function prevEx() {
       clearInterval(timerInterval); setNum = 1;
       if (exIdx > 0) { exIdx--; showExercise(); }
     }
 
+    /* ── Rest screen ── */
     function showRest(onDone) {
       clearInterval(timerInterval);
       const next = routine.exercises[exIdx + 1]?.name || 'Next set';
       document.getElementById('pbContainer').innerHTML = `
         <div class="pb-rest">
-          <h2><i class="fas fa-mug-hot"></i> Rest</h2>
-          <div class="timer-circle" id="timerCircle" style="width:140px;height:140px;border-width:8px">
-            <span id="timerNum">${REST_TIME}</span><small>seconds</small>
+          <div class="pb-rest-icon">☕</div>
+          <h2>Rest Time</h2>
+          <p>Next up: <span class="pb-rest-next">${next}</span></p>
+          <div class="pb-timer-card" style="margin:0 0 1.2rem">
+            <div class="timer-ring-wrap">
+              <svg width="130" height="130" viewBox="0 0 130 130">
+                <circle class="timer-ring-bg" cx="65" cy="65" r="54"/>
+                <circle class="timer-ring-fill" id="timerRing" cx="65" cy="65" r="54"
+                  stroke-dasharray="${CIRC}" stroke-dashoffset="0" style="stroke:var(--green)"/>
+              </svg>
+              <div class="timer-inner">
+                <span class="timer-num" id="timerNum">${REST_TIME}</span>
+                <span class="timer-sub">seconds</span>
+              </div>
+            </div>
+            <span class="timer-label"><i class="fas fa-leaf" style="color:var(--green)"></i> Relax and breathe</span>
           </div>
-          <p>Coming up: <strong style="color:white">${next}</strong></p>
-          <button class="btn-pb-primary" onclick="skipRest()">Skip Rest <i class="fas fa-forward"></i></button>
+          <button class="skip-rest-btn" onclick="skipRest()">
+            <i class="fas fa-forward"></i> Skip Rest
+          </button>
         </div>`;
       window._restDone = onDone;
       startTimer(REST_TIME, onDone);
     }
     function skipRest() { clearInterval(timerInterval); if (window._restDone) window._restDone(); }
 
+    /* ── Complete screen ── */
     async function finishWorkout() {
       clearInterval(timerInterval);
       const dur = Math.round((Date.now() - startTime) / 1000);
       try {
         await fetch(`${API}/progress`, {
-          method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include',
-          body: JSON.stringify({ routineId:routine._id, routineName:routine.name, duration:dur, exercises:routine.exercises.length })
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include',
+          body: JSON.stringify({ routineId: routine._id, routineName: routine.name, duration: dur, exercises: routine.exercises.length })
         });
       } catch {}
-      const m = Math.floor(dur/60), s = dur%60;
+      const m = Math.floor(dur / 60), s = dur % 60;
       document.getElementById('pbContainer').innerHTML = `
         <div class="pb-complete">
           <div class="trophy">🏆</div>
           <h1>Workout Complete!</h1>
-          <p style="color:#aab">Amazing work finishing <strong style="color:white">${routine.name}</strong></p>
+          <p>Great job finishing <strong>${routine.name}</strong></p>
           <div class="complete-stats">
-            <div class="cstat"><span>${routine.exercises.length}</span><small>Exercises</small></div>
-            <div class="cstat"><span>${routine.cycles||1}</span><small>Cycles</small></div>
-            <div class="cstat"><span>${m}:${String(s).padStart(2,'0')}</span><small>Duration</small></div>
+            <div class="cstat"><span class="cstat-num">${routine.exercises.length}</span><span class="cstat-lbl">Exercises</span></div>
+            <div class="cstat"><span class="cstat-num">${routine.cycles || 1}</span><span class="cstat-lbl">Cycles</span></div>
+            <div class="cstat"><span class="cstat-num">${m}:${String(s).padStart(2, '0')}</span><span class="cstat-lbl">Duration</span></div>
           </div>
-          <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:1rem">
-            <a href="routines.html" class="btn-pb-primary"><i class="fas fa-redo"></i> Do Another</a>
-            <a href="progress.html" class="btn-pb-outline"><i class="fas fa-chart-bar"></i> View Progress</a>
+          <div class="complete-btns">
+            <a href="routines.html" class="complete-btn primary"><i class="fas fa-redo"></i> Do Another</a>
+            <a href="progress.html" class="complete-btn outline"><i class="fas fa-chart-bar"></i> View Progress</a>
           </div>
         </div>`;
     }
 
+    /* ── Error ── */
     function showError(msg) {
       document.getElementById('pbContainer').innerHTML = `
         <div class="pb-error">
-          <i class="fas fa-exclamation-triangle" style="font-size:3rem;color:#e74c3c;display:block;margin-bottom:1rem"></i>
-          <p style="color:#aab;margin-bottom:1.5rem">${msg}</p>
-          <a href="routines.html" class="btn-pb-primary">Back to Routines</a>
+          <i class="fas fa-exclamation-triangle" style="font-size:2.5rem;color:var(--red);display:block;margin-bottom:1rem"></i>
+          <p style="color:var(--text-light);margin-bottom:1.5rem">${msg}</p>
+          <a href="routines.html" style="background:var(--blue);color:white;padding:0.7rem 1.5rem;border-radius:10px;text-decoration:none;font-weight:700">Back to Routines</a>
         </div>`;
     }
 

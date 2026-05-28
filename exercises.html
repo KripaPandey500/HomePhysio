@@ -8,37 +8,288 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    .search-wrap { position:relative; max-width:480px; margin:0 auto 1.5rem; }
-    .search-wrap input { width:100%; padding:0.88rem 1rem 0.88rem 3rem; border:2px solid var(--border); border-radius:30px; font-size:0.95rem; background:var(--card); color:var(--text); transition:0.2s; font-family:inherit; }
-    .search-wrap input:focus { outline:none; border-color:var(--blue); }
-    .search-wrap i { position:absolute; left:1.1rem; top:50%; transform:translateY(-50%); color:var(--text-light); }
-    .ex-count { text-align:center; color:var(--text-light); margin-bottom:1.2rem; font-size:0.84rem; }
+    /* ── Page header ── */
+    .ex-page-header {
+      text-align: center;
+      padding: 2rem 0 1.5rem;
+    }
+    .ex-page-header h1 {
+      font-size: 2rem; font-weight: 900; color: var(--text);
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .ex-page-header h1 i { color: var(--blue); }
+    .ex-page-header p { color: var(--text-light); font-size: 0.92rem; }
 
-    /* Detail modal content */
-    .detail-img { width:100%; height:260px; object-fit:cover; border-radius:14px; margin-bottom:1.2rem; }
-    .detail-info-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin:1rem 0 1.4rem; }
-    .dinfo { background:var(--bg); border-radius:12px; padding:1rem; text-align:center; }
-    .dinfo strong { display:block; font-size:1.3rem; font-weight:800; color:var(--blue); }
-    .dinfo span { font-size:0.75rem; color:var(--text-light); }
-    .detail-steps { list-style:none; padding:0; }
-    .detail-steps li { display:flex; gap:0.8rem; align-items:flex-start; margin-bottom:0.9rem; font-size:0.88rem; line-height:1.7; }
-    .step-dot { min-width:28px; height:28px; border-radius:50%; background:var(--blue); color:white; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.78rem; margin-top:0.1rem; flex-shrink:0; }
+    /* ── Search ── */
+    .search-wrap {
+      position: relative; max-width: 520px;
+      margin: 0 auto 1.5rem;
+    }
+    .search-wrap input {
+      width: 100%;
+      padding: 0.9rem 1.2rem 0.9rem 3rem;
+      border: 2px solid var(--border);
+      border-radius: 30px;
+      font-size: 0.92rem;
+      background: var(--card);
+      color: var(--text);
+      font-family: inherit;
+      transition: 0.2s;
+    }
+    .search-wrap input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,119,204,0.1); }
+    .search-wrap .s-icon {
+      position: absolute; left: 1.1rem; top: 50%;
+      transform: translateY(-50%); color: var(--text-light);
+      pointer-events: none;
+    }
+
+    /* ── Filter bar ── */
+    .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1rem; }
+    .filter-btn {
+      padding: 0.45rem 1.1rem; border-radius: 25px;
+      border: 2px solid var(--border); background: var(--card);
+      color: var(--text-light); font-weight: 600; font-size: 0.82rem;
+      cursor: pointer; transition: all 0.2s; font-family: inherit;
+    }
+    .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+    .filter-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+
+    /* ── Count ── */
+    .ex-count {
+      text-align: center; color: var(--text-light);
+      font-size: 0.84rem; margin-bottom: 1.5rem;
+    }
+
+    /* ── Exercise Grid ── */
+    .exercise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      align-items: stretch;
+    }
+
+    /* ── Exercise Card ── */
+    .exercise-card {
+      background: var(--card);
+      border-radius: 18px;
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,119,204,0.07);
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .exercise-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,119,204,0.18);
+      border-color: var(--blue);
+    }
+
+    /* Card image */
+    .exercise-card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      background: #f0f6ff;
+      flex-shrink: 0;
+    }
+
+    /* Card body */
+    .exercise-card-body {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .exercise-card-body h3 {
+      font-size: 1rem; font-weight: 800;
+      color: var(--text); margin-bottom: 0.6rem;
+    }
+    .exercise-card-meta {
+      display: flex; gap: 0.4rem;
+      flex-wrap: wrap; align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .exercise-card-stats {
+      font-size: 0.78rem; color: var(--text-light);
+      margin-bottom: 0.7rem;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .exercise-card-stats i { color: var(--blue); font-size: 0.72rem; }
+    .exercise-card-desc {
+      font-size: 0.82rem; color: var(--text-light);
+      line-height: 1.6; margin-bottom: 1rem;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .exercise-card-actions {
+      display: flex; gap: 0.6rem; flex-wrap: wrap;
+      margin-top: auto;
+    }
+    .exercise-card-actions .btn {
+      flex: 1; justify-content: center;
+    }
+
+    /* ── Detail Modal ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none; align-items: center; justify-content: center;
+      z-index: 2000; padding: 1rem;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.show { display: flex; }
+
+    .modal-box {
+      background: var(--card);
+      border-radius: 24px;
+      width: min(600px, 96vw);
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.25);
+      animation: modalIn 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes modalIn {
+      from { transform: scale(0.93) translateY(24px); opacity: 0; }
+      to   { transform: none; opacity: 1; }
+    }
+
+    /* Modal image — full width, fixed height, never cut off */
+    .modal-img-wrap {
+      width: 100%;
+      height: 260px;
+      overflow: hidden;
+      border-radius: 24px 24px 0 0;
+      flex-shrink: 0;
+      background: #f0f6ff;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      padding: 1rem;
+    }
+
+    /* Modal content area */
+    .modal-content {
+      padding: 1.5rem;
+      flex: 1;
+    }
+
+    .modal-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 1rem; gap: 1rem;
+    }
+    .modal-top h2 {
+      font-size: 1.35rem; font-weight: 900; color: var(--text); margin: 0;
+      flex: 1;
+    }
+    .modal-close-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #f0f4f8; border: none; font-size: 1rem;
+      cursor: pointer; color: #666; display: flex;
+      align-items: center; justify-content: center;
+      transition: 0.2s; flex-shrink: 0;
+    }
+    .modal-close-btn:hover { background: #fee2e2; color: #e74c3c; }
+
+    .modal-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+
+    /* Stats grid */
+    .modal-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem; margin-bottom: 1.4rem;
+    }
+    .modal-stat {
+      background: var(--bg);
+      border-radius: 14px; padding: 1rem;
+      text-align: center; border: 1.5px solid var(--border);
+    }
+    .modal-stat strong {
+      display: block; font-size: 1.6rem;
+      font-weight: 900; color: var(--blue); line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .modal-stat span { font-size: 0.75rem; color: var(--text-light); font-weight: 600; }
+
+    /* Steps */
+    .steps-title {
+      font-size: 0.92rem; font-weight: 800; color: var(--blue);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .steps-list { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+    .steps-list li {
+      display: flex; gap: 0.8rem; align-items: flex-start;
+      margin-bottom: 0.8rem;
+      padding: 0.8rem;
+      background: var(--bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-size: 0.88rem; line-height: 1.6; color: var(--text);
+    }
+    .step-num {
+      min-width: 28px; height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), #00aaff);
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.75rem;
+      flex-shrink: 0; margin-top: 0.1rem;
+    }
+
+    /* Modal actions */
+    .modal-actions {
+      display: flex; gap: 0.8rem; flex-wrap: wrap;
+    }
+    .modal-actions .btn { flex: 1; justify-content: center; }
+
+    /* Dark mode */
+    body.dark-mode .modal-img-wrap { background: #1a1d27; }
+    body.dark-mode .modal-stat { background: #1a1d27; }
+    body.dark-mode .steps-list li { background: #1a1d27; border-color: var(--border); }
+    body.dark-mode .modal-close-btn { background: #2a2d3a; color: #ccd; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .exercise-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+      .exercise-card-img { height: 150px; }
+      .modal-img-wrap { height: 200px; }
+      .modal-stats { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+      .modal-stat strong { font-size: 1.2rem; }
+    }
   </style>
 </head>
 <body>
+
 <header>
-  <a href="index.html" class="logo"><img src="assets/images/Logo.png" alt="HomePhysio"><span class="logo-text">HomePhysio</span></a>
+  <a href="index.html" class="logo">
+    <img src="assets/images/Logo.png" alt="HomePhysio">
+    <span class="logo-text">HomePhysio</span>
+  </a>
   <nav class="nav-links">
     <a href="index.html">Home</a>
     <a href="exercises.html" class="active">Exercises</a>
     <a href="routines.html">My Routines</a>
     <a href="progress.html">My Progress</a>
     <a href="aboutus.html">About Us</a>
-    <a href="profile.html" class="nav-icon"><i class="fas fa-user-circle"></i></a>
+    <a href="#" class="nav-icon" onclick="goToProfile(event)"><i class="fas fa-user-circle"></i></a>
     <button class="theme-toggle" onclick="toggleTheme()"><i id="ti" class="fas fa-moon"></i></button>
   </nav>
   <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu"><i class="fas fa-bars"></i></button>
 </header>
+
 <div class="nav-mobile" id="mobileNav">
   <a href="index.html"><i class="fas fa-home"></i> Home</a>
   <a href="exercises.html" class="active"><i class="fas fa-dumbbell"></i> Exercises</a>
@@ -49,56 +300,111 @@
 </div>
 
 <div class="page">
-  <div class="page-header" style="text-align:center">
-    <h1 class="sec-title" style="justify-content:center"><i class="fas fa-dumbbell"></i> Exercise Library</h1>
-    <p class="sec-sub">Browse all physiotherapy exercises. Click <strong>View Details</strong> for full instructions, or <strong>Add to Routine</strong> to save one.</p>
+
+  <!-- Page Header -->
+  <div class="ex-page-header">
+    <h1><i class="fas fa-dumbbell"></i> Exercise Library</h1>
+    <p>Browse all physiotherapy exercises. Click <strong>View Details</strong> for full instructions, or <strong>Add to Routine</strong> to save one.</p>
   </div>
 
+  <!-- Search -->
   <div class="search-wrap">
-    <i class="fas fa-search"></i>
+    <i class="fas fa-search s-icon"></i>
     <input type="text" id="searchInput" placeholder="Search by name, body part, difficulty..." oninput="render()">
   </div>
 
-  <div class="filter-bar" id="filterBar" style="justify-content:center"></div>
+  <!-- Filters -->
+  <div class="filter-bar" id="filterBar"></div>
+
+  <!-- Count -->
   <p class="ex-count" id="exCount"></p>
 
+  <!-- Grid -->
   <div class="exercise-grid" id="exGrid">
-    <div style="grid-column:1/-1;text-align:center;padding:3rem">
+    <div style="grid-column:1/-1;text-align:center;padding:4rem">
       <i class="fas fa-spinner fa-spin" style="font-size:2.5rem;color:var(--blue)"></i>
-      <p style="margin-top:1rem;color:var(--text-light)">Loading exercises...</p>
+      <p style="margin-top:1rem;color:var(--text-light);font-weight:600">Loading exercises...</p>
     </div>
   </div>
+
 </div>
 
-<!-- Detail Modal -->
-<div class="modal-overlay" id="detailModal">
+<!-- ── Detail Modal ── -->
+<div class="modal-overlay" id="detailModal" onclick="handleOverlayClick(event)">
   <div class="modal-box">
-    <div class="modal-header">
-      <h3 id="dTitle">Exercise Details</h3>
-      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+
+    <!-- Image -->
+    <div class="modal-img-wrap">
+      <img id="dImg" src="" alt="Exercise">
     </div>
-    <img id="dImg" src="" alt="" class="detail-img" onerror="this.src='assets/images/rehab.png'">
-    <div id="dBadges" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.8rem"></div>
-    <div class="detail-info-grid">
-      <div class="dinfo"><strong id="dSets">—</strong><span>Sets</span></div>
-      <div class="dinfo"><strong id="dReps">—</strong><span>Reps</span></div>
-      <div class="dinfo"><strong id="dDiff">—</strong><span>Difficulty</span></div>
-    </div>
-    <h4 style="font-size:0.95rem;margin-bottom:0.8rem;color:var(--blue)"><i class="fas fa-list-ol"></i> Step-by-Step Instructions</h4>
-    <ol class="detail-steps" id="dSteps"></ol>
-    <div style="display:flex;gap:0.8rem;margin-top:1.5rem;flex-wrap:wrap">
-      <button class="btn btn-primary btn-lg" id="dAddBtn"><i class="fas fa-plus"></i> Add to My Routine</button>
-      <button class="btn btn-outline" onclick="closeModal()">Close</button>
+
+    <!-- Content -->
+    <div class="modal-content">
+
+      <div class="modal-top">
+        <h2 id="dTitle">Exercise</h2>
+        <button class="modal-close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="modal-badges" id="dBadges"></div>
+
+      <!-- Stats -->
+      <div class="modal-stats">
+        <div class="modal-stat">
+          <strong id="dSets">—</strong>
+          <span>Sets</span>
+        </div>
+        <div class="modal-stat">
+          <strong id="dReps">—</strong>
+          <span>Reps</span>
+        </div>
+        <div class="modal-stat">
+          <strong id="dDiff">—</strong>
+          <span>Difficulty</span>
+        </div>
+      </div>
+
+      <!-- Steps -->
+      <p class="steps-title"><i class="fas fa-list-ol"></i> Step-by-Step Instructions</p>
+      <ol class="steps-list" id="dSteps"></ol>
+
+      <!-- Actions -->
+      <div class="modal-actions">
+        <button class="btn btn-primary btn-lg" id="dAddBtn">
+          <i class="fas fa-plus"></i> Add to My Routine
+        </button>
+        <button class="btn btn-outline btn-lg" onclick="closeModal()">
+          <i class="fas fa-times"></i> Close
+        </button>
+      </div>
+
     </div>
   </div>
 </div>
 
+<!-- Footer -->
 <footer>
   <div class="footer-grid">
-    <div class="footer-brand"><img src="assets/images/Logo.png" alt=""><div class="footer-brand-name">HomePhysio</div><p>Your home physiotherapy companion.</p></div>
-    <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="exercises.html">Exercises</a></li><li><a href="routines.html">My Routines</a></li><li><a href="progress.html">My Progress</a></li></ul></div>
-    <div class="footer-col"><h4>Account</h4><ul><li><a href="login.html">Login</a></li><li><a href="register.html">Register</a></li><li><a href="profile.html">Profile</a></li></ul></div>
-    <div class="footer-col"><h4>Admin</h4><ul><li><a href="adminlogin.html">Admin Login</a></li><li><a href="admin.html">Dashboard</a></li></ul></div>
+    <div class="footer-brand">
+      <img src="assets/images/Logo.png" alt="">
+      <div class="footer-brand-name">HomePhysio</div>
+      <p>Your home physiotherapy companion.</p>
+    </div>
+    <div class="footer-col"><h4>Pages</h4><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="exercises.html">Exercises</a></li>
+      <li><a href="routines.html">My Routines</a></li>
+      <li><a href="progress.html">My Progress</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Account</h4><ul>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="register.html">Register</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Admin</h4><ul>
+      <li><a href="adminlogin.html">Admin Login</a></li>
+      <li><a href="admin.html">Dashboard</a></li>
+    </ul></div>
   </div>
   <div class="footer-bottom"><span>&copy; 2025 HomePhysio — Internship Project by Arjan KC</span></div>
 </footer>
@@ -106,30 +412,51 @@
 <div id="toast" class="toast"></div>
 
 <script>
-const API = 'http://localhost:5000'
+const API = 'http://localhost:5000';
 let all = [], filter = 'All', current = null;
+
+// Theme
 if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('ti').className = 'fas fa-sun'; }
 function toggleTheme() { document.body.classList.toggle('dark-mode'); const d = document.body.classList.contains('dark-mode'); document.getElementById('ti').className = d ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', d ? 'dark' : 'light'); }
+
+// Mobile nav
 function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
 document.addEventListener('click', e => { const mn = document.getElementById('mobileNav'); if (mn && mn.classList.contains('open') && !e.target.closest('.hamburger') && !e.target.closest('.nav-mobile')) mn.classList.remove('open'); });
-function toast(m, t = 'info') { const el = document.getElementById('toast'); el.textContent = m; el.className = `toast show ${t}`; setTimeout(() => el.className = 'toast', 3000); }
-function closeModal() { document.getElementById('detailModal').classList.remove('show'); }
 
+// Profile
+async function goToProfile(e) {
+  e.preventDefault();
+  try {
+    const res = await fetch(`${API}/check-session`, { credentials: 'include' });
+    const data = await res.json();
+    window.location.href = data.loggedIn ? 'http://localhost:5000/profile.html' : 'http://localhost:5000/login.html';
+  } catch { window.location.href = 'login.html'; }
+}
+
+// Toast
+function toast(m, t = 'info') { const el = document.getElementById('toast'); el.textContent = m; el.className = `toast show ${t}`; setTimeout(() => el.className = 'toast', 3000); }
+
+// Close modal
+function closeModal() { document.getElementById('detailModal').classList.remove('show'); document.body.style.overflow = ''; }
+function handleOverlayClick(e) { if (e.target === document.getElementById('detailModal')) closeModal(); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Fallback data
 const FALLBACK = [
-  { _id:'1',  name:'Neck Stretch',    category:'Neck',     difficulty:'Easy',   sets:3, reps:10, image:'assets/images/neck stretch.png',    description:'Sit straight.\nTilt head right to shoulder, hold 15 seconds.\nReturn to center.\nTilt left, hold 15 seconds.\nRepeat 3 sets each side.' },
-  { _id:'2',  name:'Shoulder Stretch',category:'Shoulder', difficulty:'Easy',   sets:3, reps:12, image:'assets/images/Shoulder stretch.png', description:'Bring right arm across chest.\nUse left hand to press arm closer.\nHold 20 seconds.\nRepeat with left arm.\nDo 3 sets each side.' },
-  { _id:'3',  name:'Back Extension',  category:'Back',     difficulty:'Medium', sets:3, reps:15, image:'assets/images/back extension.png',   description:'Lie face down on mat.\nHands behind head.\nSlowly lift chest off floor.\nKeep neck neutral.\nLower slowly. 3 sets × 15 reps.' },
-  { _id:'4',  name:'Hand Grip',       category:'Hand',     difficulty:'Easy',   sets:2, reps:20, image:'assets/images/hand grip.png',        description:'Hold a stress ball.\nSqueeze firmly for 3 seconds.\nRelease slowly.\nRepeat 20 times per hand.\n2 sets each hand.' },
-  { _id:'5',  name:'Knee Flexion',    category:'Knee',     difficulty:'Medium', sets:3, reps:15, image:'assets/images/knee flexion.png',     description:'Sit on chair, feet flat.\nLift one leg, bend knee.\nHold 2 seconds.\nLower slowly.\nRepeat 15 times per leg, 3 sets.' },
-  { _id:'6',  name:'Leg Raise',       category:'Leg',      difficulty:'Medium', sets:3, reps:12, image:'assets/images/leg raise.png',        description:'Lie on back.\nLift one leg to 45 degrees.\nLower without touching floor.\n12 reps per leg.\n3 sets each side.' },
-  { _id:'7',  name:'Ankle Rotation',  category:'Ankle',    difficulty:'Easy',   sets:2, reps:15, image:'assets/images/ankle rotation.png',   description:'Sit with legs extended.\nRotate right ankle clockwise 15 times.\nThen counterclockwise 15 times.\nRepeat with left ankle.\n2 sets each.' },
-  { _id:'8',  name:'Neck Tilt',       category:'Neck',     difficulty:'Easy',   sets:3, reps:10, image:'assets/images/neck tilt.png',        description:'Sit straight.\nTilt head toward right shoulder.\nHold 10 seconds.\nReturn to center.\nTilt left. 3 sets each side.' },
-  { _id:'9',  name:'Shoulder Press',  category:'Shoulder', difficulty:'Medium', sets:3, reps:12, image:'assets/images/shoulder press.png',   description:'Hold dumbbells at shoulder height.\nPress upward until arms straight.\nLower slowly.\n12 reps. 3 sets.' },
-  { _id:'10', name:'Back Twist',      category:'Back',     difficulty:'Easy',   sets:2, reps:10, image:'assets/images/back twist.png',       description:'Sit on floor, legs extended.\nBend right knee outside left thigh.\nTwist torso right, hold 10 seconds.\nRepeat left side.\n2 sets each.' },
-  { _id:'11', name:'Wrist Circles',   category:'Hand',     difficulty:'Easy',   sets:2, reps:20, image:'assets/images/wrist circle.png',     description:'Extend arms forward.\nRotate wrists clockwise 10 times.\nThen counterclockwise 10 times.\n2 sets.' },
-  { _id:'12', name:'Squat',           category:'Knee',     difficulty:'Medium', sets:3, reps:15, image:'assets/images/squat.png',            description:'Stand shoulder-width apart.\nLower body as if sitting.\nBack straight, knees behind toes.\nReturn to standing.\n15 reps, 3 sets.' },
-  { _id:'13', name:'Calf Raise',      category:'Leg',      difficulty:'Medium', sets:3, reps:20, image:'assets/images/calf raise.png',       description:'Stand near wall for balance.\nRaise heels, hold 2 seconds.\nLower slowly.\n20 reps. 3 sets.' },
-  { _id:'14', name:'Ankle Flexion',   category:'Ankle',    difficulty:'Easy',   sets:3, reps:15, image:'assets/images/ankle flexion.png',    description:'Sit with legs extended.\nPoint toes away, hold 2 seconds.\nFlex toes toward you, hold 2 seconds.\n15 reps. 3 sets.' }
+  { _id:'1',  name:'Neck Stretch',     category:'Neck',     difficulty:'Easy',   sets:3, reps:10, image:'assets/images/neck stretch.png',     description:'Sit or stand up straight with your shoulders relaxed.\nSlowly tilt your head to the right, bringing your ear toward your shoulder.\nHold this position for 15 seconds.\nSlowly return your head to the center.\nTilt to the left side and hold for another 15 seconds.\nRepeat this movement for three sets.' },
+  { _id:'2',  name:'Shoulder Stretch', category:'Shoulder', difficulty:'Easy',   sets:3, reps:12, image:'assets/images/Shoulder stretch.png',  description:'Stand straight with your feet shoulder-width apart.\nBring your right arm across your chest.\nUse your left hand to gently press the arm closer to your chest.\nHold for 20 seconds.\nRelease slowly and repeat with the left arm.\nPerform three sets for each arm.' },
+  { _id:'3',  name:'Back Extension',   category:'Back',     difficulty:'Medium', sets:3, reps:15, image:'assets/images/back extension.png',    description:'Lie face down on a mat with legs extended.\nPlace your hands behind your head.\nSlowly lift your chest off the floor, keeping your neck neutral.\nHold briefly at the top.\nLower back down slowly.\nRepeat for three sets of 15 repetitions.' },
+  { _id:'4',  name:'Hand Grip',        category:'Hand',     difficulty:'Easy',   sets:2, reps:20, image:'assets/images/hand grip.png',         description:'Hold a stress ball or grip trainer in one hand.\nSqueeze tightly and hold for 2-3 seconds.\nRelease slowly and let your hand relax.\nRepeat 20 times for each hand.\nComplete two sets, moving smoothly without jerking.' },
+  { _id:'5',  name:'Knee Flexion',     category:'Knee',     difficulty:'Medium', sets:3, reps:15, image:'assets/images/knee flexion.png',      description:'Sit on a sturdy chair with feet flat.\nLift one leg and bend your knee.\nHold for 2 seconds.\nLower your leg slowly.\nRepeat 15 times per leg.\nPerform three sets, moving gently.' },
+  { _id:'6',  name:'Leg Raise',        category:'Leg',      difficulty:'Medium', sets:3, reps:12, image:'assets/images/leg raise.png',         description:'Lie on your back with legs straight.\nLift one leg slowly to 45 degrees.\nLower it back without touching the floor.\nRepeat 12 times per leg.\nDo three sets, moving slowly and controlled.' },
+  { _id:'7',  name:'Ankle Rotation',   category:'Ankle',    difficulty:'Easy',   sets:2, reps:15, image:'assets/images/ankle rotation.png',    description:'Sit or lie down with legs extended.\nRotate your right ankle clockwise 15 times.\nRotate counterclockwise 15 times.\nSwitch ankle and repeat.\nDo two sets for each ankle, moving smoothly.' },
+  { _id:'8',  name:'Neck Tilt',        category:'Neck',     difficulty:'Easy',   sets:3, reps:10, image:'assets/images/neck tilt.png',         description:'Sit straight with shoulders relaxed.\nTilt your head slowly toward the right shoulder.\nHold for 10 seconds.\nReturn to center.\nTilt to the left shoulder and hold.\nRepeat three sets, moving gently.' },
+  { _id:'9',  name:'Shoulder Press',   category:'Shoulder', difficulty:'Medium', sets:3, reps:12, image:'assets/images/shoulder press.png',    description:'Stand or sit with dumbbells at shoulder height.\nPress upward until arms are straight.\nLower slowly back to shoulder level.\nRepeat 12 times.\nDo three sets, moving in a controlled manner.' },
+  { _id:'10', name:'Back Twist',       category:'Back',     difficulty:'Easy',   sets:2, reps:10, image:'assets/images/back twist.png',        description:'Sit on the floor with legs extended.\nBend your right knee and place your foot outside the left thigh.\nTwist your torso to the right and hold for 10 seconds.\nReturn to center.\nSwitch sides and repeat.\nDo two sets.' },
+  { _id:'11', name:'Wrist Circles',    category:'Hand',     difficulty:'Easy',   sets:2, reps:20, image:'assets/images/wrist circle.png',      description:'Extend arms in front of you.\nRotate wrists clockwise 10 times.\nRotate counterclockwise 10 times.\nRepeat for two sets, moving slowly.' },
+  { _id:'12', name:'Squat',            category:'Knee',     difficulty:'Medium', sets:3, reps:15, image:'assets/images/squat.png',             description:'Stand with feet shoulder-width apart.\nLower your body as if sitting on a chair.\nKeep back straight and knees behind toes.\nReturn to standing.\nRepeat 15 times for three sets.' },
+  { _id:'13', name:'Calf Raise',       category:'Leg',      difficulty:'Medium', sets:3, reps:20, image:'assets/images/calf raise.png',        description:'Stand straight with feet shoulder-width apart.\nRaise heels off the ground and hold for 2 seconds.\nLower heels slowly.\nRepeat 20 times.\nDo three sets, moving controlled.' },
+  { _id:'14', name:'Ankle Flexion',    category:'Ankle',    difficulty:'Easy',   sets:3, reps:15, image:'assets/images/ankle flexion.png',     description:'Sit with legs extended.\nPoint toes away from the body, then pull back toward yourself.\nRepeat 15 times per ankle.\nDo three sets, moving slowly and carefully.' }
 ];
 
 async function loadExercises() {
@@ -163,28 +490,40 @@ function render() {
     const ms = !q || e.name.toLowerCase().includes(q) || (e.category || '').toLowerCase().includes(q) || (e.difficulty || '').toLowerCase().includes(q);
     return mc && ms;
   });
+
   document.getElementById('exCount').textContent = `Showing ${list.length} of ${all.length} exercises`;
+
   const grid = document.getElementById('exGrid');
   if (!list.length) {
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-search"></i><h3>No exercises found</h3><p>Try a different search or filter.</p></div>`;
     return;
   }
+
   grid.innerHTML = list.map(ex => `
     <div class="exercise-card">
-      <img src="${ex.image || 'assets/images/rehab.png'}" alt="${ex.name}" style="width:100%;height:190px;object-fit:cover" onerror="this.src='assets/images/rehab.png'">
+      <img
+        class="exercise-card-img"
+        src="${ex.image || 'assets/images/rehab.png'}"
+        alt="${ex.name}"
+        onerror="this.src='assets/images/rehab.png'"
+      >
       <div class="exercise-card-body">
         <h3>${ex.name}</h3>
         <div class="exercise-card-meta">
           <span class="badge badge-${(ex.difficulty || 'easy').toLowerCase()}">${ex.difficulty || 'Easy'}</span>
           <span class="badge badge-blue">${ex.category || ex.bodyPart || 'General'}</span>
-          <span style="font-size:0.75rem;color:var(--text-light)">${ex.sets} sets &times; ${ex.reps} reps</span>
+        </div>
+        <div class="exercise-card-stats">
+          <i class="fas fa-layer-group"></i> ${ex.sets} sets
+          &nbsp;·&nbsp;
+          <i class="fas fa-redo"></i> ${ex.reps} reps
         </div>
         <p class="exercise-card-desc">${(ex.description || '').split('\n')[0]}</p>
         <div class="exercise-card-actions">
-          <button class="btn btn-primary btn-sm" onclick='openDetail(${JSON.stringify(ex).replace(/'/g, "&#39;")})'>
+          <button class="btn btn-primary btn-sm" onclick='openDetail(${JSON.stringify(ex).replace(/'/g,"&#39;")})'>
             <i class="fas fa-eye"></i> View
           </button>
-          <button class="btn btn-outline btn-sm" onclick='addToRoutine(${JSON.stringify(ex).replace(/'/g, "&#39;")})'>
+          <button class="btn btn-outline btn-sm" onclick='addToRoutine(${JSON.stringify(ex).replace(/'/g,"&#39;")})'>
             <i class="fas fa-plus"></i> Add
           </button>
         </div>
@@ -194,28 +533,52 @@ function render() {
 
 function openDetail(ex) {
   current = ex;
+
+  // Image
+  const img = document.getElementById('dImg');
+  img.src = ex.image || 'assets/images/rehab.png';
+  img.alt = ex.name;
+  img.onerror = () => { img.src = 'assets/images/rehab.png'; };
+
+  // Title & badges
   document.getElementById('dTitle').textContent = ex.name;
-  document.getElementById('dImg').src  = ex.image || 'assets/images/rehab.png';
-  document.getElementById('dSets').textContent = ex.sets || '—';
-  document.getElementById('dReps').textContent = ex.reps || '—';
-  document.getElementById('dDiff').textContent = ex.difficulty || 'Easy';
   document.getElementById('dBadges').innerHTML = `
     <span class="badge badge-${(ex.difficulty || 'easy').toLowerCase()}">${ex.difficulty || 'Easy'}</span>
     <span class="badge badge-blue">${ex.category || ex.bodyPart || 'General'}</span>`;
+
+  // Stats
+  document.getElementById('dSets').textContent = ex.sets || '—';
+  document.getElementById('dReps').textContent = ex.reps || '—';
+  document.getElementById('dDiff').textContent = ex.difficulty || 'Easy';
+
+  // Steps
   const steps = (ex.description || '').split('\n').filter(s => s.trim());
   document.getElementById('dSteps').innerHTML = steps.map((s, i) =>
-    `<li><div class="step-dot">${i + 1}</div><span>${s.trim()}</span></li>`
+    `<li><div class="step-num">${i + 1}</div><span>${s.trim()}</span></li>`
   ).join('');
+
+  // Add button
   document.getElementById('dAddBtn').onclick = () => addToRoutine(ex);
+
+  // Show modal
   document.getElementById('detailModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
 }
 
 async function addToRoutine(ex) {
   try {
     const s = await (await fetch(`${API}/check-session`, { credentials: 'include' })).json();
-    if (!s.loggedIn) { if (confirm('Please log in to add exercises to a routine. Go to login?')) window.location.href = 'login.html'; return; }
+    if (!s.loggedIn) {
+      if (confirm('Please log in to add exercises to a routine. Go to login?'))
+        window.location.href = 'http://localhost:5000/login.html';
+      return;
+    }
     const routines = await (await fetch(`${API}/routines`, { credentials: 'include' })).json();
-    if (!routines.length) { if (confirm('You have no routines yet. Create one now?')) window.location.href = 'routines.html'; return; }
+    if (!routines.length) {
+      if (confirm('You have no routines yet. Create one now?'))
+        window.location.href = 'routines.html';
+      return;
+    }
     const names = routines.map((r, i) => `${i + 1}. ${r.name}`).join('\n');
     const pick  = prompt(`Which routine to add "${ex.name}" to?\n\n${names}\n\nEnter the number:`);
     if (!pick) return;
