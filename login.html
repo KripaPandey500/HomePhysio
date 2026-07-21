@@ -95,7 +95,7 @@
 </div>
 
 <script>
-const API = 'http://localhost:5000';
+const API = '/';
 
   async function doLogin() {
     const email  = document.getElementById('email').value.trim();
@@ -132,7 +132,7 @@ const API = 'http://localhost:5000';
       }
 
       // Login successful — redirect to profile
-     window.location.href = 'http://localhost:5000/profile.html';
+     window.location.href = '//profile.html';
     } catch {
       err.textContent = 'Cannot connect to server. Make sure npm start is running in the backend folder.';
       err.style.display = 'block';

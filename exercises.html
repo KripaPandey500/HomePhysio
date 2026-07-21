@@ -412,7 +412,7 @@
 <div id="toast" class="toast"></div>
 
 <script>
-const API = 'http://localhost:5000';
+const API = '';
 let all = [], filter = 'All', current = null;
 
 // Theme
@@ -429,7 +429,7 @@ async function goToProfile(e) {
   try {
     const res = await fetch(`${API}/check-session`, { credentials: 'include' });
     const data = await res.json();
-    window.location.href = data.loggedIn ? 'http://localhost:5000/profile.html' : 'http://localhost:5000/login.html';
+    window.location.href = data.loggedIn ? '//profile.html' : '//login.html';
   } catch { window.location.href = 'login.html'; }
 }
 
@@ -570,7 +570,7 @@ async function addToRoutine(ex) {
     const s = await (await fetch(`${API}/check-session`, { credentials: 'include' })).json();
     if (!s.loggedIn) {
       if (confirm('Please log in to add exercises to a routine. Go to login?'))
-        window.location.href = 'http://localhost:5000/login.html';
+        window.location.href = '//login.html';
       return;
     }
     const routines = await (await fetch(`${API}/routines`, { credentials: 'include' })).json();

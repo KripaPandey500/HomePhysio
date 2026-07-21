@@ -94,7 +94,7 @@
 </footer>
 
 <script>
-const API = 'http://localhost:5000'
+const API = '/'
 if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('ti').className = 'fas fa-sun'; }
 function toggleTheme() { document.body.classList.toggle('dark-mode'); const d = document.body.classList.contains('dark-mode'); document.getElementById('ti').className = d ? 'fas fa-sun' : 'fas fa-moon'; localStorage.setItem('theme', d ? 'dark' : 'light'); }
 function toggleMobileNav() { document.getElementById('mobileNav').classList.toggle('open'); }
@@ -102,7 +102,7 @@ document.addEventListener('click', e => { const mn = document.getElementById('mo
 
 async function doLogout() {
   await fetch(`${API}/logout`, { method: 'POST', credentials: 'include' });
- window.location.href = 'http://localhost:5000/login.html';
+ window.location.href = '//login.html';
 }
 
 window.onload = async () => {

@@ -337,7 +337,7 @@
   </div>
 
   <script>
-    const API = 'http://localhost:5000';
+    const API = '/';
     let routine = null, exIdx = 0, setNum = 1, cycleNum = 1;
     let timerInterval = null, secondsLeft = 0, paused = false, startTime = null;
     const WORK_TIME = 30, REST_TIME = 15;
@@ -349,7 +349,7 @@
     async function init() {
       try {
         const s = await (await fetch(`${API}/check-session`, { credentials: 'include' })).json();
-        if (!s.loggedIn) { window.location.href = 'http://localhost:5000/login.html'; return; }
+        if (!s.loggedIn) { window.location.href = '//login.html'; return; }
         const id = new URLSearchParams(location.search).get('routineId');
         if (!id) { showError('No routine selected. Please go back and choose one.'); return; }
         const res = await fetch(`${API}/routines/${id}`, { credentials: 'include' });
