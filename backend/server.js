@@ -1,10 +1,12 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const path = require('path');
-const MongoStore = require('connect-mongo');  
+const MongoStore = require('connect-mongo');
 const app = express();
 const PORT = 5000;
 
@@ -43,21 +45,34 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 store: MongoStore.create({
-    mongoUrl: 'mongodb://127.0.0.1:27017/homephysio',
+    mongoUrl: process.env.MONGO_URI,
     ttl: 7 * 24 * 60 * 60
 }),
     cookie: cookieOptions
 }));
 
 // -------------------- DATABASE --------------------
-mongoose.connect('mongodb://127.0.0.1:27017/homephysio')
-    .then(async () => {
-        console.log('✅ MongoDB Connected');
+require('dotenv').config();
+
+const connectDB = async () => {
+    try {
+        const uri = process.env.MONGO_URI;
+
+        await mongoose.connect(uri);
+
+        console.log('✅ HomePhysio MongoDB Connected — DB:', mongoose.connection.db.databaseName);
+
+        // Seed data (optional)
         await seedExercises();
         await seedAdmin();
-    })
-    .catch(err => console.error('❌ MongoDB Error:', err));
 
+    } catch (err) {
+        console.error('❌ MongoDB connection error:', err.message);
+        process.exit(1);
+    }
+};
+
+connectDB();
 // -------------------- SERVE FRONTEND --------------------
 const publicDir = path.join(__dirname, '..');
 app.use(express.static(publicDir));
