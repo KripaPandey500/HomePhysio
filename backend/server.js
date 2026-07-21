@@ -17,7 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 
 const allowedOrigins = [
     /^https?:\/\/127\.0\.0\.1:\d+$/,
-    /^https?:\/\/localhost:\d+$/
+    /^https?:\/\/localhost:\d+$/,
+    /^https:\/\/homephysio\.onrender\.com$/
 ];
 
 app.use(cors({
