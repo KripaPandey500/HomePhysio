@@ -102,7 +102,7 @@ document.addEventListener('click', e => { const mn = document.getElementById('mo
 
 async function doLogout() {
   await fetch(`${API}/logout`, { method: 'POST', credentials: 'include' });
- window.location.href = '//login.html';
+ window.location.href = '/login.html';
 }
 
 window.onload = async () => {
