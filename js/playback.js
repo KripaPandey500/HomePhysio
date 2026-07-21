@@ -4,7 +4,7 @@
  * and logs completion to the backend.
  */
 
-const API = '/'
+const API = ''
 
 let routine          = null;
 let currentIndex     = 0;

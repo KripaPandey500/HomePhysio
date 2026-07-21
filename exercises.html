@@ -570,7 +570,7 @@ async function addToRoutine(ex) {
     const s = await (await fetch(`${API}/check-session`, { credentials: 'include' })).json();
     if (!s.loggedIn) {
       if (confirm('Please log in to add exercises to a routine. Go to login?'))
-        window.location.href = '//login.html';
+        window.location.href = '/login.html';
       return;
     }
     const routines = await (await fetch(`${API}/routines`, { credentials: 'include' })).json();

@@ -350,7 +350,7 @@
 </footer>
 
 <script>
-const API = '/';
+const API = '';
 let allLogs = [], calYear = new Date().getFullYear();
 
 if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('ti').className = 'fas fa-sun'; }
@@ -369,9 +369,9 @@ function switchTab(id, btn) {
 async function init() {
   try {
     const s = await (await fetch(`${API}/check-session`, { credentials: 'include' })).json();
-    if (!s.loggedIn) { window.location.href = '//login.html'; return; }
+    if (!s.loggedIn) { window.location.href = '/login.html'; return; }
     document.getElementById('userGreeting').textContent = `Hi, ${s.user.name}! Track your workout history and fitness stats.`;
-  } catch { window.location.href = '//login.html'; return; }
+  } catch { window.location.href = '/login.html'; return; }
 
   try {
     const res = await fetch(`${API}/progress`, { credentials: 'include' });

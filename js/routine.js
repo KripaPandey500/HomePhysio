@@ -2,7 +2,7 @@
  * routine.js — Routine creation and management (routines.html)
  */
 
-const API = '/'
+const API = ''
 
 let currentUser = null;
 let allRoutines = [];

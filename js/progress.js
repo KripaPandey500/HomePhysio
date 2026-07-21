@@ -2,7 +2,7 @@
  * progress.js — Progress tracking page
  */
 
-const API = '/'
+const API = ''
 
 document.addEventListener('DOMContentLoaded', async () => {
     await checkSession();

@@ -549,7 +549,7 @@ html { overflow-y: scroll; }
 
 <script>
   // ✅ FIXED: API base URL now points to backend server
-  const API = '/';
+  const API = '';
 
   // Theme
   if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('theme-icon').className = 'fas fa-sun'; }
@@ -562,9 +562,9 @@ async function goToProfile(e) {
       const res = await fetch(`${API}/check-session`, { credentials: 'include' });
       const data = await res.json();
       if (data.loggedIn) {
-        window.location.href = '//profile.html';
+        window.location.href = '/profile.html';
       } else {
-        window.location.href = '//login.html';
+        window.location.href = '/login.html';
       }
     } catch {
       // If backend unreachable, just go to login
