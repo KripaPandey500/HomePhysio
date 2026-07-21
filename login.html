@@ -115,7 +115,7 @@ const API = '/';
 
     try {
       // Step 1: Login
-      const res  = await fetch(`${API}/login`, {
+     const res = await fetch('/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -132,7 +132,7 @@ const API = '/';
       }
 
       // Login successful — redirect to profile
-     window.location.href = '//profile.html';
+     window.location.href = '/profile.html';
     } catch {
       err.textContent = 'Cannot connect to server. Make sure npm start is running in the backend folder.';
       err.style.display = 'block';
